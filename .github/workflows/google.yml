@@ -23,7 +23,7 @@ env:
   GKE_ZONE: asia-southeast1-a  
   DEPLOYMENT_NAME: ique-app # TODO: update to deployment name
   REPOSITORY: ique-star6ucks
-  IMAGE: ique
+  IMAGE: ique-app
 
 jobs:
   setup-build-publish-deploy:
