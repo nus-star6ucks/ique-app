@@ -1,4 +1,4 @@
-FROM node:16-alpine as build-stage
+FROM node:16-alpine
 
 WORKDIR /app
 RUN corepack enable
@@ -9,9 +9,11 @@ RUN pnpm install
 COPY . .
 RUN pnpm build
 
-FROM nginx:stable-alpine as production-stage
+CMD ["pnpm", "run", "dev"]
 
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-EXPOSE 80
+# FROM nginx:stable-alpine as production-stage
 
-CMD ["nginx", "-g", "daemon off;"]
+# COPY --from=build-stage /app/dist /usr/share/nginx/html
+# EXPOSE 80
+
+# CMD ["nginx", "-g", "daemon off;"]
