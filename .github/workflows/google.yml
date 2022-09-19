@@ -77,3 +77,7 @@ jobs:
     - name: Publish
       run: |-
         docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest"
+        
+    - name: Run Cloud Build Trigger
+      run: |-
+        gcloud beta builds triggers run ique --branch=main
