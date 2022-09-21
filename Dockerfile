@@ -2,7 +2,7 @@ FROM node:16-alpine
 
 RUN npm install -g http-server
 
-WORKDIR /app
+WORKDIR /src
 RUN corepack enable
 
 COPY .npmrc package.json ./
