@@ -29,19 +29,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@master
-      - name: Installing project dependencies
-      - uses: pnpm/action-setup@v2.0.1
-        name: Install pnpm
+      - name: checkout
+        uses: actions/checkout@master
+        
+      - name: Install node.js
+        uses: actions/setup-node@master
+      
+      - name: Installing pnpm
+        uses: pnpm/action-setup@v2.0.1
         id: pnpm-install
         with:
           version: 7
           run_install: false
+          
       - name: Install dependencies
         run: pnpm install
+        
       - name: Building the project
-      - run: pnpm run build
+        run: pnpm run build
 
   setup-build-publish-deploy:
     name: Setup, Build, and Deploy
