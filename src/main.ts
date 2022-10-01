@@ -4,9 +4,12 @@ import { setupLayouts } from 'virtual:generated-layouts'
 import 'virtual:windi.css'
 import './styles/main.css'
 
+// https://fontawesome.com/docs/web/use-with/vue/add-icons
 import App from './App.vue'
 import type { UserModule } from './types'
 import generatedRoutes from '~pages'
+
+/* import font awesome icon component */
 
 const routes = setupLayouts(generatedRoutes)
 
@@ -20,3 +23,4 @@ export const createApp = ViteSSG(
       .forEach(i => i.install?.(ctx))
   },
 )
+
