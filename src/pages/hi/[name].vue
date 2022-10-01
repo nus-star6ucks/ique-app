@@ -1,17 +1,17 @@
 <script setup lang="ts">
-const props = defineProps<{ name: string }>()
-const router = useRouter()
-const user = useUserStore()
-const { t } = useI18n()
+// const props = defineProps<{ name: string }>()
+// const router = useRouter()
+// const user = useUserStore()
+// const { t } = useI18n()
 
-watchEffect(() => {
-  user.setNewName(props.name)
-})
+// watchEffect(() => {
+//   user.setNewName(props.name)
+// })
 </script>
 
 <template>
   <div>
-    <div text-4xl>
+    <!-- <div text-4xl>
       <div i-carbon-pedestrian inline-block />
     </div>
     <p>
@@ -42,6 +42,6 @@ watchEffect(() => {
       >
         {{ t('button.back') }}
       </button>
-    </div>
+    </div> -->
   </div>
 </template>

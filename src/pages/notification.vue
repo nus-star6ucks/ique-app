@@ -13,7 +13,7 @@
 
 <template>
   <div>
-    Me
+    Notification
   </div>
 </template>
 

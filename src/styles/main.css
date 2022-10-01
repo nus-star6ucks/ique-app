@@ -1,3 +1,7 @@
+* {
+  @apply transition-all;
+}
+
 html,
 body,
 #app {
@@ -11,18 +15,36 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.tabbar {
-  @apply bg-cyan-900 p-4 pt-20 absolute bottom-0 flex justify-around items-center w-screen text-sm;
+main {
+  height: calc(100vh - 70px);
+  @apply overflow-hidden z-10 relative bg-white rounded-b-3xl p-6;
 }
 
+.tabbar {
+  @apply bg-cyan-900 p-4 pt-20 absolute bottom-0 flex justify-around items-center w-screen text-sm z-0;
+}
+
+
 .tab {
-  @apply bg-cyan-800 px-4 py-2 rounded-full space-x-2 flex items-center;
+  @apply px-4 py-2 space-x-2 flex items-center;
 }
 
 .tab span {
-  @apply text-white;
+  @apply hidden;
 }
 
-.tab.active span {
-  @apply inline-block
+.tab span, .tab svg {
+  @apply text-gray-400 text-xs;
+}
+
+.tab.router-link-active span {
+  @apply inline-block;
+}
+
+.tab.router-link-active {
+  @apply bg-cyan-800 rounded-full;
+}
+
+.tab.router-link-active span, .tab.router-link-active svg {
+  @apply text-white;
 }
