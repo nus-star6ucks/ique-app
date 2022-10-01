@@ -1,4 +1,3 @@
-
 html,
 body,
 #app {
@@ -6,17 +5,24 @@ body,
   margin: 0;
   padding: 0;
 }
-#nprogress {
-  pointer-events: none;
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
-#nprogress .bar {
-  background: rgb(13,148,136);
-  opacity: 0.75;
-  position: fixed;
-  z-index: 1031;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
+.tabbar {
+  @apply bg-cyan-900 p-4 pt-20 absolute bottom-0 flex justify-around items-center w-screen text-sm;
+}
+
+.tab {
+  @apply bg-cyan-800 px-4 py-2 rounded-full space-x-2 flex items-center;
+}
+
+.tab span {
+  @apply text-white;
+}
+
+.tab.active span {
+  @apply inline-block
 }
