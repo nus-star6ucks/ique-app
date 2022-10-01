@@ -10,6 +10,7 @@ import Inspect from 'vite-plugin-inspect'
 import WindiCSS from 'vite-plugin-windicss'
 
 export default defineConfig({
+  base: '',
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
@@ -19,14 +20,11 @@ export default defineConfig({
   plugins: [
     WindiCSS(),
     Vue({
-      include: [/\.vue$/],
       reactivityTransform: true,
     }),
 
     // https://github.com/hannoeru/vite-plugin-pages
-    Pages({
-      extensions: ['vue'],
-    }),
+    Pages(),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
     Layouts(),
