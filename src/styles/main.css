@@ -1,4 +1,3 @@
-@import './markdown.css';
 
 html,
 body,
@@ -7,12 +6,6 @@ body,
   margin: 0;
   padding: 0;
 }
-
-html.dark {
-  background: #121212;
-  color-scheme: dark;
-}
-
 #nprogress {
   pointer-events: none;
 }
