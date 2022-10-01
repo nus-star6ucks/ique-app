@@ -1,5 +1,5 @@
 <script lang="ts">
-import { ArrowLeftIcon, LockClosedIcon, UserIcon } from '@heroicons/vue/24/outline'
+import { ArrowLeftIcon, LockClosedIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
 
 export default {
   components: {

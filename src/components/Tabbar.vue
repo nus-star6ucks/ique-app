@@ -1,5 +1,5 @@
 <script lang="ts">
-import { BellIcon, HomeIcon, TicketIcon, UserIcon } from '@heroicons/vue/24/outline'
+import { BellIcon, HomeIcon, TicketIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
 
 export default {
   components: {
