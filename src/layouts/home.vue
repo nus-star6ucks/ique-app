@@ -9,9 +9,8 @@ export default {
 </script>
 
 <template>
-  <main>
+  <main class="with-tabbar">
     <RouterView />
-    <Footer />
   </main>
   <Tabbar />
 </template>
