@@ -62,12 +62,8 @@ main {
   @apply text-gray-800;
 }
 
-.tab.router-link-active span {
-  @apply inline-block;
-}
-
 .tab .icon {
-  @apply rounded-lg p-2;
+  @apply rounded-lg p-2 leading-none;
 }
 
 .tab .text {
