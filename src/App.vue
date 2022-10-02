@@ -7,14 +7,14 @@ useHead({
   meta: [
     {
       name: 'theme-color',
-      content: computed(() => '#ffffff'),
+      content: computed(() => '#10b981'),
     },
   ],
   link: [
     {
       rel: 'icon',
       type: 'image/svg+xml',
-      href: computed(() => '/favicon.svg'),
+      href: computed(() => '/favicon.ico'),
     },
   ],
 })
