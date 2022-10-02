@@ -9,7 +9,7 @@ export default {
 </script>
 
 <template>
-  <footer class="tabbar">
+  <footer class="tabbar glassmorphism">
     <RouterLink to="/" class="tab">
       <span class="icon"><HomeIcon class="w-6 h-6" /></span>
       <span class="text">Home</span>

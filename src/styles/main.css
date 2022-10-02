@@ -8,15 +8,22 @@
 
 @font-face {
   font-family: 'Archia';
-  src: url('~/assets/fonts/archia-semibold-webfont.otf');
+  src: url('~/assets/fonts/archia-medium-webfont.otf');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Archia';
-  src: url('~/assets/fonts/archia-bold-webfont.otf');
+  src: url('~/assets/fonts/archia-semibold-webfont.otf');
   font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Archia';
+  src: url('~/assets/fonts/archia-bold-webfont.otf');
+  font-weight: 700;
   font-style: normal;
 }
 
@@ -26,7 +33,7 @@ body,
   min-height: 100%;
   margin: 0;
   padding: 0;
-  @apply tracking-wide bg-gray-100;
+  @apply tracking-wide bg-gray-50;
 }
 
 body {
@@ -34,18 +41,21 @@ body {
 }
 
 main {
-  @apply p-6;
+  @apply p-8;
+}
+
+.glassmorphism {
+  @apply bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-60 bg-white;
 }
 
 /* Tabbar */
-
 .tabbar {
-  @apply px-4 py-2 fixed bottom-0 flex justify-between items-center w-full z-10 text-base bg-white;
-  @apply shadow-xl rounded-t-2xl rounded-b-none bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-60;
+  @apply px-4 py-2 fixed bottom-0 flex justify-between items-center w-full z-10 text-base;
+  @apply shadow-xl rounded-t-2xl rounded-b-none;
 }
 
 .tab {
-  @apply px-4 py-2 flex-col flex items-center;
+  @apply px-4 py-2 pb-8 flex-col flex items-center;
 }
 
 .tab {
