@@ -9,22 +9,26 @@ export default {
 </script>
 
 <template>
-  <footer class="tabbar transition-all">
+  <footer class="tabbar">
     <RouterLink to="/" class="tab">
-      <HomeIcon class="w-5 h-5" />
-      <span>Home</span>
+      <span class="icon"><HomeIcon class="w-6 h-6" /></span>
+      <span class="text">Home</span>
     </RouterLink>
     <RouterLink to="/notification" class="tab">
-      <BellIcon class="w-5 h-5" />
-      <span>Notification</span>
+      <span class="icon">
+        <BellIcon class="w-6 h-6" />
+      </span>
+      <span class="text">Notifications</span>
     </RouterLink>
-    <RouterLink to="/ticket" class="tab">
-      <TicketIcon class="w-5 h-5" />
-      <span>Ticket</span>
+    <RouterLink to="/tickets" class="tab">
+      <span class="icon">
+        <TicketIcon class="w-6 h-6" />
+      </span>
+      <span class="text">Tickets</span>
     </RouterLink>
     <RouterLink to="/me" class="tab">
-      <UserIcon class="w-5 h-5" />
-      <span>Me</span>
+      <span class="icon"><UserIcon class="w-6 h-6" /></span>
+      <span class="text">Me</span>
     </RouterLink>
   </footer>
 </template>

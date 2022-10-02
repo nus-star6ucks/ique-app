@@ -1,27 +1,36 @@
-* {
-  @apply transition-all;
+@font-face {
+  font-family: 'Archia';
+  src: url('~/assets/fonts/archia-regular-webfont.eot');
+  src: url('~/assets/fonts/archia-regular-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Archia';
+  src: url('~/assets/fonts/archia-semibold-webfont.otf');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Archia';
+  src: url('~/assets/fonts/archia-bold-webfont.otf');
+  font-weight: 600;
+  font-style: normal;
 }
 
 html,
 body,
 #app {
-  height: 100%;
+  min-height: 100%;
   margin: 0;
   padding: 0;
-  @apply tracking-wide;
+  @apply tracking-wide bg-gray-100;
 }
 
-a {
-  @apply text-orange-500;
-}
-
-a:hover {
-  @apply text-orange-700;
-}
-
-main.with-tabbar {
-  height: calc(100vh - 70px);
-  @apply overflow-hidden z-10 relative bg-white rounded-b-3xl;
+body {
+  font-family: Archia, Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Source Han Sans CN, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
 }
 
 main {
@@ -31,38 +40,45 @@ main {
 /* Tabbar */
 
 .tabbar {
-  @apply bg-cyan-900 p-4 pt-20 absolute bottom-0 flex justify-between items-center w-screen text-base z-0;
+  @apply px-4 py-2 fixed bottom-0 flex justify-between items-center w-full z-10 text-base bg-white;
+  @apply shadow-xl rounded-t-2xl rounded-b-none bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-60;
 }
 
 .tab {
-  @apply px-4 py-2 space-x-2 flex items-center;
+  @apply px-4 py-2 flex-col flex items-center;
 }
 
-.tab span {
-  @apply hidden;
-}
-
-.tab span, .tab svg {
-  @apply text-gray-400 text-sm;
+.tab {
+  @apply text-gray-800;
 }
 
 .tab.router-link-active span {
   @apply inline-block;
 }
 
-.tab.router-link-active {
-  @apply bg-cyan-800 rounded-full;
+.tab .icon {
+  @apply rounded-lg p-2;
 }
 
-.tab.router-link-active span, .tab.router-link-active svg {
-  @apply text-white;
+.tab .text {
+  @apply mt-1 text-xs;
 }
+
+.tab.router-link-active .icon {
+  @apply bg-cyan-800 text-white;
+}
+
+.tab.router-link-active .text {
+  @apply text-cyan-800;
+}
+
 
 /* Form Auth */
-.form-auth input[type=text], .form-auth input[type=password] {
+.form-auth input[type=text],
+.form-auth input[type=password] {
   @apply w-full py-4 bg-gray-100 rounded-xl;
 }
+
 .form-auth input:focus {
   @apply border-none;
 }
-
