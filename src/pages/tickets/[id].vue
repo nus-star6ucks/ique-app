@@ -11,7 +11,7 @@ export default {
 <template>
   <div class="min-h-100vh">
     <header class="flex items-center justify-between text-white mb-4">
-      <button class="bg-orange-200 leading-none p-2 rounded-lg">
+      <button class="bg-orange-200 p-2 rounded-lg">
         <ArrowLeftIcon class="w-5 h-5 text-orange-500 top-0.5 relative" />
       </button>
       <h2>Your Booking Ticket</h2>

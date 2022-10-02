@@ -11,16 +11,16 @@ export default {
 <template>
   <div>
     <header class="flex items-center justify-between">
-      <button class="bg-orange-100 leading-none p-2 rounded-lg">
-        <ArrowLeftIcon class="w-5 h-5 text-orange-500" />
+      <button class="bg-white p-2 rounded-lg">
+        <ArrowLeftIcon class="w-5 h-5 text-gray-800" />
       </button>
-      <RouterLink to="/login" class="text-orange-500">
+      <RouterLink to="/login" class="text-gray-800">
         Login
       </RouterLink>
     </header>
 
     <form class="form-auth mt-24 space-y-16">
-      <h2 class="font-semibold text-3xl pt-16">
+      <h2 class="font-semibold text-3xl pt-8">
         Join Us
       </h2>
       <div class="space-y-4">
@@ -50,10 +50,10 @@ export default {
         </div>
       </div>
       <div>
-        <button type="submit" class="text-center w-full bg-teal-500 text-white rounded-lg uppercase py-4">
+        <button type="submit" class="text-center w-full bg-emerald-500 shadow-md shadow-emerald-500/40 text-white rounded-lg uppercase py-4">
           Sign up
         </button>
-        <p class="text-center mt-4 text-gray-400 px-4">
+        <p class="text-center mt-4 text-gray-400 px-4 text-xs">
           By clicking Sign up, you agree to your <a href="javascript:;">Terms and Conditions</a> and <a href="javascript:;">Privacy Statement</a>
         </p>
       </div>

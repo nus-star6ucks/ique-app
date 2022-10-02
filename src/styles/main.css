@@ -33,7 +33,12 @@ body,
   min-height: 100%;
   margin: 0;
   padding: 0;
-  @apply tracking-wide bg-gray-50;
+  background-color: #faf9fa;
+  @apply tracking-wide;
+}
+
+button {
+  @apply leading-none;
 }
 
 body {
@@ -50,12 +55,12 @@ main {
 
 /* Tabbar */
 .tabbar {
-  @apply px-4 py-2 fixed bottom-0 flex justify-between items-center w-full z-10 text-base;
+  @apply px-8 py-2 fixed bottom-0 flex justify-between items-center w-full z-10 text-base;
   @apply shadow-xl rounded-t-2xl rounded-b-none;
 }
 
 .tab {
-  @apply px-4 py-2 pb-8 flex-col flex items-center;
+  @apply py-1 pb-2 flex-col flex items-center;
 }
 
 .tab {
@@ -71,20 +76,36 @@ main {
 }
 
 .tab.router-link-active .icon {
-  @apply bg-cyan-800 text-white;
+  @apply bg-emerald-500 text-white;
 }
 
 .tab.router-link-active .text {
-  @apply text-cyan-800;
+  @apply text-emerald-500;
 }
 
 
 /* Form Auth */
 .form-auth input[type=text],
 .form-auth input[type=password] {
-  @apply w-full py-4 bg-gray-100 rounded-xl;
+  @apply w-full py-4 border-gray-200 border rounded-xl;
 }
 
 .form-auth input:focus {
-  @apply border-none;
+  @apply outline-emerald-500;
+}
+
+.me .menu {
+  @apply divide-y divide-gray-200;
+}
+
+.me .menu li {
+  @apply py-4 space-x-6 flex items-center leading-none;
+}
+
+.me .menu li .icon {
+  @apply text-gray-500 mt-0.5;
+}
+
+.me .menu li .text {
+  @apply font-medium;
 }
