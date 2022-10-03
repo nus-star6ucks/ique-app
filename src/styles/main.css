@@ -31,7 +31,7 @@ body {
 }
 
 main {
-  @apply p-8;
+  @apply p-8 mb-24;
 }
 
 .glassmorphism {

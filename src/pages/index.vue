@@ -44,6 +44,143 @@ import { ChevronRightIcon, MagnifyingGlassIcon, MapPinIcon } from '@heroicons/vu
         Nearest
       </button>
     </section>
+    <section class="grid grid-cols-2 gap-4">
+      <a
+        href="#"
+        class="block overflow-hidden rounded-lg bg-white relative"
+      >
+        <img
+          src="https://ique.vercel.app/demo/foods/1.jpeg"
+          class="h-56 w-full object-cover rounded-lg"
+        >
+        <div class="absolute top-2 glassmorphism bg-white text-gray-700 text-center absolute left-2 z-10 text-xs rounded-md p-2">Western</div>
+
+        <div class="relative space-y-2 px-6 py-4">
+          <h3 class="text-lg font-bold">
+            The Deck
+          </h3>
+          <Stars :count="4" />
+
+          <div class="mt-4 w-full flex items-center justify-between items-center text-gray-500 text-sm">
+            <span>
+              20 foodies waiting
+            </span>
+            <span class="flex items-center space-x-1">
+              <MapPinIcon class="w-5" />
+              <span>400m</span>
+            </span>
+          </div>
+        </div>
+      </a>
+      <a
+        href="#"
+        class="block overflow-hidden rounded-lg bg-white relative"
+      >
+        <img
+          src="https://ique.vercel.app/demo/foods/2.jpeg"
+          class="h-56 w-full object-cover rounded-lg"
+        >
+        <div class="absolute top-2 glassmorphism bg-white text-gray-700 text-center absolute left-2 z-10 text-xs rounded-md p-2">Western</div>
+
+        <div class="relative space-y-2 px-6 py-4">
+          <h3 class="text-lg font-bold">
+            The Deck
+          </h3>
+          <Stars :count="4" />
+
+          <div class="mt-4 w-full flex items-center justify-between items-center text-gray-500 text-sm">
+            <span>
+              20 foodies waiting
+            </span>
+            <span class="flex items-center space-x-1">
+              <MapPinIcon class="w-5" />
+              <span>400m</span>
+            </span>
+          </div>
+        </div>
+      </a>
+      <a
+        href="#"
+        class="block overflow-hidden rounded-lg bg-white relative"
+      >
+        <img
+          src="https://ique.vercel.app/demo/foods/3.jpeg"
+          class="h-56 w-full object-cover rounded-lg"
+        >
+        <div class="absolute top-2 glassmorphism bg-white text-gray-700 text-center absolute left-2 z-10 text-xs rounded-md p-2">Western</div>
+
+        <div class="relative space-y-2 px-6 py-4">
+          <h3 class="text-lg font-bold">
+            The Deck
+          </h3>
+          <Stars :count="4" />
+
+          <div class="mt-4 w-full flex items-center justify-between items-center text-gray-500 text-sm">
+            <span>
+              20 foodies waiting
+            </span>
+            <span class="flex items-center space-x-1">
+              <MapPinIcon class="w-5" />
+              <span>400m</span>
+            </span>
+          </div>
+        </div>
+      </a>
+      <a
+        href="#"
+        class="block overflow-hidden rounded-lg bg-white relative"
+      >
+        <img
+          src="https://ique.vercel.app/demo/foods/4.jpeg"
+          class="h-56 w-full object-cover rounded-lg"
+        >
+        <div class="absolute top-2 glassmorphism bg-white text-gray-700 text-center absolute left-2 z-10 text-xs rounded-md p-2">Western</div>
+
+        <div class="relative space-y-2 px-6 py-4">
+          <h3 class="text-lg font-bold">
+            The Deck
+          </h3>
+          <Stars :count="4" />
+
+          <div class="mt-4 w-full flex items-center justify-between items-center text-gray-500 text-sm">
+            <span>
+              20 foodies waiting
+            </span>
+            <span class="flex items-center space-x-1">
+              <MapPinIcon class="w-5" />
+              <span>400m</span>
+            </span>
+          </div>
+        </div>
+      </a>
+      <a
+        href="#"
+        class="block overflow-hidden rounded-lg bg-white relative"
+      >
+        <img
+          src="https://ique.vercel.app/demo/foods/5.jpeg"
+          class="h-56 w-full object-cover rounded-lg"
+        >
+        <div class="absolute top-2 glassmorphism bg-white text-gray-700 text-center absolute left-2 z-10 text-xs rounded-md p-2">Western</div>
+
+        <div class="relative space-y-2 px-6 py-4">
+          <h3 class="text-lg font-bold">
+            The Deck
+          </h3>
+          <Stars :count="4" />
+
+          <div class="mt-4 w-full flex items-center justify-between items-center text-gray-500 text-sm">
+            <span>
+              20 foodies waiting
+            </span>
+            <span class="flex items-center space-x-1">
+              <MapPinIcon class="w-5" />
+              <span>400m</span>
+            </span>
+          </div>
+        </div>
+      </a>
+    </section>
     <section class="space-y-4">
       <a
         class="group grid grid-cols-3 overflow-hidden rounded-xl bg-white rounded-xl p-6"
@@ -52,7 +189,7 @@ import { ChevronRightIcon, MagnifyingGlassIcon, MapPinIcon } from '@heroicons/vu
         <div class="col-span-1 relative overflow-hidden rounded-xl">
           <div class="glassmorphism bg-white text-gray-700 text-center absolute bottom-2 left-2 z-10 text-xs rounded-md p-2">Western</div>
           <img
-            src="https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_1280.jpg"
+            src="https://ique.vercel.app/demo/foods/6.jpeg"
             class="inset-0 h-full w-full object-cover z-0"
           >
         </div>
@@ -80,7 +217,7 @@ import { ChevronRightIcon, MagnifyingGlassIcon, MapPinIcon } from '@heroicons/vu
         <div class="col-span-1 relative overflow-hidden rounded-xl">
           <div class="glassmorphism bg-white text-gray-700 text-center absolute bottom-2 left-2 z-10 text-xs rounded-md p-2">Western</div>
           <img
-            src="https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_1280.jpg"
+            src="https://ique.vercel.app/demo/foods/7.jpeg"
             class="inset-0 h-full w-full object-cover z-0"
           >
         </div>
@@ -107,7 +244,7 @@ import { ChevronRightIcon, MagnifyingGlassIcon, MapPinIcon } from '@heroicons/vu
         <div class="col-span-1 relative overflow-hidden rounded-xl">
           <div class="glassmorphism bg-white text-gray-700 text-center absolute bottom-2 left-2 z-10 text-xs rounded-md p-2">Western</div>
           <img
-            src="https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_1280.jpg"
+            src="https://ique.vercel.app/demo/foods/8.jpeg"
             class="inset-0 h-full w-full object-cover z-0"
           >
         </div>
@@ -134,7 +271,7 @@ import { ChevronRightIcon, MagnifyingGlassIcon, MapPinIcon } from '@heroicons/vu
         <div class="col-span-1 relative overflow-hidden rounded-xl">
           <div class="glassmorphism bg-white text-gray-700 text-center absolute bottom-2 left-2 z-10 text-xs rounded-md p-2">Western</div>
           <img
-            src="https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_1280.jpg"
+            src="https://ique.vercel.app/demo/foods/1.jpeg"
             class="inset-0 h-full w-full object-cover z-0"
           >
         </div>
