@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-</script>
-
-<script lang="ts">
 import Tabbar from '../components/Tabbar.vue'
 
-export default {
-  components: {
-    Tabbar,
-  },
-}
+useHead({
+  meta: [
+    {
+      name: 'theme-color',
+      content: computed(() => ((useRouter().currentRoute.value.meta.themeColor as string) || '#faf9fa')),
+    },
+  ],
+})
 </script>
 
 <template>

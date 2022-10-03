@@ -1,11 +1,5 @@
-<script lang="ts">
+<script setup lang="ts">
 import { ArrowLeftOnRectangleIcon, HeartIcon } from '@heroicons/vue/24/outline/index.js'
-
-export default {
-  components: {
-    ArrowLeftOnRectangleIcon, HeartIcon,
-  },
-}
 </script>
 
 <template>
@@ -76,5 +70,6 @@ export default {
 meta:
   layout: home
   classNames: me
+  themeColor: '#10b981'
 </route>
 
