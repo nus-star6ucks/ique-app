@@ -10,6 +10,7 @@ declare module '@vue/runtime-core' {
     Counter: typeof import('./components/Counter.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Stars: typeof import('./components/Stars.vue')['default']
     Tabbar: typeof import('./components/Tabbar.vue')['default']
   }
 }

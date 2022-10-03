@@ -8,6 +8,20 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <script>
+    (function (d) {
+      const config = {
+        kitId: 'evw3nrf',
+        scriptTimeout: 3000,
+        async: true,
+  }
+  const h = d.documentElement; const t = setTimeout(() => { h.className = `${h.className.replace(/\bwf-loading\b/g, '')} wf-inactive` }, config.scriptTimeout); const tk = d.createElement('script'); let f = false; const s = d.getElementsByTagName('script')[0]; let a; h.className += ' wf-loading'; tk.src = `https://use.typekit.net/${config.kitId}.js`; tk.async = true; tk.onload = tk.onreadystatechange = function () {
+    a = this.readyState; if (f || a && a != 'complete' && a != 'loaded')
+          return; f = true; clearTimeout(t); try { Typekit.load(config) }
+    catch (e) {}
+  }; s.parentNode.insertBefore(tk, s)
+    })(document)
+  </script>
 </head>
 
 <body class="font-body">
