@@ -22,7 +22,7 @@ import { ChevronRightIcon, MagnifyingGlassIcon, MapPinIcon } from '@heroicons/vu
           <span>Sign up or login to start</span> <ChevronRightIcon class="w-4" />
         </button>
       </div>
-      <img src="https://ique.vercel.app/assets/banner.svg" class="w-32 absolute right-2 bottom-6">
+      <img src="/assets/banner.svg" class="w-32 absolute right-2 bottom-6">
     </div>
     <section class="space-x-4 overflow-x-scroll no-scrollbar whitespace-nowrap">
       <button class="bg-white px-4 py-2 rounded-lg">
