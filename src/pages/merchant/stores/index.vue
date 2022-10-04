@@ -94,6 +94,12 @@ export default {
         </a>
       </section>
     </div>
+
+    <div class="p-3 text-center w-50 rounded-lg uppercase underline underline-offset-4">
+      <RouterLink to="/stores/register" class="text-gray-800 ">
+        Register a store
+      </RouterLink>
+    </div>
   </div>
 </template>
 
