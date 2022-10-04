@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { MapPinIcon } from '@heroicons/vue/24/outline/index.js'
+import Stars from './Stars.vue'
 import type { Store } from '~/api/models'
 
 const props = defineProps<{
