@@ -10,6 +10,7 @@ specifiers:
   '@vue/test-utils': ^2.1.0
   '@vueuse/core': ^9.3.0
   '@vueuse/head': ^0.8.0
+  '@vueuse/router': ^9.3.0
   axios: ^0.27.2
   critters: ^0.0.16
   cross-env: ^7.0.3
@@ -47,6 +48,7 @@ dependencies:
   '@heroicons/vue': 2.0.11_vue@3.2.40
   '@vueuse/core': 9.3.0_vue@3.2.40
   '@vueuse/head': 0.8.0_vue@3.2.40
+  '@vueuse/router': 9.3.0_c7eza3xvlyb4mo6qeit5ggeo6u
   axios: 0.27.2
   install: 0.13.0
   npm: 8.19.2
@@ -2113,6 +2115,19 @@ packages:
 
   /@vueuse/metadata/9.3.0:
     resolution: {integrity: sha512-GnnfjbzIPJIh9ngL9s9oGU1+Hx/h5/KFqTfJykzh/1xjaHkedV9g0MASpdmPZIP+ynNhKAcEfA6g5i8KXwtoMA==}
+
+  /@vueuse/router/9.3.0_c7eza3xvlyb4mo6qeit5ggeo6u:
+    resolution: {integrity: sha512-UFN2MFciprH21oYsAgNHeDJ4Bd86HpRm9gximSN8j6h4fc2aa62fvfhprfHqdTxYAcgcGkMwcc9TO75jOvr8gg==}
+    peerDependencies:
+      vue-router: '>=4.0.0-rc.1'
+    dependencies:
+      '@vueuse/shared': 9.3.0_vue@3.2.40
+      vue-demi: 0.13.11_vue@3.2.40
+      vue-router: 4.1.5_vue@3.2.40
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
 
   /@vueuse/shared/9.2.0_vue@3.2.40:
     resolution: {integrity: sha512-NnRp/noSWuXW0dKhZK5D0YLrDi0nmZ18UeEgwXQq7Ul5TTP93lcNnKjrHtd68j2xFB/l59yPGFlCryL692bnrA==}

@@ -8,15 +8,15 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Counter: typeof import('./components/Counter.vue')['default']
+    HomeStoreCard: typeof import('./components/HomeStoreCard.vue')['default']
     HomeStoreCardHorizontal: typeof import('./components/HomeStoreCardHorizontal.vue')['default']
-    HomeStoreCardVertical: typeof import('./components/HomeStoreCardVertical.vue')['default']
     Loading: typeof import('./components/Loading.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Stars: typeof import('./components/Stars.vue')['default']
     StoreCard: typeof import('./components/StoreCard.vue')['default']
     StoreCardHorizontal: typeof import('./components/StoreCardHorizontal.vue')['default']
-    StoreCardVertical: typeof import('./components/StoreCardVertical.vue')['default']
     Tabbar: typeof import('./components/Tabbar.vue')['default']
+    TicketCard: typeof import('./components/TicketCard.vue')['default']
   }
 }

@@ -81,11 +81,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get Stores
          * @param {number} [userId] 
-         * @param {string} [storeId] 
+         * @param {number} [storeId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storesGet: async (userId?: number, storeId?: string, options: any = {}): Promise<RequestArgs> => {
+        storesGet: async (userId?: number, storeId?: number, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/stores`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -284,11 +284,11 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get Stores
          * @param {number} [userId] 
-         * @param {string} [storeId] 
+         * @param {number} [storeId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storesGet(userId?: number, storeId?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Store>>> {
+        async storesGet(userId?: number, storeId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Store>>> {
             const localVarAxiosArgs = await StoreApiAxiosParamCreator(configuration).storesGet(userId, storeId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -374,11 +374,11 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * 
          * @summary Get Stores
          * @param {number} [userId] 
-         * @param {string} [storeId] 
+         * @param {number} [storeId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storesGet(userId?: number, storeId?: string, options?: any): AxiosPromise<Array<Store>> {
+        storesGet(userId?: number, storeId?: number, options?: any): AxiosPromise<Array<Store>> {
             return StoreApiFp(configuration).storesGet(userId, storeId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -425,81 +425,12 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
 };
 
 /**
- * StoreApi - interface
- * @export
- * @interface StoreApi
- */
-export interface StoreApiInterface {
-    /**
-     * 
-     * @summary Delete Store
-     * @param {number} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StoreApiInterface
-     */
-    storesDelete(id: number, options?: any): AxiosPromise<object>;
-
-    /**
-     * 
-     * @summary Get Stores
-     * @param {number} [userId] 
-     * @param {string} [storeId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StoreApiInterface
-     */
-    storesGet(userId?: number, storeId?: string, options?: any): AxiosPromise<Array<Store>>;
-
-    /**
-     * 
-     * @summary Create Store
-     * @param {InlineObject4} [inlineObject4] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StoreApiInterface
-     */
-    storesPost(inlineObject4?: InlineObject4, options?: any): AxiosPromise<InlineResponse2011>;
-
-    /**
-     * 
-     * @summary Update Store Info
-     * @param {InlineObject3} [inlineObject3] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StoreApiInterface
-     */
-    storesPut(inlineObject3?: InlineObject3, options?: any): AxiosPromise<InlineResponse2002>;
-
-    /**
-     * 
-     * @summary Start Service
-     * @param {number} [storeId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StoreApiInterface
-     */
-    storesStartServicePost(storeId?: number, options?: any): AxiosPromise<object>;
-
-    /**
-     * 
-     * @summary Stop Service
-     * @param {number} [storeId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StoreApiInterface
-     */
-    storesStopServicePost(storeId?: number, options?: any): AxiosPromise<object>;
-
-}
-
-/**
  * StoreApi - object-oriented interface
  * @export
  * @class StoreApi
  * @extends {BaseAPI}
  */
-export class StoreApi extends BaseAPI implements StoreApiInterface {
+export class StoreApi extends BaseAPI {
     /**
      * 
      * @summary Delete Store
@@ -516,12 +447,12 @@ export class StoreApi extends BaseAPI implements StoreApiInterface {
      * 
      * @summary Get Stores
      * @param {number} [userId] 
-     * @param {string} [storeId] 
+     * @param {number} [storeId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public storesGet(userId?: number, storeId?: string, options?: any) {
+    public storesGet(userId?: number, storeId?: number, options?: any) {
         return StoreApiFp(this.configuration).storesGet(userId, storeId, options).then((request) => request(this.axios, this.basePath));
     }
 

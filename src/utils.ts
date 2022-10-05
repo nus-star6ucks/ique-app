@@ -1,3 +1,6 @@
-import { StoreApi } from './api'
+import { QueueApi, StoreApi } from './api'
 
-export const storeApi = new StoreApi({}, 'https://mock.apifox.cn/m1/1701091-0-default')
+const API_BASEURL = 'https://mock.apifox.cn/m1/1701091-0-default'
+
+export const storeApi = new StoreApi({}, API_BASEURL)
+export const queueApi = new QueueApi({}, API_BASEURL)
