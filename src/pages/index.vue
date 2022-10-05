@@ -3,13 +3,9 @@ import { ChevronRightIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline
 import { useAsyncState } from '@vueuse/core'
 import Loading from '../components/Loading.vue'
 import { storeApi } from '../utils'
-import StoreCardVertical from '~/components/StoreCardVertical.vue'
+import StoreCard from '~/components/StoreCard.vue'
 
 const { isLoading, state: storesData, isReady } = useAsyncState(storeApi.storesGet().then(data => data.data), [])
-
-onMounted(() => {
-  storeApi.storesGet().then(data => data.data)
-})
 </script>
 
 <template>
@@ -55,7 +51,7 @@ onMounted(() => {
       </button>
     </section>
     <section v-if="isReady" class="grid grid-cols-2 gap-4">
-      <StoreCardVertical v-for="store in storesData" :key="store.id" :store="store" />
+      <StoreCard v-for="store in storesData" :key="store.id" :store="store" />
     </section>
     <Loading :loading="isLoading" />
   </div>

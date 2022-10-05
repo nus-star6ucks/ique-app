@@ -1,83 +1,51 @@
-<script lang="ts">
+<script setup lang="ts">
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline/index.js'
+import { useRouteParams } from '@vueuse/router'
+import { queueApi, storeApi } from '~/utils'
 
-export default {
-  components: {
-    ArrowLeftIcon,
-  },
-}
+const ticketId = useRouteParams('id')
+const { state: ticketsData } = useAsyncState(queueApi.ticketsGet(undefined, undefined, +ticketId).then(data => data.data), [])
+const { state: storeData, isReady: isStoreDataReady } = useAsyncState(storeApi.storesGet(undefined, ticketsData.value?.[0]?.storeId).then(data => data.data), [])
 </script>
 
 <template>
-  <div class="min-h-100vh">
+  <div>
     <header class="flex items-center justify-between text-gray-800 mb-4">
       <button class="bg-white p-2 rounded-lg">
-        <ArrowLeftIcon class="w-5 h-5 top-0.5 relative" />
+        <ArrowLeftIcon class="w-5 h-5 relative" />
       </button>
       <h2>Your Booking Ticket</h2>
       <div class="w-9 h-9" />
     </header>
     <section class="space-y-4">
-      <a
-        href="#"
-        class="block bg-white overflow-hidden rounded-lg"
-      >
-        <img
-          alt="Office"
-          src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-          class="h-56 w-full object-cover"
-        >
-
-        <div class="p-6">
-          <h5 class="text-xl font-bold">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </h5>
-
-          <p class="mt-2 text-sm text-gray-500">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua.
+      <div v-if="isStoreDataReady">
+        <div class="overflow-hidden rounded-lg bg-center bg-cover h-36" style="background-image: url(https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80);" />
+        <div class="bg-white overflow-hidden rounded-lg p-4 mx-4 -mt-12 shadow-gray-100 shadow-lg">
+          <h2 class="text-lg font-bold" v-text="storeData[0].name" />
+          <h3 class="text-lg font-bold">
+            Point 29-30
+          </h3>
+          <p class="text-gray-500 text-sm mt-2">
+            blablabla · 10:00 PM
           </p>
-
-          <div
-            class="mt-4 inline-block border-b border-blue-500 pb-1 font-medium text-blue-600"
-          >
-            Find out more
-            <span aria-hidden="true">&rarr;</span>
-          </div>
         </div>
-      </a>
-      <div class="bg-white rounded-lg px-4 py-8">
-        <h3 class="text-center font-semibold mb-4 text-xl">
-          Your Queue Number
-        </h3>
-        <p class="text-center text-5xl font-bold text-emerald-500">
-          AG123
-        </p>
       </div>
-      <div class="bg-white rounded-lg px-4 py-8">
-        <div class="flex items-center justify-around">
-          <div class="text-center p-4">
-            <h4 class="font-bold text-3xl mb-1 text-emerald-500">
-              12
+      <div class="bg-white rounded-lg shadow-gray-100 shadow-lg px-4 py-8">
+        <div class="border-b border-dashed border-gray-200 pb-4 relative">
+          <h3 class="text-center text-gray-400 mb-2 text-xl">
+            Your Queue Number
+          </h3>
+          <p class="text-center text-5xl font-bold text-emerald-500">
+            AG123
+          </p>
+        </div>
+        <div class="grid grid-cols-2">
+          <div class="p-4">
+            <h4 class="text-gray-400 mb-2 text-base">
+              Queue Type
             </h4>
-            <p class="text-gray-400">
-              Queues
-            </p>
-          </div>
-          <div class="text-center p-4">
-            <h4 class="font-bold text-3xl mb-1 text-emerald-500">
-              47
-            </h4>
-            <p class="text-gray-400">
-              Avg Minutes To Go
-            </p>
-          </div>
-          <div class="text-center p-4">
-            <h4 class="font-bold text-3xl mb-1 text-emerald-500">
-              5.5
-            </h4>
-            <p class="text-gray-400">
-              KM Distance
+            <p class="text-gray-800 font-semibold">
+              123
             </p>
           </div>
         </div>
