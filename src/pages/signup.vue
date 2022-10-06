@@ -11,9 +11,12 @@ export default {
 <template>
   <div>
     <header class="flex items-center justify-between">
-      <button class="bg-white p-2 rounded-lg">
-        <ArrowLeftIcon class="w-5 h-5 text-gray-800" />
-      </button>
+      <RouterLink v-slot="{ navigate }" to="/me" custom>
+        <button class="bg-white p-2 rounded-lg" @click="navigate">
+          <ArrowLeftIcon class="w-5 h-5 text-gray-800" />
+        </button>
+      </RouterLink>
+
       <RouterLink to="/login" class="text-gray-800">
         Login
       </RouterLink>

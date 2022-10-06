@@ -23,10 +23,11 @@ const { isLoading, state: storesData, isReady } = useAsyncState(storeApi.storesG
         <h2 class="text-2xl uppercase mb-4 font-light">
           Welcome to iQue
         </h2>
-        <!-- border-emerald-500 text-emerald-500  -->
-        <button class="border rounded-lg p-2 border-gray-800 flex items-center text-sm">
-          <span>Sign up or login to start</span> <ChevronRightIcon class="w-4" />
-        </button>
+        <RouterLink v-slot="{ navigate }" to="/welcome" custom>
+          <button class="border rounded-lg p-2 border-gray-800 flex items-center text-sm" @click="navigate">
+            <span>Sign up or login to start</span> <ChevronRightIcon class="w-4" />
+          </button>
+        </RouterLink>
       </div>
       <img src="/assets/banner.svg" class="w-32 absolute right-2 bottom-6">
     </div>

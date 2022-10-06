@@ -11,9 +11,11 @@ export default {
 <template>
   <div>
     <header class="flex items-center justify-between">
-      <button class="bg-white p-2 rounded-lg">
-        <ArrowLeftIcon class="w-5 h-5 text-gray-800" />
-      </button>
+      <RouterLink v-slot="{ navigate }" to="/me" custom>
+        <button class="bg-white p-2 rounded-lg" @click="navigate">
+          <ArrowLeftIcon class="w-5 h-5 text-gray-800" />
+        </button>
+      </RouterLink>
       <RouterLink to="/signup" class="text-gray-800">
         Signup
       </RouterLink>
@@ -28,13 +30,13 @@ export default {
           <div class="absolute inset-y-0 left-4 top-4 inline-flex">
             <UserIcon class="w-6 h-6 text-gray-400" />
           </div>
-          <input placeholder="Username" required type="text" class="px-6 pl-14" minlength="6">
+          <input placeholder="Username" name="username" required type="text" class="px-6 pl-14" minlength="6">
         </div>
         <div class="relative">
           <div class="absolute inset-y-0 left-4 top-4 inline-flex">
             <LockClosedIcon class="w-6 h-6 text-gray-400" />
           </div>
-          <input placeholder="Password" minlength="6" required class="px-6 pl-14" type="password">
+          <input placeholder="Password" name="password" minlength="6" required class="px-6 pl-14" type="password">
         </div>
         <div class="relative space-x-2">
           <label>
@@ -47,7 +49,7 @@ export default {
         <button type="submit" class="text-center w-full bg-emerald-500 shadow-md shadow-emerald-500/40 text-white rounded-lg uppercase py-4">
           Login
         </button>
-        <p class="text-center mt-4 text-gray-500 px-4 text-sm">
+        <p class="text-center mt-4 text-gray-400 px-4 text-xs">
           By clicking Login, you agree to your <a href="javascript:;">Terms and Conditions</a> and <a href="javascript:;">Privacy Statement</a>
         </p>
       </div>

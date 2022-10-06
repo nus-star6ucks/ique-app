@@ -23,10 +23,6 @@ const props = defineProps<{
       <Stars :count="4" />
       <div class="mt-4 w-full flex items-center justify-between items-center text-gray-500 text-sm">
         <span class="flex items-center space-x-1">
-          <UsersIcon class="w-5" />
-          <span>20</span>
-        </span>
-        <span class="flex items-center space-x-1">
           <MapPinIcon class="w-5" />
           <span>400m</span>
         </span>

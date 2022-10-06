@@ -31,7 +31,11 @@ body {
 }
 
 main {
-  @apply p-8 mb-24;
+  @apply p-8;
+}
+
+main.with-tabbar {
+  @apply mb-24;
 }
 
 .glassmorphism {

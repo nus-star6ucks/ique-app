@@ -156,4 +156,5 @@ export default {
 <route lang="yaml">
 meta:
   layout: home
+  classNames: with-tabbar
 </route>

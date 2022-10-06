@@ -13,7 +13,7 @@ useHead({
 </script>
 
 <template>
-  <main class="with-tabbar" :class="[useRouter().currentRoute.value.meta.classNames]">
+  <main :class="[useRouter().currentRoute.value.meta.classNames]">
     <RouterView />
   </main>
   <Tabbar />
