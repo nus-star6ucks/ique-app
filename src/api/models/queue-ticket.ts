@@ -12,6 +12,7 @@
  */
 
 
+import { SeatType } from './seat-type';
 
 /**
  * 
@@ -37,6 +38,12 @@ export interface QueueTicket {
      * @memberof QueueTicket
      */
     customerId: number;
+    /**
+     * 
+     * @type {SeatType}
+     * @memberof QueueTicket
+     */
+    seatType: SeatType;
     /**
      * 
      * @type {number}

@@ -18,5 +18,6 @@ declare module '@vue/runtime-core' {
     StoreCardHorizontal: typeof import('./components/StoreCardHorizontal.vue')['default']
     Tabbar: typeof import('./components/Tabbar.vue')['default']
     TicketCard: typeof import('./components/TicketCard.vue')['default']
+    Welcome: typeof import('./components/Welcome.vue')['default']
   }
 }

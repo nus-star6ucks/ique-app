@@ -12,6 +12,7 @@
  */
 
 
+import { SeatType } from './seat-type';
 
 /**
  * 
@@ -37,6 +38,12 @@ export interface InlineObject5 {
      * @memberof InlineObject5
      */
     customerId: number;
+    /**
+     * 
+     * @type {SeatType}
+     * @memberof InlineObject5
+     */
+    seatType: SeatType;
     /**
      * 
      * @type {number}

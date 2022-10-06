@@ -9,6 +9,8 @@ export * from './inline-response2001';
 export * from './inline-response2002';
 export * from './inline-response2002-resources';
 export * from './inline-response2003';
+export * from './inline-response2004';
+export * from './inline-response2004-queues-info';
 export * from './inline-response201';
 export * from './inline-response2011';
 export * from './inline-response2012';
