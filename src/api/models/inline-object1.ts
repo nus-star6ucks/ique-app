@@ -24,7 +24,7 @@ export interface InlineObject1 {
      * @type {number}
      * @memberof InlineObject1
      */
-    id: number;
+    id?: number;
     /**
      * 
      * @type {string}
@@ -54,13 +54,13 @@ export interface InlineObject1 {
      * @type {string}
      * @memberof InlineObject1
      */
-    status: InlineObject1StatusEnum;
+    status?: InlineObject1StatusEnum;
     /**
      * timestamp
      * @type {number}
      * @memberof InlineObject1
      */
-    createTime: number;
+    createTime?: number;
 }
 
 /**

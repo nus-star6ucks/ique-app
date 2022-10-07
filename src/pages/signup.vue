@@ -1,11 +1,48 @@
 <script lang="ts">
 import { ArrowLeftIcon, LockClosedIcon, PhoneIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
+import { useUserStore } from '~/stores/user'
+import { userApi } from '~/utils'
 
-export default {
+export default defineComponent({
   components: {
     ArrowLeftIcon, UserIcon, PhoneIcon, LockClosedIcon,
   },
-}
+  setup() {
+    const userStore = useUserStore()
+    return { userStore }
+  },
+  data() {
+    return {
+      username: '',
+      password: '',
+      passwordConfirmation: '',
+      phone: '',
+      loading: false,
+    }
+  },
+  methods: {
+    async onSubmit() {
+      if (this.loading)
+        return
+      this.loading = true
+      try {
+        const { data } = await userApi.usersPost({
+          username: this.username,
+          password: this.password,
+          phoneNumber: this.phone,
+          userType: 'customer',
+        })
+        this.$router.push('/')
+      }
+      catch (e) {
+        console.log(e)
+      }
+      finally {
+        this.loading = false
+      }
+    },
+  },
+})
 </script>
 
 <template>
@@ -22,7 +59,7 @@ export default {
       </RouterLink>
     </header>
 
-    <form class="form-auth mt-24 space-y-16">
+    <form class="form-auth mt-24 space-y-16" @submit.prevent="onSubmit">
       <h2 class="font-semibold text-3xl pt-8">
         Join Us
       </h2>
@@ -31,25 +68,25 @@ export default {
           <div class="absolute inset-y-0 left-4 top-4 inline-flex">
             <UserIcon class="w-6 h-6 text-gray-400" />
           </div>
-          <input placeholder="Username" required type="text" class="px-6 pl-14" minlength="6">
+          <input placeholder="Username" name="username" required type="text" class="px-6 pl-14" minlength="6">
         </div>
         <div class="relative">
           <div class="absolute inset-y-0 left-4 top-4 inline-flex">
             <PhoneIcon class="w-6 h-6 text-gray-400" />
           </div>
-          <input placeholder="Phone" type="text" class="px-6 pl-14" required>
+          <input placeholder="Phone" name="phone" type="text" class="px-6 pl-14" required>
         </div>
         <div class="relative">
           <div class="absolute inset-y-0 left-4 top-4 inline-flex">
             <LockClosedIcon class="w-6 h-6 text-gray-400" />
           </div>
-          <input placeholder="Password" minlength="6" required class="px-6 pl-14" type="password">
+          <input placeholder="Password" name="password" minlength="6" required class="px-6 pl-14" type="password">
         </div>
         <div class="relative">
           <div class="absolute inset-y-0 left-4 top-4 inline-flex">
             <LockClosedIcon class="w-6 h-6 text-gray-400" />
           </div>
-          <input placeholder="Password Confirmation" minlength="6" required class="px-6 pl-14" type="password">
+          <input placeholder="Password Confirmation" name="passwordConfirmation" minlength="6" required class="px-6 pl-14" type="password">
         </div>
       </div>
       <div>

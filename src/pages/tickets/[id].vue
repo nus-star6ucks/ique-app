@@ -2,6 +2,7 @@
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline/index.js'
 import { useRouteParams } from '@vueuse/router'
 import { queueApi, storeApi } from '~/utils'
+import Loading from '~/components/Loading.vue'
 
 const ticketId = useRouteParams('id')
 const { state: ticketsData } = useAsyncState(queueApi.ticketsGet(undefined, undefined, +ticketId).then(data => data.data), [])
@@ -10,14 +11,14 @@ const { state: storeData, isReady: isStoreDataReady } = useAsyncState(storeApi.s
 
 <template>
   <div>
-    <header class="flex items-center justify-between text-gray-800 mb-4">
+    <header class="flex items-center justify-between text-gray-800 mb-12">
       <button class="bg-white p-2 rounded-lg">
         <ArrowLeftIcon class="w-5 h-5 relative" />
       </button>
-      <h2>Your Booking Ticket</h2>
+      <h2>You are Queueing</h2>
       <div class="w-9 h-9" />
     </header>
-    <section class="space-y-4">
+    <section class="space-y-8">
       <div v-if="isStoreDataReady">
         <div class="overflow-hidden rounded-lg bg-center bg-cover h-36" style="background-image: url(https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80);" />
         <div class="bg-white overflow-hidden rounded-lg p-4 mx-4 -mt-12 shadow-gray-100 shadow-lg">
@@ -30,8 +31,9 @@ const { state: storeData, isReady: isStoreDataReady } = useAsyncState(storeApi.s
           </p>
         </div>
       </div>
+      <Loading v-else />
       <div class="bg-white rounded-lg shadow-gray-100 shadow-lg px-4 py-8">
-        <div class="border-b border-dashed border-gray-200 pb-4 relative">
+        <div class="border-b border-dashed border-gray-200 pb-8 relative">
           <h3 class="text-center text-gray-400 mb-2 text-xl">
             Your Queue Number
           </h3>
@@ -40,11 +42,11 @@ const { state: storeData, isReady: isStoreDataReady } = useAsyncState(storeApi.s
           </p>
         </div>
         <div class="grid grid-cols-2">
-          <div class="p-4">
+          <div class="px-4 py-8">
             <h4 class="text-gray-400 mb-2 text-base">
-              Queue Type
+              Type
             </h4>
-            <p class="text-gray-800 font-semibold">
+            <p class="text-gray-800 text-xl font-semibold">
               123
             </p>
           </div>

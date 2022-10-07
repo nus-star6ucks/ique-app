@@ -306,12 +306,62 @@ export const QueueApiFactory = function (configuration?: Configuration, basePath
 };
 
 /**
+ * QueueApi - interface
+ * @export
+ * @interface QueueApi
+ */
+export interface QueueApiInterface {
+    /**
+     * 
+     * @summary Checkin for customer
+     * @param {string} [ticketId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueueApiInterface
+     */
+    queueCheckinPost(ticketId?: string, options?: any): AxiosPromise<InlineResponse401>;
+
+    /**
+     * 
+     * @summary Get Queue Info
+     * @param {number} [ticketId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueueApiInterface
+     */
+    queuesGet(ticketId?: number, options?: any): AxiosPromise<InlineResponse2003>;
+
+    /**
+     * 1. get tickets by storeId: 用户获取某家商店的排队信息 2. get tickets by userId：用户获取自己的所有取号的 ticket 信息 3. get tickets by userId & storeId：用户获取自己取号的某家商店的 ticket 信息 4. get a ticket by ticketId：用户获取取号详细信息
+     * @summary Get Queue Tickets
+     * @param {number} [userId] 
+     * @param {number} [storeId] 
+     * @param {number} [ticketId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueueApiInterface
+     */
+    ticketsGet(userId?: number, storeId?: number, ticketId?: number, options?: any): AxiosPromise<Array<QueueTicket>>;
+
+    /**
+     * 
+     * @summary Create Queue Ticket
+     * @param {InlineObject5} [inlineObject5] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueueApiInterface
+     */
+    ticketsPost(inlineObject5?: InlineObject5, options?: any): AxiosPromise<InlineResponse2012>;
+
+}
+
+/**
  * QueueApi - object-oriented interface
  * @export
  * @class QueueApi
  * @extends {BaseAPI}
  */
-export class QueueApi extends BaseAPI {
+export class QueueApi extends BaseAPI implements QueueApiInterface {
     /**
      * 
      * @summary Checkin for customer

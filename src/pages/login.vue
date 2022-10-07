@@ -1,11 +1,44 @@
 <script lang="ts">
 import { ArrowLeftIcon, LockClosedIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
+import { useUserStore } from '~/stores/user'
+import { userApi } from '~/utils'
 
-export default {
+export default defineComponent({
   components: {
-    ArrowLeftIcon, UserIcon, LockClosedIcon,
+    ArrowLeftIcon, LockClosedIcon, UserIcon,
   },
-}
+  setup() {
+    const userStore = useUserStore()
+    return { userStore }
+  },
+  data() {
+    return {
+      username: '',
+      password: '',
+      loading: false,
+    }
+  },
+  methods: {
+    async onSubmit() {
+      if (this.loading)
+        return
+      this.loading = true
+      try {
+        const { data } = await userApi.usersLoginPost({
+          username: this.username,
+          password: this.password,
+        })
+        this.userStore.login(data.token)
+      }
+      catch (e) {
+        console.log(e)
+      }
+      finally {
+        this.loading = false
+      }
+    },
+  },
+})
 </script>
 
 <template>
@@ -21,7 +54,7 @@ export default {
       </RouterLink>
     </header>
 
-    <form class="form-auth mt-24 space-y-16">
+    <form class="form-auth mt-24 space-y-16" @submit.prevent="onSubmit">
       <h2 class="font-semibold text-3xl pt-8">
         Welcome Back
       </h2>
@@ -30,23 +63,23 @@ export default {
           <div class="absolute inset-y-0 left-4 top-4 inline-flex">
             <UserIcon class="w-6 h-6 text-gray-400" />
           </div>
-          <input placeholder="Username" name="username" required type="text" class="px-6 pl-14" minlength="6">
+          <input v-model.trim="username" placeholder="Username" name="username" required type="text" class="px-6 pl-14" minlength="6">
         </div>
         <div class="relative">
           <div class="absolute inset-y-0 left-4 top-4 inline-flex">
             <LockClosedIcon class="w-6 h-6 text-gray-400" />
           </div>
-          <input placeholder="Password" name="password" minlength="6" required class="px-6 pl-14" type="password">
+          <input v-model="password" placeholder="Password" name="password" minlength="6" required class="px-6 pl-14" type="password">
         </div>
         <div class="relative space-x-2">
           <label>
-            <input required type="checkbox">
+            <input type="checkbox">
             <span class="ml-2 text-gray-600">Remember me</span>
           </label>
         </div>
       </div>
       <div>
-        <button type="submit" class="text-center w-full bg-emerald-500 shadow-md shadow-emerald-500/40 text-white rounded-lg uppercase py-4">
+        <button type="submit" :disabled="isLoading" :class="{ 'shadow-none': isLoading, 'bg-gray-400': isLoading }" class="transition-all text-center w-full bg-emerald-500 shadow-md shadow-emerald-500/40 text-white rounded-lg uppercase py-4">
           Login
         </button>
         <p class="text-center mt-4 text-gray-400 px-4 text-xs">
