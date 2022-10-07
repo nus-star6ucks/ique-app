@@ -9,6 +9,14 @@ export default {
   },
   setup() {
     const store = useUserStore()
+    useHead({
+      meta: [
+        {
+          name: 'theme-color',
+          content: '#faf9fa',
+        },
+      ],
+    })
 
     return {
       store,
