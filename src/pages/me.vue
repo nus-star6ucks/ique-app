@@ -8,7 +8,7 @@ export default {
     ArrowLeftOnRectangleIcon, Welcome, HeartIcon,
   },
   setup() {
-    const store = useUserStore()
+    const userStore = useUserStore()
     useHead({
       meta: [
         {
@@ -19,14 +19,14 @@ export default {
     })
 
     return {
-      store,
+      userStore,
     }
   },
 }
 </script>
 
 <template>
-  <Welcome v-if="!store.token" />
+  <Welcome v-if="!userStore.token" />
   <div v-else>
     <div class="text-white bg-emerald-500 -m-8 p-8">
       <div class="flex items-center justify-between">

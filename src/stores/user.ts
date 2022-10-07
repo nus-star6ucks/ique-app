@@ -18,7 +18,10 @@ export const useUserStore = defineStore('user', () => {
     token.value = _token
   }
 
-  const logout = () => setToken('')
+  const logout = () => {
+    localStorage.removeItem('token')
+    setToken('')
+  }
 
   function setUser(_user: LoginUser) {
     user.value = _user
