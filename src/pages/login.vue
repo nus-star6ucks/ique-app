@@ -31,6 +31,7 @@ export default defineComponent({
         this.userStore.login(data.token)
       }
       catch (e) {
+        // eslint-disable-next-line no-console
         console.log(e)
       }
       finally {
@@ -79,7 +80,7 @@ export default defineComponent({
         </div>
       </div>
       <div>
-        <button type="submit" :disabled="isLoading" :class="{ 'shadow-none': isLoading, 'bg-gray-400': isLoading }" class="transition-all text-center w-full bg-emerald-500 shadow-md shadow-emerald-500/40 text-white rounded-lg uppercase py-4">
+        <button type="submit" :disabled="loading" :class="{ 'shadow-none': loading, 'bg-gray-400': loading }" class="transition-all text-center w-full bg-emerald-500 shadow-md shadow-emerald-500/40 text-white rounded-lg uppercase py-4">
           Login
         </button>
         <p class="text-center mt-4 text-gray-400 px-4 text-xs">

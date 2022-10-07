@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// https://github.com/vueuse/head
-// you can use this to manipulate the document head in any components,
-// they will be rendered correctly in the html results with vite-ssg
+import { useUserStore } from './stores/user'
+import { userApi } from './utils'
+
 const router = useRouter()
 useHead({
   title: 'iQue',
@@ -20,6 +20,15 @@ useHead({
       href: computed(() => '/favicon.ico'),
     },
   ],
+})
+const userStore = useUserStore()
+
+onMounted(() => {
+  userApi.usersVerifyGet().then(({ data }) => {
+    userStore.setUser(data)
+  }).catch(() => {
+    router.replace('/')
+  })
 })
 </script>
 

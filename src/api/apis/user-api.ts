@@ -29,6 +29,8 @@ import { InlineResponse200 } from '../models';
 // @ts-ignore
 import { InlineResponse2001 } from '../models';
 // @ts-ignore
+import { InlineResponse2005 } from '../models';
+// @ts-ignore
 import { InlineResponse201 } from '../models';
 // @ts-ignore
 import { InlineResponse401 } from '../models';
@@ -214,6 +216,41 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Headers 里带上 token，返回 User 详细信息，如 token 失效返回 401。
+         * @summary Verify User Token
+         * @param {string} [authorization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersVerifyGet: async (authorization?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/users/verify`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (authorization !== undefined && authorization !== null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -292,6 +329,20 @@ export const UserApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * Headers 里带上 token，返回 User 详细信息，如 token 失效返回 401。
+         * @summary Verify User Token
+         * @param {string} [authorization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersVerifyGet(authorization?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2005>> {
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).usersVerifyGet(authorization, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -350,65 +401,18 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         usersPut(inlineObject?: InlineObject, options?: any): AxiosPromise<InlineResponse200> {
             return UserApiFp(configuration).usersPut(inlineObject, options).then((request) => request(axios, basePath));
         },
+        /**
+         * Headers 里带上 token，返回 User 详细信息，如 token 失效返回 401。
+         * @summary Verify User Token
+         * @param {string} [authorization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersVerifyGet(authorization?: string, options?: any): AxiosPromise<InlineResponse2005> {
+            return UserApiFp(configuration).usersVerifyGet(authorization, options).then((request) => request(axios, basePath));
+        },
     };
 };
-
-/**
- * UserApi - interface
- * @export
- * @interface UserApi
- */
-export interface UserApiInterface {
-    /**
-     * 
-     * @summary Delete User
-     * @param {number} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApiInterface
-     */
-    usersDelete(id: number, options?: any): AxiosPromise<object>;
-
-    /**
-     * 
-     * @summary Login
-     * @param {InlineObject2} [inlineObject2] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApiInterface
-     */
-    usersLoginPost(inlineObject2?: InlineObject2, options?: any): AxiosPromise<InlineResponse2001>;
-
-    /**
-     * 
-     * @summary Logout
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApiInterface
-     */
-    usersLogoutPost(options?: any): AxiosPromise<object>;
-
-    /**
-     * user signup
-     * @summary Signup
-     * @param {InlineObject1} [inlineObject1] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApiInterface
-     */
-    usersPost(inlineObject1?: InlineObject1, options?: any): AxiosPromise<InlineResponse201>;
-
-    /**
-     * 
-     * @summary Update User Info
-     * @param {InlineObject} [inlineObject] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserApiInterface
-     */
-    usersPut(inlineObject?: InlineObject, options?: any): AxiosPromise<InlineResponse200>;
-
-}
 
 /**
  * UserApi - object-oriented interface
@@ -416,7 +420,7 @@ export interface UserApiInterface {
  * @class UserApi
  * @extends {BaseAPI}
  */
-export class UserApi extends BaseAPI implements UserApiInterface {
+export class UserApi extends BaseAPI {
     /**
      * 
      * @summary Delete User
@@ -474,6 +478,18 @@ export class UserApi extends BaseAPI implements UserApiInterface {
      */
     public usersPut(inlineObject?: InlineObject, options?: any) {
         return UserApiFp(this.configuration).usersPut(inlineObject, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Headers 里带上 token，返回 User 详细信息，如 token 失效返回 401。
+     * @summary Verify User Token
+     * @param {string} [authorization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public usersVerifyGet(authorization?: string, options?: any) {
+        return UserApiFp(this.configuration).usersVerifyGet(authorization, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

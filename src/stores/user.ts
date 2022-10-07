@@ -1,12 +1,17 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import type { User } from '~/api/models'
+
+export interface LoginUser {
+  id: number
+  username: string
+  createTime: number
+}
 
 export const useUserStore = defineStore('user', () => {
   /**
    * Current name of the user.
    */
   const token = ref('')
-  const user = ref<User>()
+  const user = ref<LoginUser>()
 
   function setToken(_token: string) {
     token.value = _token
@@ -14,7 +19,7 @@ export const useUserStore = defineStore('user', () => {
 
   const logout = () => setToken('')
 
-  function setUser(_user: User) {
+  function setUser(_user: LoginUser) {
     user.value = _user
   }
 

@@ -20,7 +20,7 @@ const props = defineProps<{
     </div>
     <div class="col-span-2">
       <div class="pl-6 space-y-2 min-h-32 relative">
-        <h3 class="font-semibold text-lg" v-text="props.store.name" />
+        <h3 class="font-semibold text-lg" />
         <Stars :count="4" />
         <div class="absolute bottom-0 w-full pr-6 flex items-center justify-between items-center text-gray-500">
           <span class="flex items-center space-x-1">
