@@ -96,6 +96,5 @@ export default {
 meta:
   layout: home
   classNames: me with-tabbar
-  themeColor: '#10b981'
 </route>
 
