@@ -14,6 +14,7 @@ export const useUserStore = defineStore('user', () => {
   const user = ref<LoginUser>()
 
   function setToken(_token: string) {
+    localStorage.setItem('token', _token)
     token.value = _token
   }
 
