@@ -20,6 +20,7 @@ export const useUserStore = defineStore('user', () => {
 
   const logout = () => {
     localStorage.removeItem('token')
+    user.value = undefined
     setToken('')
   }
 
@@ -32,6 +33,7 @@ export const useUserStore = defineStore('user', () => {
     logout,
     setUser,
     user,
+    token,
   }
 })
 

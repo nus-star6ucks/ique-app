@@ -3,6 +3,7 @@ import { ArrowLeftIcon } from '@heroicons/vue/24/outline/index.js'
 import { useRouteParams } from '@vueuse/router'
 import { queueApi, storeApi } from '~/utils'
 import Loading from '~/components/Loading.vue'
+import WithAuth from '~/components/WithAuth.vue'
 
 const ticketId = useRouteParams('id')
 const { state: ticketsData } = useAsyncState(queueApi.ticketsGet(undefined, undefined, +ticketId).then(data => data.data), [])
@@ -10,7 +11,7 @@ const { state: storeData, isReady: isStoreDataReady } = useAsyncState(storeApi.s
 </script>
 
 <template>
-  <div>
+  <WithAuth>
     <header class="flex items-center justify-between text-gray-800 mb-12">
       <button class="bg-white p-2 rounded-lg">
         <ArrowLeftIcon class="w-5 h-5 relative" />
@@ -31,7 +32,7 @@ const { state: storeData, isReady: isStoreDataReady } = useAsyncState(storeApi.s
           </p>
         </div>
       </div>
-      <Loading v-else />
+      <Loading :loading="isStoreDataReady" />
       <div class="bg-white rounded-lg shadow-gray-100 shadow-lg px-4 py-8">
         <div class="border-b border-dashed border-gray-200 pb-8 relative">
           <h3 class="text-center text-gray-400 mb-2 text-xl">
@@ -67,7 +68,7 @@ const { state: storeData, isReady: isStoreDataReady } = useAsyncState(storeApi.s
         </li>
       </ul>
     </section>
-  </div>
+  </WithAuth>
 </template>
 
 <route lang="yaml">

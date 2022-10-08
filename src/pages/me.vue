@@ -34,9 +34,7 @@ export default {
           <p class="text-2xl font-semibold mb-2">
             :-)
           </p>
-          <h1 class="text-3xl font-semibold">
-            Dragon Lee
-          </h1>
+          <h1 class="text-3xl font-semibold uppercase" v-text="userStore.user?.username" />
         </div>
         <a>
           <div class="w-14 h-14 rounded-md bg-contain" style="background-image: url('https://avatars.githubusercontent.com/u/3370745?v=4')" />

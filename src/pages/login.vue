@@ -2,10 +2,14 @@
 import { ArrowLeftIcon, LockClosedIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
 import { useUserStore } from '~/stores/user'
 import { userApi } from '~/utils'
+import WithoutAuth from '~/components/WithoutAuth.vue'
 
 export default defineComponent({
   components: {
-    ArrowLeftIcon, LockClosedIcon, UserIcon,
+    ArrowLeftIcon,
+    LockClosedIcon,
+    UserIcon,
+    WithoutAuth,
   },
   setup() {
     const userStore = useUserStore()
@@ -43,7 +47,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div>
+  <WithoutAuth>
     <header class="flex items-center justify-between">
       <RouterLink v-slot="{ navigate }" to="/me" custom>
         <button class="bg-white p-2 rounded-lg" @click="navigate">
@@ -54,7 +58,6 @@ export default defineComponent({
         Signup
       </RouterLink>
     </header>
-
     <form class="form-auth mt-24 space-y-16" @submit.prevent="onSubmit">
       <h2 class="font-semibold text-3xl pt-8">
         Welcome Back
@@ -88,7 +91,7 @@ export default defineComponent({
         </p>
       </div>
     </form>
-  </div>
+  </WithoutAuth>
 </template>
 
 <route lang="yaml">
