@@ -28,7 +28,7 @@ router.beforeEach((to, from, next) => {
   const userStore = useUserStore(pinia)
   const token = useLocalStorage('token', '')
 
-  if (typeof userStore.user === 'undefined' && token) {
+  if (typeof userStore.user === 'undefined' && token.value) {
     userApi.usersVerifyGet().then(({ data }) => {
       userStore.setUser(data)
       next()

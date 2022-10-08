@@ -3,7 +3,7 @@ const token = useLocalStorage('token', '')
 const router = useRouter()
 
 onMounted(() => {
-  if (token)
+  if (token.value)
     router.replace('/')
 })
 </script>

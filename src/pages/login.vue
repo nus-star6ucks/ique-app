@@ -35,7 +35,7 @@ export default defineComponent({
           password: this.password,
         })
         this.userStore.login(data.token)
-        this.snackStore.show({ message: `Welcome back, ${this.username}` })
+        this.snackStore.show({ message: `Welcome back, ${this.username}`, mode: 'success' })
         window.setTimeout(() => {
           window.location.reload()
         }, 1500)
