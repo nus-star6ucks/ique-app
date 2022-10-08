@@ -8,14 +8,19 @@ import WithAuth from '~/components/WithAuth.vue'
 const ticketId = useRouteParams('id')
 const { state: ticketsData } = useAsyncState(queueApi.ticketsGet(undefined, undefined, +ticketId).then(data => data.data), [])
 const { state: storeData, isReady: isStoreDataReady } = useAsyncState(storeApi.storesGet(undefined, ticketsData.value?.[0]?.storeId).then(data => data.data), [])
+const ticket = computed(() => ticketsData.value[0])
+const store = computed(() => storeData.value[0])
+// const { state: queueData } = useAsyncState(queueApi.queuesGet(ticket.value.ticketId), undefined)
 </script>
 
 <template>
   <WithAuth>
     <header class="flex items-center justify-between text-gray-800 mb-12">
-      <button class="bg-white p-2 rounded-lg">
-        <ArrowLeftIcon class="w-5 h-5 relative" />
-      </button>
+      <RouterLink v-slot="{ navigate }" to="/tickets" custom>
+        <button class="bg-white p-2 rounded-lg" @click="navigate">
+          <ArrowLeftIcon class="w-5 h-5 text-gray-800" />
+        </button>
+      </RouterLink>
       <h2>You are Queueing</h2>
       <div class="w-9 h-9" />
     </header>
@@ -23,7 +28,7 @@ const { state: storeData, isReady: isStoreDataReady } = useAsyncState(storeApi.s
       <div v-if="isStoreDataReady">
         <div class="overflow-hidden rounded-lg bg-center bg-cover h-36" style="background-image: url(https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80);" />
         <div class="bg-white overflow-hidden rounded-lg p-4 mx-4 -mt-12 shadow-gray-100 shadow-lg">
-          <h2 class="text-lg font-bold" v-text="storeData[0].name" />
+          <h2 class="text-lg font-bold" v-text="store.name" />
           <h3 class="text-lg font-bold">
             Point 29-30
           </h3>
@@ -32,24 +37,33 @@ const { state: storeData, isReady: isStoreDataReady } = useAsyncState(storeApi.s
           </p>
         </div>
       </div>
-      <Loading :loading="isStoreDataReady" />
+      <Loading :loading="!isStoreDataReady" />
       <div class="bg-white rounded-lg shadow-gray-100 shadow-lg px-4 py-8">
         <div class="border-b border-dashed border-gray-200 pb-8 relative">
           <h3 class="text-center text-gray-400 mb-2 text-xl">
             Your Queue Number
           </h3>
-          <p class="text-center text-5xl font-bold text-emerald-500">
-            AG123
-          </p>
+          <Loading :loading="!ticket" />
+          <p v-if="ticket" class="text-center text-5xl font-bold text-emerald-500" v-text="ticket.ticketId" />
         </div>
-        <div class="grid grid-cols-2">
+        <div v-if="ticket" class="grid grid-cols-3">
           <div class="px-4 py-8">
             <h4 class="text-gray-400 mb-2 text-base">
               Type
             </h4>
-            <p class="text-gray-800 text-xl font-semibold">
-              123
-            </p>
+            <p class="text-gray-800 text-xl font-semibold" v-text="ticket.seatType.name" />
+          </div>
+          <div class="px-4 py-8">
+            <h4 class="text-gray-400 mb-2 text-base">
+              Ahead
+            </h4>
+            <p class="text-gray-800 text-xl font-semibold" v-text="ticket.seatType.name" />
+          </div>
+          <div class="px-4 py-8">
+            <h4 class="text-gray-400 mb-2 text-base">
+              Type
+            </h4>
+            <p class="text-gray-800 text-xl font-semibold" v-text="ticket.seatType.name" />
           </div>
         </div>
       </div>

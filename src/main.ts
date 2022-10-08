@@ -9,6 +9,8 @@ import App from './App.vue'
 
 import 'virtual:windi.css'
 import './styles/main.css'
+import { useUserStore } from './stores/user'
+import { userApi } from './utils'
 
 const pinia = createPinia()
 
@@ -21,6 +23,25 @@ const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
 })
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore(pinia)
+  const token = useLocalStorage('token', '')
+
+  if (typeof userStore.user === 'undefined' && token) {
+    userApi.usersVerifyGet().then(({ data }) => {
+      userStore.setUser(data)
+      next()
+    }).catch(() => {
+      userStore.logout()
+      next('/')
+    })
+    return
+  }
+
+  next()
+})
+
 app.use(pinia)
 app.use(router)
 app.use(head)

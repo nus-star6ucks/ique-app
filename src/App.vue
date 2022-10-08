@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useUserStore } from './stores/user'
-import { userApi } from './utils'
 import Snackbar from './components/Snackbar.vue'
 
 const router = useRouter()
@@ -21,18 +19,6 @@ useHead({
       href: computed(() => '/favicon.ico'),
     },
   ],
-})
-const userStore = useUserStore()
-const token = useLocalStorage('token', '')
-onMounted(() => {
-  if (token.value) {
-    userApi.usersVerifyGet().then(({ data }) => {
-      userStore.setUser(data)
-    }).catch(() => {
-      userStore.logout()
-      router.replace('/')
-    })
-  }
 })
 </script>
 
