@@ -26,7 +26,7 @@ export default {
 </script>
 
 <template>
-  <Welcome v-if="!userStore.token" />
+  <Welcome v-if="!userStore.user" />
   <div v-else>
     <div class="text-white bg-emerald-500 -m-8 p-8">
       <div class="flex items-center justify-between">
@@ -81,7 +81,7 @@ export default {
           <span class="icon"><HeartIcon class="w-6 h-6" /></span>
           <span class="text">Rate Us</span>
         </li>
-        <li>
+        <li @click="userStore.logout">
           <span class="icon"><ArrowLeftOnRectangleIcon class="w-6 h-6" /></span>
           <span class="text">Logout</span>
         </li>

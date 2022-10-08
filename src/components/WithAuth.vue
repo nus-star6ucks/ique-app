@@ -5,8 +5,8 @@ const userStore = useUserStore()
 const router = useRouter()
 
 onMounted(() => {
-  const { user, token } = userStore
-  if (token && user)
+  const { user } = userStore
+  if (user)
     return
 
   router.replace('/me')

@@ -3,6 +3,7 @@ import { ArrowLeftIcon, LockClosedIcon, UserIcon } from '@heroicons/vue/24/outli
 import { useUserStore } from '~/stores/user'
 import { userApi } from '~/utils'
 import WithoutAuth from '~/components/WithoutAuth.vue'
+import { useSnackStore } from '~/stores/snack'
 
 export default defineComponent({
   components: {
@@ -13,7 +14,8 @@ export default defineComponent({
   },
   setup() {
     const userStore = useUserStore()
-    return { userStore }
+    const snackStore = useSnackStore()
+    return { userStore, snackStore }
   },
   data() {
     return {
@@ -33,6 +35,10 @@ export default defineComponent({
           password: this.password,
         })
         this.userStore.login(data.token)
+        this.snackStore.show({ message: `Welcome back, ${this.username}` })
+        window.setTimeout(() => {
+          window.location.reload()
+        }, 1500)
       }
       catch (e) {
         // eslint-disable-next-line no-console

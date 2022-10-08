@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { useUserStore } from '~/stores/user'
-
-const userStore = useUserStore()
+const token = useLocalStorage('token', '')
 const router = useRouter()
 
 onMounted(() => {
-  const { user, token } = userStore
-  if (token && user)
+  if (token)
     router.replace('/')
 })
 </script>

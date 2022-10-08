@@ -10,12 +10,10 @@ export const useUserStore = defineStore('user', () => {
   /**
    * Current name of the user.
    */
-  const token = ref('')
   const user = ref<LoginUser>()
 
   function setToken(_token: string) {
     localStorage.setItem('token', _token)
-    token.value = _token
   }
 
   const logout = () => {
@@ -33,7 +31,6 @@ export const useUserStore = defineStore('user', () => {
     logout,
     setUser,
     user,
-    token,
   }
 })
 
