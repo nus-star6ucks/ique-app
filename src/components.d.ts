@@ -7,17 +7,19 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    copy: typeof import('./components/WithAuth copy.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
-    HomeStoreCard: typeof import('./components/HomeStoreCard.vue')['default']
-    HomeStoreCardHorizontal: typeof import('./components/HomeStoreCardHorizontal.vue')['default']
     Loading: typeof import('./components/Loading.vue')['default']
+    Notification: typeof import('./components/Notification.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Snackbar: typeof import('./components/Snackbar.vue')['default']
     Stars: typeof import('./components/Stars.vue')['default']
     StoreCard: typeof import('./components/StoreCard.vue')['default']
-    StoreCardHorizontal: typeof import('./components/StoreCardHorizontal.vue')['default']
     Tabbar: typeof import('./components/Tabbar.vue')['default']
     TicketCard: typeof import('./components/TicketCard.vue')['default']
     Welcome: typeof import('./components/Welcome.vue')['default']
+    WithAuth: typeof import('./components/WithAuth.vue')['default']
+    WithoutAuth: typeof import('./components/WithoutAuth.vue')['default']
   }
 }

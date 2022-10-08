@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useUserStore } from './stores/user'
 import { userApi } from './utils'
+import Snackbar from './components/Snackbar.vue'
 
 const router = useRouter()
 useHead({
@@ -22,16 +23,20 @@ useHead({
   ],
 })
 const userStore = useUserStore()
-
+const token = useLocalStorage('token', '')
 onMounted(() => {
-  userApi.usersVerifyGet().then(({ data }) => {
-    userStore.setUser(data)
-  }).catch(() => {
-    router.replace('/')
-  })
+  if (token.value) {
+    userApi.usersVerifyGet().then(({ data }) => {
+      userStore.setUser(data)
+    }).catch(() => {
+      userStore.logout()
+      router.replace('/')
+    })
+  }
 })
 </script>
 
 <template>
   <RouterView />
+  <Snackbar />
 </template>

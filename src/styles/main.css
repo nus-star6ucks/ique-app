@@ -98,3 +98,22 @@ main.with-tabbar {
 .me .menu li .text {
   @apply font-medium;
 }
+
+.is-success {
+  @apply text-emerald-700 bg-green-100;
+}
+
+.is-error {
+  @apply text-red-700 bg-red-100;
+}
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(-50%) translateY(-10px);
+  opacity: 0;
+}
