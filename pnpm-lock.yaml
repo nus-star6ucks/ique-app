@@ -15,6 +15,7 @@ specifiers:
   critters: ^0.0.16
   cross-env: ^7.0.3
   cypress: ^10.9.0
+  dayjs: ^1.11.5
   eslint: ^8.24.0
   eslint-plugin-cypress: ^2.12.1
   https-localhost: ^4.7.1
@@ -51,6 +52,7 @@ dependencies:
   '@vueuse/head': 0.8.0_vue@3.2.40
   '@vueuse/router': 9.3.0_c7eza3xvlyb4mo6qeit5ggeo6u
   axios: 0.27.2
+  dayjs: 1.11.5
   install: 0.13.0
   notiwind: 1.2.6_vue@3.2.40
   npm: 8.19.2
@@ -2982,7 +2984,6 @@ packages:
 
   /dayjs/1.11.5:
     resolution: {integrity: sha512-CAdX5Q3YW3Gclyo5Vpqkgpj8fSdLQcRuzfX6mC6Phy0nfJ0eGYOeS7m4mt2plDWLAtA4TqTakvbboHvUxfe4iA==}
-    dev: true
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}

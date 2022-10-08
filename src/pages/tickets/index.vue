@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline/index.js'
 import { useUserStore } from '~/stores/user'
-import { queueApi, storeApi } from '~/utils'
+import { humanEstimateTime, queueApi, storeApi } from '~/utils'
 import Loading from '~/components/Loading.vue'
 import WithAuth from '~/components/WithAuth.vue'
 
@@ -12,9 +12,12 @@ const { state: tickets, isLoading } = useAsyncState(async () => {
   const { data: tickets } = await queueApi.ticketsGet(user?.id)
   return Promise.all(tickets.map(async (ticket) => {
     const { data: storeData } = await storeApi.storesIdGet(ticket.storeId)
+    const { data: queueData } = await queueApi.queuesGet(ticket.ticketId)
+
     return {
       ...ticket,
       store: storeData,
+      queue: queueData,
     }
   }))
 }, [])
@@ -39,9 +42,7 @@ const { state: tickets, isLoading } = useAsyncState(async () => {
         :to="`/tickets/${ticket.ticketId}`"
       >
         <div class="col-span-2 relative rounded-xl overflow-hidden p-2">
-          <div class="glassmorphism bg-white text-gray-700 text-center absolute bottom-2 z-10 text-xs rounded-md p-2">
-            Avg. 5min
-          </div>
+          <div class="glassmorphism bg-white text-gray-700 text-center absolute bottom-2 z-10 text-xs rounded-md p-2" v-text="humanEstimateTime(ticket.queue.estimateWaitingTime)" />
           <img
             :src="ticket.store.resources.imageUrl"
             class="absolute inset-0 h-full w-full object-cover z-0"
@@ -50,10 +51,8 @@ const { state: tickets, isLoading } = useAsyncState(async () => {
 
         <div class="col-span-3">
           <div class="my-4 p-6 bg-white rounded-xl">
-            <h3>2 Groups Left</h3>
-            <p class="mt-2 text-sm text-gray-400">
-              AC123 - Queen Table (3-4 pax)
-            </p>
+            <h3 v-text="`${ticket.queue.waitingSize} Groups Ahead`" />
+            <p class="mt-2 text-sm text-gray-400" v-text="`${ticket.ticketId} - ${ticket.seatType.name}`" />
             <p class="mt-2 text-sm text-gray-500" v-text="ticket.store.name" />
           </div>
         </div>
