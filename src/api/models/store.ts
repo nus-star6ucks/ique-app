@@ -47,6 +47,12 @@ export interface Store {
     type: StoreTypeEnum;
     /**
      * 
+     * @type {string}
+     * @memberof Store
+     */
+    address: string;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof Store
      */

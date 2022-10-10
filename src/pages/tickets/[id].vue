@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline/index.js'
 import { useRouteParams } from '@vueuse/router'
 import { humanEstimateTime, queueApi, storeApi } from '~/utils'
