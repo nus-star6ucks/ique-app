@@ -50,7 +50,7 @@ const queue = computed(() => data.value?.queue)
           <h3 class="text-center text-gray-400 mb-2 text-xl">
             Your Queue Number
           </h3>
-          <p class="text-center text-5xl font-bold text-emerald-500" v-text="ticket.ticketId" />
+          <p class="text-center text-5xl font-bold text-emerald-500" v-text="ticket.id" />
         </div>
         <div class="grid grid-cols-3">
           <div class="px-4 py-8">
