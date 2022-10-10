@@ -2,7 +2,6 @@
 import { ArrowLeftOnRectangleIcon, HeartIcon } from '@heroicons/vue/24/outline/index.js'
 import Welcome from '../components/Welcome.vue'
 import { useUserStore } from '../stores/user'
-
 export default {
   components: {
     ArrowLeftOnRectangleIcon, Welcome, HeartIcon,
@@ -22,6 +21,13 @@ export default {
       userStore,
     }
   },
+  methods: {
+    confirmLogout() {
+      // eslint-disable-next-line no-alert
+      if (window.confirm('Are you sure?'))
+        this.userStore.logout()
+    },
+  },
 }
 </script>
 
@@ -36,9 +42,7 @@ export default {
           </p>
           <h1 class="text-3xl font-semibold uppercase" v-text="userStore.user?.username" />
         </div>
-        <a>
-          <div class="w-14 h-14 rounded-md bg-contain" style="background-image: url('https://avatars.githubusercontent.com/u/3370745?v=4')" />
-        </a>
+        <div class="rounded-md bg-contain w-14 h-14" :style="`background-image: url('https://i.pravatar.cc/150?u=${userStore.user.username}')`" />
       </div>
       <div class="flex space-x-8 mt-8">
         <div>
@@ -81,7 +85,7 @@ export default {
           <span class="icon"><HeartIcon class="w-6 h-6" /></span>
           <span class="text">Rate Us</span>
         </li>
-        <li @click="userStore.logout">
+        <li @click="confirmLogout">
           <span class="icon"><ArrowLeftOnRectangleIcon class="w-6 h-6" /></span>
           <span class="text">Logout</span>
         </li>
