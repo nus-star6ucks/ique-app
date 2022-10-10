@@ -19,8 +19,6 @@ import { Configuration } from '../configuration';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { InlineObject5 } from '../models';
-// @ts-ignore
 import { InlineResponse2004 } from '../models';
 // @ts-ignore
 import { InlineResponse2012 } from '../models';
@@ -187,11 +185,15 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Create Queue Ticket
-         * @param {InlineObject5} [inlineObject5] 
+         * @param {number} queueId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ticketsPost: async (inlineObject5?: InlineObject5, options: any = {}): Promise<RequestArgs> => {
+        ticketsPost: async (queueId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'queueId' is not null or undefined
+            if (queueId === null || queueId === undefined) {
+                throw new RequiredError('queueId','Required parameter queueId was null or undefined when calling ticketsPost.');
+            }
             const localVarPath = `/tickets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -202,17 +204,17 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            if (queueId !== undefined) {
+                localVarQueryParameter['queueId'] = queueId;
+            }
+
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof inlineObject5 !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(inlineObject5 !== undefined ? inlineObject5 : {}) : (inlineObject5 || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -289,12 +291,12 @@ export const QueueApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Create Queue Ticket
-         * @param {InlineObject5} [inlineObject5] 
+         * @param {number} queueId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async ticketsPost(inlineObject5?: InlineObject5, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2012>> {
-            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).ticketsPost(inlineObject5, options);
+        async ticketsPost(queueId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2012>> {
+            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).ticketsPost(queueId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -354,12 +356,12 @@ export const QueueApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Create Queue Ticket
-         * @param {InlineObject5} [inlineObject5] 
+         * @param {number} queueId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ticketsPost(inlineObject5?: InlineObject5, options?: any): AxiosPromise<InlineResponse2012> {
-            return QueueApiFp(configuration).ticketsPost(inlineObject5, options).then((request) => request(axios, basePath));
+        ticketsPost(queueId: number, options?: any): AxiosPromise<InlineResponse2012> {
+            return QueueApiFp(configuration).ticketsPost(queueId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -424,13 +426,13 @@ export class QueueApi extends BaseAPI {
     /**
      * 
      * @summary Create Queue Ticket
-     * @param {InlineObject5} [inlineObject5] 
+     * @param {number} queueId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QueueApi
      */
-    public ticketsPost(inlineObject5?: InlineObject5, options?: any) {
-        return QueueApiFp(this.configuration).ticketsPost(inlineObject5, options).then((request) => request(this.axios, this.basePath));
+    public ticketsPost(queueId: number, options?: any) {
+        return QueueApiFp(this.configuration).ticketsPost(queueId, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

@@ -3,7 +3,6 @@ export * from './inline-object1';
 export * from './inline-object2';
 export * from './inline-object3';
 export * from './inline-object4';
-export * from './inline-object5';
 export * from './inline-response200';
 export * from './inline-response2001';
 export * from './inline-response2002';
