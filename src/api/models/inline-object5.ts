@@ -12,7 +12,6 @@
  */
 
 
-import { SeatType } from './seat-type';
 
 /**
  * 
@@ -25,66 +24,7 @@ export interface InlineObject5 {
      * @type {number}
      * @memberof InlineObject5
      */
-    id: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineObject5
-     */
-    storeId: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineObject5
-     */
-    customerId: number;
-    /**
-     * 
-     * @type {SeatType}
-     * @memberof InlineObject5
-     */
-    seatType: SeatType;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineObject5
-     */
-    queueNumber?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineObject5
-     */
     queueId: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineObject5
-     */
-    startTime: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineObject5
-     */
-    endTime: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineObject5
-     */
-    status: InlineObject5StatusEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InlineObject5StatusEnum {
-    Pending = 'pending',
-    Seated = 'seated',
-    Skipped = 'skipped'
-}
-
 
 
