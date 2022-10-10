@@ -12,6 +12,8 @@
  */
 
 
+import { InlineResponse2003Resources } from './inline-response2003-resources';
+import { InlineResponse2005QueuesInfo } from './inline-response2005-queues-info';
 
 /**
  * 
@@ -27,45 +29,69 @@ export interface InlineResponse2005 {
     id: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof InlineResponse2005
      */
-    username: string;
+    merchantId: number;
     /**
      * 
      * @type {string}
      * @memberof InlineResponse2005
      */
-    userType: InlineResponse2005UserTypeEnum;
+    name: string;
+    /**
+     * StoreType
+     * @type {string}
+     * @memberof InlineResponse2005
+     */
+    type: InlineResponse2005TypeEnum;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof InlineResponse2005
+     */
+    phoneNumbers: Array<string>;
+    /**
+     * Store Status
      * @type {string}
      * @memberof InlineResponse2005
      */
     status: InlineResponse2005StatusEnum;
     /**
-     * timestamp
+     * 
      * @type {number}
      * @memberof InlineResponse2005
      */
-    createTime: number;
+    registerTime: number;
+    /**
+     * 
+     * @type {InlineResponse2003Resources}
+     * @memberof InlineResponse2005
+     */
+    resources: InlineResponse2003Resources;
+    /**
+     * 
+     * @type {Array<InlineResponse2005QueuesInfo>}
+     * @memberof InlineResponse2005
+     */
+    queuesInfo: Array<InlineResponse2005QueuesInfo>;
 }
 
 /**
     * @export
     * @enum {string}
     */
-export enum InlineResponse2005UserTypeEnum {
-    Customer = 'customer',
-    Merchant = 'merchant'
+export enum InlineResponse2005TypeEnum {
+    Restaurant = 'Restaurant',
+    Cafe = 'Cafe'
 }
 /**
     * @export
     * @enum {string}
     */
 export enum InlineResponse2005StatusEnum {
-    Active = 'active',
-    Cancelled = 'cancelled'
+    OnService = 'onService',
+    StopService = 'stopService'
 }
 
 

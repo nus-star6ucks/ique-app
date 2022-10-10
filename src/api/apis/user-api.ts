@@ -29,7 +29,7 @@ import { InlineResponse200 } from '../models';
 // @ts-ignore
 import { InlineResponse2001 } from '../models';
 // @ts-ignore
-import { InlineResponse2005 } from '../models';
+import { InlineResponse2002 } from '../models';
 // @ts-ignore
 import { InlineResponse201 } from '../models';
 // @ts-ignore
@@ -45,15 +45,11 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @summary Delete User
-         * @param {number} id 
+         * @param {number} [id] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersDelete: async (id: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling usersDelete.');
-            }
+        usersDelete: async (id?: number, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/users`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -67,6 +63,36 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
             if (id !== undefined) {
                 localVarQueryParameter['id'] = id;
             }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get User
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersGet: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/users`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
 
     
@@ -217,6 +243,36 @@ export const UserApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * 
+         * @summary Refresh Token
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersRefreshGet: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/users/refresh`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Headers 里带上 token，返回 User 详细信息，如 token 失效返回 401。
          * @summary Verify User Token
          * @param {string} [authorization] 
@@ -263,12 +319,25 @@ export const UserApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Delete User
-         * @param {number} id 
+         * @param {number} [id] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async usersDelete(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async usersDelete(id?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
             const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).usersDelete(id, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary Get User
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).usersGet(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -281,7 +350,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async usersLoginPost(inlineObject2?: InlineObject2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2001>> {
+        async usersLoginPost(inlineObject2?: InlineObject2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2002>> {
             const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).usersLoginPost(inlineObject2, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -322,8 +391,21 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async usersPut(inlineObject?: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+        async usersPut(inlineObject?: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2001>> {
             const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).usersPut(inlineObject, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary Refresh Token
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersRefreshGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).usersRefreshGet(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -336,7 +418,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async usersVerifyGet(authorization?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2005>> {
+        async usersVerifyGet(authorization?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
             const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).usersVerifyGet(authorization, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -355,12 +437,21 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
         /**
          * 
          * @summary Delete User
-         * @param {number} id 
+         * @param {number} [id] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersDelete(id: number, options?: any): AxiosPromise<object> {
+        usersDelete(id?: number, options?: any): AxiosPromise<object> {
             return UserApiFp(configuration).usersDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get User
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersGet(options?: any): AxiosPromise<InlineResponse200> {
+            return UserApiFp(configuration).usersGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -369,7 +460,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersLoginPost(inlineObject2?: InlineObject2, options?: any): AxiosPromise<InlineResponse2001> {
+        usersLoginPost(inlineObject2?: InlineObject2, options?: any): AxiosPromise<InlineResponse2002> {
             return UserApiFp(configuration).usersLoginPost(inlineObject2, options).then((request) => request(axios, basePath));
         },
         /**
@@ -398,8 +489,17 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersPut(inlineObject?: InlineObject, options?: any): AxiosPromise<InlineResponse200> {
+        usersPut(inlineObject?: InlineObject, options?: any): AxiosPromise<InlineResponse2001> {
             return UserApiFp(configuration).usersPut(inlineObject, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Refresh Token
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersRefreshGet(options?: any): AxiosPromise<object> {
+            return UserApiFp(configuration).usersRefreshGet(options).then((request) => request(axios, basePath));
         },
         /**
          * Headers 里带上 token，返回 User 详细信息，如 token 失效返回 401。
@@ -408,7 +508,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersVerifyGet(authorization?: string, options?: any): AxiosPromise<InlineResponse2005> {
+        usersVerifyGet(authorization?: string, options?: any): AxiosPromise<InlineResponse200> {
             return UserApiFp(configuration).usersVerifyGet(authorization, options).then((request) => request(axios, basePath));
         },
     };
@@ -424,13 +524,24 @@ export class UserApi extends BaseAPI {
     /**
      * 
      * @summary Delete User
-     * @param {number} id 
+     * @param {number} [id] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserApi
      */
-    public usersDelete(id: number, options?: any) {
+    public usersDelete(id?: number, options?: any) {
         return UserApiFp(this.configuration).usersDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get User
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public usersGet(options?: any) {
+        return UserApiFp(this.configuration).usersGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -478,6 +589,17 @@ export class UserApi extends BaseAPI {
      */
     public usersPut(inlineObject?: InlineObject, options?: any) {
         return UserApiFp(this.configuration).usersPut(inlineObject, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Refresh Token
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApi
+     */
+    public usersRefreshGet(options?: any) {
+        return UserApiFp(this.configuration).usersRefreshGet(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

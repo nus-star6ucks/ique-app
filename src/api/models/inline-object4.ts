@@ -12,7 +12,7 @@
  */
 
 
-import { InlineResponse2002Resources } from './inline-response2002-resources';
+import { InlineResponse2003Resources } from './inline-response2003-resources';
 import { SeatType } from './seat-type';
 
 /**
@@ -71,10 +71,10 @@ export interface InlineObject4 {
     seatTypes: Array<SeatType>;
     /**
      * 
-     * @type {InlineResponse2002Resources}
+     * @type {InlineResponse2003Resources}
      * @memberof InlineObject4
      */
-    resources: InlineResponse2002Resources;
+    resources: InlineResponse2003Resources;
 }
 
 /**

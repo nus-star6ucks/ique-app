@@ -21,7 +21,7 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { InlineObject5 } from '../models';
 // @ts-ignore
-import { InlineResponse2003 } from '../models';
+import { InlineResponse2004 } from '../models';
 // @ts-ignore
 import { InlineResponse2012 } from '../models';
 // @ts-ignore
@@ -214,7 +214,7 @@ export const QueueApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async queuesGet(ticketId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2003>> {
+        async queuesGet(ticketId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2004>> {
             const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesGet(ticketId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -277,7 +277,7 @@ export const QueueApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queuesGet(ticketId?: number, options?: any): AxiosPromise<InlineResponse2003> {
+        queuesGet(ticketId?: number, options?: any): AxiosPromise<InlineResponse2004> {
             return QueueApiFp(configuration).queuesGet(ticketId, options).then((request) => request(axios, basePath));
         },
         /**

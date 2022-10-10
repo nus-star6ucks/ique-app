@@ -16,19 +16,19 @@
 /**
  * 
  * @export
- * @interface InlineResponse2002Resources
+ * @interface InlineResponse2003Resources
  */
-export interface InlineResponse2002Resources {
+export interface InlineResponse2003Resources {
     /**
      * 
      * @type {string}
-     * @memberof InlineResponse2002Resources
+     * @memberof InlineResponse2003Resources
      */
     description: string;
     /**
      * 
      * @type {string}
-     * @memberof InlineResponse2002Resources
+     * @memberof InlineResponse2003Resources
      */
     imageUrl: string;
 }

@@ -12,8 +12,6 @@
  */
 
 
-import { InlineResponse2002Resources } from './inline-response2002-resources';
-import { SeatType } from './seat-type';
 
 /**
  * 
@@ -23,76 +21,16 @@ import { SeatType } from './seat-type';
 export interface InlineResponse2002 {
     /**
      * 
-     * @type {number}
-     * @memberof InlineResponse2002
-     */
-    id: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineResponse2002
-     */
-    merchantId: number;
-    /**
-     * 
      * @type {string}
      * @memberof InlineResponse2002
      */
-    name: string;
+    token: string;
     /**
-     * StoreType
+     * customer, merchant
      * @type {string}
      * @memberof InlineResponse2002
      */
-    type: InlineResponse2002TypeEnum;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof InlineResponse2002
-     */
-    phoneNumbers: Array<string>;
-    /**
-     * Store Status
-     * @type {string}
-     * @memberof InlineResponse2002
-     */
-    status?: InlineResponse2002StatusEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineResponse2002
-     */
-    registerTime?: number;
-    /**
-     * queue ids
-     * @type {Array<SeatType>}
-     * @memberof InlineResponse2002
-     */
-    seatTypes: Array<SeatType>;
-    /**
-     * 
-     * @type {InlineResponse2002Resources}
-     * @memberof InlineResponse2002
-     */
-    resources: InlineResponse2002Resources;
+    userType: string;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InlineResponse2002TypeEnum {
-    Restaurant = 'Restaurant',
-    Cafe = 'Cafe'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InlineResponse2002StatusEnum {
-    OnService = 'onService',
-    StopService = 'stopService'
-}
-
 
 

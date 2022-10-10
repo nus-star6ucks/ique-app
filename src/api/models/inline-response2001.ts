@@ -21,16 +21,64 @@
 export interface InlineResponse2001 {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof InlineResponse2001
      */
-    token: string;
+    id: number;
     /**
-     * customer, merchant
+     * 
      * @type {string}
      * @memberof InlineResponse2001
      */
-    userType: string;
+    username: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse2001
+     */
+    password: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse2001
+     */
+    userType: InlineResponse2001UserTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse2001
+     */
+    phoneNumber: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse2001
+     */
+    status: InlineResponse2001StatusEnum;
+    /**
+     * timestamp
+     * @type {number}
+     * @memberof InlineResponse2001
+     */
+    createTime?: number;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum InlineResponse2001UserTypeEnum {
+    Customer = 'customer',
+    Merchant = 'merchant'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum InlineResponse2001StatusEnum {
+    Active = 'active',
+    Cancelled = 'cancelled'
+}
+
 
 

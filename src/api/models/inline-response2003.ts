@@ -12,6 +12,8 @@
  */
 
 
+import { InlineResponse2003Resources } from './inline-response2003-resources';
+import { SeatType } from './seat-type';
 
 /**
  * 
@@ -24,13 +26,73 @@ export interface InlineResponse2003 {
      * @type {number}
      * @memberof InlineResponse2003
      */
-    waitingSize: number;
+    id: number;
     /**
      * 
      * @type {number}
      * @memberof InlineResponse2003
      */
-    estimateWaitingTime: number;
+    merchantId: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse2003
+     */
+    name: string;
+    /**
+     * StoreType
+     * @type {string}
+     * @memberof InlineResponse2003
+     */
+    type: InlineResponse2003TypeEnum;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof InlineResponse2003
+     */
+    phoneNumbers: Array<string>;
+    /**
+     * Store Status
+     * @type {string}
+     * @memberof InlineResponse2003
+     */
+    status?: InlineResponse2003StatusEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineResponse2003
+     */
+    registerTime?: number;
+    /**
+     * queue ids
+     * @type {Array<SeatType>}
+     * @memberof InlineResponse2003
+     */
+    seatTypes: Array<SeatType>;
+    /**
+     * 
+     * @type {InlineResponse2003Resources}
+     * @memberof InlineResponse2003
+     */
+    resources: InlineResponse2003Resources;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum InlineResponse2003TypeEnum {
+    Restaurant = 'Restaurant',
+    Cafe = 'Cafe'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum InlineResponse2003StatusEnum {
+    OnService = 'onService',
+    StopService = 'stopService'
+}
+
 
 

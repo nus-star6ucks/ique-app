@@ -16,25 +16,25 @@
 /**
  * 
  * @export
- * @interface InlineResponse2004QueuesInfo
+ * @interface InlineResponse2005QueuesInfo
  */
-export interface InlineResponse2004QueuesInfo {
+export interface InlineResponse2005QueuesInfo {
     /**
      * 
      * @type {number}
-     * @memberof InlineResponse2004QueuesInfo
+     * @memberof InlineResponse2005QueuesInfo
      */
     queueId: number;
     /**
      * 
      * @type {number}
-     * @memberof InlineResponse2004QueuesInfo
+     * @memberof InlineResponse2005QueuesInfo
      */
     size: number;
     /**
      * 
      * @type {string}
-     * @memberof InlineResponse2004QueuesInfo
+     * @memberof InlineResponse2005QueuesInfo
      */
     seatTypeName: string;
 }

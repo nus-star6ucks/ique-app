@@ -12,8 +12,6 @@
  */
 
 
-import { InlineResponse2002Resources } from './inline-response2002-resources';
-import { InlineResponse2004QueuesInfo } from './inline-response2004-queues-info';
 
 /**
  * 
@@ -26,73 +24,13 @@ export interface InlineResponse2004 {
      * @type {number}
      * @memberof InlineResponse2004
      */
-    id: number;
+    waitingSize: number;
     /**
      * 
      * @type {number}
      * @memberof InlineResponse2004
      */
-    merchantId: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse2004
-     */
-    name: string;
-    /**
-     * StoreType
-     * @type {string}
-     * @memberof InlineResponse2004
-     */
-    type: InlineResponse2004TypeEnum;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof InlineResponse2004
-     */
-    phoneNumbers: Array<string>;
-    /**
-     * Store Status
-     * @type {string}
-     * @memberof InlineResponse2004
-     */
-    status: InlineResponse2004StatusEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineResponse2004
-     */
-    registerTime: number;
-    /**
-     * 
-     * @type {InlineResponse2002Resources}
-     * @memberof InlineResponse2004
-     */
-    resources: InlineResponse2002Resources;
-    /**
-     * 
-     * @type {Array<InlineResponse2004QueuesInfo>}
-     * @memberof InlineResponse2004
-     */
-    queuesInfo: Array<InlineResponse2004QueuesInfo>;
+    estimateWaitingTime: number;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InlineResponse2004TypeEnum {
-    Restaurant = 'Restaurant',
-    Cafe = 'Cafe'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InlineResponse2004StatusEnum {
-    OnService = 'onService',
-    StopService = 'stopService'
-}
-
 
 

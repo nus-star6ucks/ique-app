@@ -36,19 +36,7 @@ export interface InlineResponse200 {
      * @type {string}
      * @memberof InlineResponse200
      */
-    password: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse200
-     */
     userType: InlineResponse200UserTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse200
-     */
-    phoneNumber: string;
     /**
      * 
      * @type {string}
@@ -60,7 +48,7 @@ export interface InlineResponse200 {
      * @type {number}
      * @memberof InlineResponse200
      */
-    createTime?: number;
+    createTime: number;
 }
 
 /**
