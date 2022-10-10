@@ -12,7 +12,7 @@ const { state: tickets, isLoading } = useAsyncState(async () => {
   const { data: tickets } = await queueApi.ticketsGet(user?.id)
   return Promise.all(tickets.map(async (ticket) => {
     const { data: storeData } = await storeApi.storesIdGet(ticket.storeId)
-    const { data: queueData } = await queueApi.queuesGet(ticket.ticketId)
+    const { data: queueData } = await queueApi.queuesGet(ticket.id)
 
     return {
       ...ticket,
@@ -37,9 +37,9 @@ const { state: tickets, isLoading } = useAsyncState(async () => {
       <Loading :loading="isLoading" />
       <RouterLink
         v-for="ticket in tickets"
-        :key="ticket.ticketId"
+        :key="ticket.id"
         class="group grid grid-cols-5 overflow-hidden rounded-xl"
-        :to="`/tickets/${ticket.ticketId}`"
+        :to="`/tickets/${ticket.id}`"
       >
         <div class="col-span-2 relative rounded-xl overflow-hidden p-2">
           <div class="glassmorphism bg-white text-gray-700 text-center absolute bottom-2 z-10 text-xs rounded-md p-2" v-text="humanEstimateTime(ticket.queue.estimateWaitingTime)" />
@@ -52,7 +52,7 @@ const { state: tickets, isLoading } = useAsyncState(async () => {
         <div class="col-span-3">
           <div class="my-4 p-6 bg-white rounded-xl">
             <h3 v-text="`${ticket.queue.waitingSize} Groups Ahead`" />
-            <p class="mt-2 text-sm text-gray-400" v-text="`${ticket.ticketId} - ${ticket.seatType.name}`" />
+            <p class="mt-2 text-sm text-gray-400" v-text="`${ticket.queueNumber} - ${ticket.seatType.name}`" />
             <p class="mt-2 text-sm text-gray-500" v-text="ticket.store.name" />
           </div>
         </div>
