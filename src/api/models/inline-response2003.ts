@@ -47,6 +47,12 @@ export interface InlineResponse2003 {
     type: InlineResponse2003TypeEnum;
     /**
      * 
+     * @type {string}
+     * @memberof InlineResponse2003
+     */
+    address: string;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof InlineResponse2003
      */

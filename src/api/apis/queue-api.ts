@@ -70,14 +70,49 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary Get Queue Info
+         * 用户未取号，获取当前 store 所有 queue 的waiting size
+         * @summary Get Queue Info 
+         * @param {number} [queueId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queuesGet: async (queueId?: number, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/queues`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (queueId !== undefined) {
+                localVarQueryParameter['queueId'] = queueId;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 用户取号后，获取在当前队列中自己前面还有多少人排队
+         * @summary Get Customer Ticket Info
          * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queuesGet: async (ticketId?: number, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/queues`;
+        queuesTicketsGet: async (ticketId?: number, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/queues/tickets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -208,14 +243,28 @@ export const QueueApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * 
-         * @summary Get Queue Info
+         * 用户未取号，获取当前 store 所有 queue 的waiting size
+         * @summary Get Queue Info 
+         * @param {number} [queueId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async queuesGet(queueId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2004>> {
+            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesGet(queueId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 用户取号后，获取在当前队列中自己前面还有多少人排队
+         * @summary Get Customer Ticket Info
          * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async queuesGet(ticketId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2004>> {
-            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesGet(ticketId, options);
+        async queuesTicketsGet(ticketId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2004>> {
+            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesTicketsGet(ticketId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -271,14 +320,24 @@ export const QueueApiFactory = function (configuration?: Configuration, basePath
             return QueueApiFp(configuration).queueCheckinPost(ticketId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Get Queue Info
+         * 用户未取号，获取当前 store 所有 queue 的waiting size
+         * @summary Get Queue Info 
+         * @param {number} [queueId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queuesGet(queueId?: number, options?: any): AxiosPromise<InlineResponse2004> {
+            return QueueApiFp(configuration).queuesGet(queueId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 用户取号后，获取在当前队列中自己前面还有多少人排队
+         * @summary Get Customer Ticket Info
          * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queuesGet(ticketId?: number, options?: any): AxiosPromise<InlineResponse2004> {
-            return QueueApiFp(configuration).queuesGet(ticketId, options).then((request) => request(axios, basePath));
+        queuesTicketsGet(ticketId?: number, options?: any): AxiosPromise<InlineResponse2004> {
+            return QueueApiFp(configuration).queuesTicketsGet(ticketId, options).then((request) => request(axios, basePath));
         },
         /**
          * 1. get tickets by storeId: 用户获取某家商店的排队信息 2. get tickets by userId：用户获取自己的所有取号的 ticket 信息 3. get tickets by userId & storeId：用户获取自己取号的某家商店的 ticket 信息 4. get a ticket by ticketId：用户获取取号详细信息
@@ -325,15 +384,27 @@ export class QueueApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @summary Get Queue Info
+     * 用户未取号，获取当前 store 所有 queue 的waiting size
+     * @summary Get Queue Info 
+     * @param {number} [queueId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueueApi
+     */
+    public queuesGet(queueId?: number, options?: any) {
+        return QueueApiFp(this.configuration).queuesGet(queueId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 用户取号后，获取在当前队列中自己前面还有多少人排队
+     * @summary Get Customer Ticket Info
      * @param {number} [ticketId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QueueApi
      */
-    public queuesGet(ticketId?: number, options?: any) {
-        return QueueApiFp(this.configuration).queuesGet(ticketId, options).then((request) => request(this.axios, this.basePath));
+    public queuesTicketsGet(ticketId?: number, options?: any) {
+        return QueueApiFp(this.configuration).queuesTicketsGet(ticketId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

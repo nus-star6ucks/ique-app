@@ -25,8 +25,6 @@ import { InlineObject4 } from '../models';
 // @ts-ignore
 import { InlineResponse2003 } from '../models';
 // @ts-ignore
-import { InlineResponse2005 } from '../models';
-// @ts-ignore
 import { InlineResponse2011 } from '../models';
 // @ts-ignore
 import { InlineResponse401 } from '../models';
@@ -340,7 +338,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storesIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2005>> {
+        async storesIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Store>> {
             const localVarAxiosArgs = await StoreApiAxiosParamCreator(configuration).storesIdGet(id, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -440,7 +438,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storesIdGet(id: number, options?: any): AxiosPromise<InlineResponse2005> {
+        storesIdGet(id: number, options?: any): AxiosPromise<Store> {
             return StoreApiFp(configuration).storesIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**

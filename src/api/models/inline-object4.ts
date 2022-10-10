@@ -47,6 +47,12 @@ export interface InlineObject4 {
     type: InlineObject4TypeEnum;
     /**
      * 
+     * @type {string}
+     * @memberof InlineObject4
+     */
+    address: string;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof InlineObject4
      */

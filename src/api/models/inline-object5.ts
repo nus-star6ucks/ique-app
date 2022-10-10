@@ -25,7 +25,7 @@ export interface InlineObject5 {
      * @type {number}
      * @memberof InlineObject5
      */
-    ticketId?: number;
+    id: number;
     /**
      * 
      * @type {number}
