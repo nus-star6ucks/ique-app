@@ -4,7 +4,8 @@ import { QueueApi, StoreApi, UserApi } from './api'
 
 dayjs.extend(relativeTime)
 
-const API_BASEURL = 'https://mock.apifox.cn/m1/1701091-0-9ec0a847'
+const API_BASEURL = 'https://mock.apifox.cn/m1/1701091-0-default'
+const API_UMS_URL = 'https://mock.apifox.cn/m1/1701091-0-9ec0a847'
 
 const accessToken = localStorage.getItem('token') || ''
 
@@ -16,7 +17,7 @@ export const queueApi = new QueueApi({
 }, API_BASEURL)
 export const userApi = new UserApi({
   accessToken,
-}, API_BASEURL)
+}, API_UMS_URL)
 
 export const humanEstimateTime = (secs: number) => {
   const HOUR = 60 * 60

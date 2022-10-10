@@ -29,7 +29,7 @@ router.beforeEach((to, from, next) => {
   const token = useLocalStorage('token', '')
 
   if (typeof userStore.user === 'undefined' && token.value) {
-    userApi.usersVerifyGet().then(({ data }) => {
+    userApi.usersGet().then(({ data }) => {
       userStore.setUser(data)
       next()
     }).catch(() => {
