@@ -7,20 +7,16 @@ import Loading from '~/components/Loading.vue'
 import WithAuth from '~/components/WithAuth.vue'
 
 const ticketId = useRouteParams('id')
-const { state: data, isLoading } = useAsyncState(queueApi.ticketsGet(undefined, undefined, +ticketId).then(async ({ data }) => {
-  const [ticket] = data
-  const { data: [store] } = await storeApi.storesGet(undefined, ticket.storeId)
-  const { data: queue } = await queueApi.queuesGet(ticket.ticketId)
+const { state: data, isLoading } = useAsyncState(queueApi.queuesTicketsTicketIdGet(+ticketId).then(async ({ data }) => {
+  const { data: store } = await storeApi.storesStoreIdGet(data.storeId)
   return {
-    ticket,
+    ticket: data,
     store,
-    queue,
   }
 }), undefined)
 
 const store = computed(() => data.value?.store)
 const ticket = computed(() => data.value?.ticket)
-const queue = computed(() => data.value?.queue)
 </script>
 
 <template>
@@ -57,19 +53,19 @@ const queue = computed(() => data.value?.queue)
             <h4 class="text-gray-400 mb-2 text-base">
               Type
             </h4>
-            <p class="text-gray-800 text-xl font-semibold" v-text="ticket.seatType.name" />
+            <p class="text-gray-800 text-xl font-semibold" v-text="ticket.queueInfo.seatTypeName" />
           </div>
           <div class="px-4 py-8">
             <h4 class="text-gray-400 mb-2 text-base">
               Ahead
             </h4>
-            <p v-if="queue" class="text-gray-800 text-xl font-semibold" v-text="`${queue.waitingSize} pax`" />
+            <p class="text-gray-800 text-xl font-semibold" v-text="`${ticket.queueInfo.waitingSize} pax`" />
           </div>
           <div class="px-4 py-8">
             <h4 class="text-gray-400 mb-2 text-base">
               Estimated Time
             </h4>
-            <p v-if="queue" class="text-gray-800 text-xl font-semibold" v-text="humanEstimateTime(queue.estimateWaitingTime)" />
+            <p class="text-gray-800 text-xl font-semibold" v-text="humanEstimateTime(ticket.queueInfo.estimateWaitingTime)" />
           </div>
         </div>
       </div>

@@ -31,7 +31,7 @@ export default defineComponent({
         return
       this.loading = true
       try {
-        const { data } = await userApi.usersPost({
+        await userApi.usersPost({
           username: this.username,
           password: this.password,
           phoneNumber: this.phone,

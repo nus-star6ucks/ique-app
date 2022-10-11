@@ -5,50 +5,41 @@ import { useRouteParams } from '@vueuse/router'
 import { StarIcon as StarSolidIcon } from '@heroicons/vue/24/solid/index.js'
 import { ref } from 'vue'
 import {
-  TransitionRoot,
-  TransitionChild,
   Dialog,
   DialogPanel,
   DialogTitle,
+  TransitionChild,
+  TransitionRoot,
 } from '@headlessui/vue'
 import { humanEstimateTime, queueApi, storeApi } from '~/utils'
 import Loading from '~/components/Loading.vue'
 import WithAuth from '~/components/WithAuth.vue'
 import { useSnackStore } from '~/stores/snack'
+import type { QueueInfo } from '~/api/models'
 
 const snackStore = useSnackStore()
 const router = useRouter()
 
-const reqTktConfmIsOpen = ref<boolean>(false)
-function setReqTktConfmIsOpen(value: boolean) {
-  reqTktConfmIsOpen.value = value
-}
-
-const queueIdConfirmation = ref<number>(NaN)
-function setQueueIdConfirmation(value: number) {
-  queueIdConfirmation.value = value
+const selectedQueueInfo = ref<QueueInfo>(undefined!)
+function setSelectedQueueInfo(value: QueueInfo) {
+  selectedQueueInfo.value = value
 }
 
 const queueTicketRequesting = ref<boolean>(false)
 function queue() {
   queueTicketRequesting.value = true
-  queueApi.ticketsPost(queueIdConfirmation.value).then(({ data }) => {
-    snackStore.show({ mode: 'success', message: `Queued successfully!`})
+  queueApi.ticketsPost(selectedQueueInfo.value.queueId).then(({ data }) => {
+    snackStore.show({ mode: 'success', message: 'Queued successfully!' })
     router.push(`/tickets/${data.ticketId}`)
-  }).catch(e => {
-    snackStore.show({ mode: 'error', message: 'Unexpected error, please try again.'})
+  }).catch((e) => {
+    snackStore.show({ mode: 'error', message: 'Unexpected error, please try again.' })
   }).finally(() => {
     queueTicketRequesting.value = false
   })
 }
 
 const storeId = useRouteParams('id')
-const { state: store, isLoading } = useAsyncState(storeApi.storesIdGet(+storeId).then(async ({ data }) => data), undefined)
-
-const { state: waitingInfo, isLoading: waitingInfoIsLoading, execute: requestWaitingInfo } = useAsyncState((queueId: number) => queueApi.queuesGet(queueId).then(async ({ data }) => data), undefined, {
-  immediate: false,
-  resetOnExecute: true
-})
+const { state: store, isLoading } = useAsyncState(storeApi.storesStoreIdGet(+storeId).then(async ({ data }) => data), undefined)
 </script>
 
 <template>
@@ -78,9 +69,7 @@ const { state: waitingInfo, isLoading: waitingInfoIsLoading, execute: requestWai
           </h3>
           <p class="text-gray-800 font-semibold flex items-center">
             <StarSolidIcon class="w-5 text-yellow-500" />
-            <span class="ml-2">
-              4
-            </span>
+            <span class="ml-2" v-text="store.resources.ratings.toFixed(1)" />
           </p>
         </div>
         <div>
@@ -99,9 +88,9 @@ const { state: waitingInfo, isLoading: waitingInfoIsLoading, execute: requestWai
       <p class="text-gray-600 tracking-wider leading-loose text-base" v-text="store.resources.description" />
       <div class="bg-white overflow-hidden rounded-lg p-4">
         <ul class="divide-y divide-gray-100">
-          <li v-for="seatType in store.seatTypes" :key="seatType.id" class="flex items-center justify-between py-4">
-            <p v-text="seatType.name" />
-            <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setQueueIdConfirmation(seatType.id!); setReqTktConfmIsOpen(true); requestWaitingInfo(0, seatType.id) }">
+          <li v-for="q in store.queuesInfo" :key="q.queueId" class="flex items-center justify-between py-4">
+            <p v-text="q.seatTypeName" />
+            <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
               Queue
             </button>
           </li>
@@ -110,8 +99,8 @@ const { state: waitingInfo, isLoading: waitingInfoIsLoading, execute: requestWai
     </section>
   </WithAuth>
 
-  <TransitionRoot appear :show="reqTktConfmIsOpen" as="template">
-    <Dialog as="div" @close="setReqTktConfmIsOpen(false)" class="relative z-10">
+  <TransitionRoot appear :show="!!selectedQueueInfo" as="template">
+    <Dialog as="div" class="relative z-10" @close="setSelectedQueueInfo(undefined!)">
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -145,9 +134,8 @@ const { state: waitingInfo, isLoading: waitingInfoIsLoading, execute: requestWai
                 Request Ticket Confirmation
               </DialogTitle>
               <div>
-                <Loading :loading="waitingInfoIsLoading" />
-                <p class="text-sm text-gray-500" v-if="!waitingInfoIsLoading && waitingInfo">
-                  You're requesting to queue . There are <span v-text="waitingInfo.waitingSize"></span> people waiting in front of you, expect to wait <span v-text="humanEstimateTime(waitingInfo.estimateWaitingTime)" />.
+                <p class="text-sm text-gray-500">
+                  You're requesting to queue . There are <span v-text="selectedQueueInfo.waitingSize" /> people waiting in front of you, expect to wait <span v-text="humanEstimateTime(selectedQueueInfo.estimateWaitingTime)" />.
                 </p>
               </div>
 
@@ -163,7 +151,7 @@ const { state: waitingInfo, isLoading: waitingInfoIsLoading, execute: requestWai
                 <button
                   type="button"
                   class="inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm text-gray-400"
-                  @click="setReqTktConfmIsOpen(false)"
+                  @click="setSelectedQueueInfo(undefined!)"
                 >
                   Not now
                 </button>
