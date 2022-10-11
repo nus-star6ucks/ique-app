@@ -50,7 +50,7 @@ const { state: tickets, isLoading } = useAsyncState(async () => {
 
         <div class="col-span-3">
           <div class="my-4 p-6 bg-white rounded-xl">
-            <p class="mt-2 text-sm text-gray-400" v-text="`${ticket.queueNumber} - ${ticket.seatType.name}`" />
+            <h3 class="mt-2 text-lg text-gray-800 font-bold" v-text="`${ticket.queueNumber} - ${ticket.seatType.name}`" />
             <p class="mt-2 text-sm text-gray-500" v-text="ticket.store.name" />
           </div>
         </div>

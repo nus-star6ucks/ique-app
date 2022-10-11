@@ -25,8 +25,15 @@ function setSelectedQueueInfo(value: QueueInfo) {
   selectedQueueInfo.value = value
 }
 
+function deselectQueueInfo() {
+  selectedQueueInfo.value = undefined!
+}
+
 const queueTicketRequesting = ref<boolean>(false)
 function queue() {
+  if (!selectedQueueInfo.value)
+    return
+
   queueTicketRequesting.value = true
   queueApi.ticketsPost(selectedQueueInfo.value.queueId).then(({ data }) => {
     snackStore.show({ mode: 'success', message: 'Queued successfully!' })
@@ -105,8 +112,8 @@ const { state: store, isLoading } = useAsyncState(storeApi.storesStoreIdGet(+sto
     </section>
   </WithAuth>
 
-  <TransitionRoot appear :show="!!selectedQueueInfo" as="template">
-    <Dialog as="div" class="relative z-10" @close="setSelectedQueueInfo(undefined!)">
+  <TransitionRoot v-if="!!selectedQueueInfo" :show="true" appear as="template">
+    <Dialog as="div" class="relative z-10" @close="deselectQueueInfo()">
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"
@@ -141,7 +148,7 @@ const { state: store, isLoading } = useAsyncState(storeApi.storesStoreIdGet(+sto
               </DialogTitle>
               <div>
                 <p class="text-sm text-gray-500">
-                  You're requesting to queue . There are <span v-text="selectedQueueInfo.waitingSize" /> people waiting in front of you, expect to wait <span v-text="humanEstimateTime(selectedQueueInfo.estimateWaitingTime)" />.
+                  You're requesting to queue <span v-text="selectedQueueInfo.seatTypeName" />. There are <span v-text="selectedQueueInfo.waitingSize" /> people waiting in front of you, expect to wait <span v-text="humanEstimateTime(selectedQueueInfo.estimateWaitingTime)" />.
                 </p>
               </div>
 
@@ -157,7 +164,7 @@ const { state: store, isLoading } = useAsyncState(storeApi.storesStoreIdGet(+sto
                 <button
                   type="button"
                   class="inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm text-gray-400"
-                  @click="setSelectedQueueInfo(undefined!)"
+                  @click="deselectQueueInfo()"
                 >
                   Not now
                 </button>
