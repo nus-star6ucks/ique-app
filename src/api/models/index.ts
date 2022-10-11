@@ -14,6 +14,7 @@ export * from './inline-response2005-resources';
 export * from './inline-response201';
 export * from './inline-response2011';
 export * from './inline-response2012';
+export * from './inline-response2013';
 export * from './inline-response401';
 export * from './inline-response409';
 export * from './queue-info';
