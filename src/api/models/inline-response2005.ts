@@ -12,7 +12,7 @@
  */
 
 
-import { InlineResponse2005Resources } from './inline-response2005-resources';
+import { InlineResponse2003Resources } from './inline-response2003-resources';
 import { QueueInfo } from './queue-info';
 
 /**
@@ -77,10 +77,10 @@ export interface InlineResponse2005 {
     queuesInfo: Array<QueueInfo>;
     /**
      * 
-     * @type {InlineResponse2005Resources}
+     * @type {InlineResponse2003Resources}
      * @memberof InlineResponse2005
      */
-    resources: InlineResponse2005Resources;
+    resources: InlineResponse2003Resources;
 }
 
 /**

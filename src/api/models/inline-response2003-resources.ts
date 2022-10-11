@@ -36,7 +36,7 @@ export interface InlineResponse2003Resources {
      * @type {number}
      * @memberof InlineResponse2003Resources
      */
-    rating: number;
+    ratings: number;
 }
 
 
