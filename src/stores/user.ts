@@ -3,6 +3,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 export interface LoginUser {
   id: number
   username: string
+  userType: string
   createTime: number
 }
 

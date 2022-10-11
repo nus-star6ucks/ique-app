@@ -6,12 +6,13 @@ dayjs.extend(relativeTime)
 
 const API_BASEURL = 'https://mock.apifox.cn/m1/1701091-0-default'
 const API_UMS_URL = 'https://mock.apifox.cn/m1/1701091-0-9ec0a847'
+const API_SMS_URL = 'https://mock.apifox.cn/m1/1701091-0-b519d081'
 
 const accessToken = localStorage.getItem('token') || ''
 
 export const storeApi = new StoreApi({
   accessToken,
-}, API_BASEURL)
+}, API_SMS_URL)
 export const queueApi = new QueueApi({
   accessToken,
 }, API_BASEURL)

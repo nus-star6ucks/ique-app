@@ -31,6 +31,10 @@ router.beforeEach((to, from, next) => {
   if (typeof userStore.user === 'undefined' && token.value) {
     userApi.usersGet().then(({ data }) => {
       userStore.setUser(data)
+      if (data.userType === 'merchant') {
+        next('/merchant')
+        return
+      }
       next()
     }).catch(() => {
       userStore.logout()
