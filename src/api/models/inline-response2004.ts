@@ -12,6 +12,7 @@
  */
 
 
+import { QueueInfo } from './queue-info';
 
 /**
  * 
@@ -24,13 +25,49 @@ export interface InlineResponse2004 {
      * @type {number}
      * @memberof InlineResponse2004
      */
-    waitingSize: number;
+    id: number;
     /**
      * 
      * @type {number}
      * @memberof InlineResponse2004
      */
-    estimateWaitingTime: number;
+    storeId: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineResponse2004
+     */
+    customerId: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineResponse2004
+     */
+    queueNumber: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineResponse2004
+     */
+    startTime: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineResponse2004
+     */
+    endTime: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse2004
+     */
+    status: string;
+    /**
+     * 
+     * @type {QueueInfo}
+     * @memberof InlineResponse2004
+     */
+    queueInfo: QueueInfo;
 }
 
 

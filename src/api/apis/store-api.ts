@@ -25,6 +25,8 @@ import { InlineObject4 } from '../models';
 // @ts-ignore
 import { InlineResponse2003 } from '../models';
 // @ts-ignore
+import { InlineResponse2005 } from '../models';
+// @ts-ignore
 import { InlineResponse2011 } from '../models';
 // @ts-ignore
 import { InlineResponse401 } from '../models';
@@ -81,11 +83,10 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * 
          * @summary Get Stores
          * @param {number} [userId] 
-         * @param {number} [storeId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storesGet: async (userId?: number, storeId?: number, options: any = {}): Promise<RequestArgs> => {
+        storesGet: async (userId?: number, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/stores`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -99,46 +100,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             if (userId !== undefined) {
                 localVarQueryParameter['userId'] = userId;
             }
-
-            if (storeId !== undefined) {
-                localVarQueryParameter['storeId'] = storeId;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get Store Detail
-         * @param {number} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        storesIdGet: async (id: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling storesIdGet.');
-            }
-            const localVarPath = `/stores/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
 
     
@@ -293,6 +254,42 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Get Store Detail
+         * @param {number} storeId storeId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storesStoreIdGet: async (storeId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeId' is not null or undefined
+            if (storeId === null || storeId === undefined) {
+                throw new RequiredError('storeId','Required parameter storeId was null or undefined when calling storesStoreIdGet.');
+            }
+            const localVarPath = `/stores/{storeId}`
+                .replace(`{${"storeId"}}`, encodeURIComponent(String(storeId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -320,26 +317,11 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get Stores
          * @param {number} [userId] 
-         * @param {number} [storeId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storesGet(userId?: number, storeId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Store>>> {
-            const localVarAxiosArgs = await StoreApiAxiosParamCreator(configuration).storesGet(userId, storeId, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @summary Get Store Detail
-         * @param {number} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async storesIdGet(id: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Store>> {
-            const localVarAxiosArgs = await StoreApiAxiosParamCreator(configuration).storesIdGet(id, options);
+        async storesGet(userId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Store>>> {
+            const localVarAxiosArgs = await StoreApiAxiosParamCreator(configuration).storesGet(userId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -401,6 +383,20 @@ export const StoreApiFp = function(configuration?: Configuration) {
                 return axios.request(axiosRequestArgs);
             };
         },
+        /**
+         * 
+         * @summary Get Store Detail
+         * @param {number} storeId storeId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async storesStoreIdGet(storeId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2005>> {
+            const localVarAxiosArgs = await StoreApiAxiosParamCreator(configuration).storesStoreIdGet(storeId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
     }
 };
 
@@ -424,22 +420,11 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * 
          * @summary Get Stores
          * @param {number} [userId] 
-         * @param {number} [storeId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storesGet(userId?: number, storeId?: number, options?: any): AxiosPromise<Array<Store>> {
-            return StoreApiFp(configuration).storesGet(userId, storeId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get Store Detail
-         * @param {number} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        storesIdGet(id: number, options?: any): AxiosPromise<Store> {
-            return StoreApiFp(configuration).storesIdGet(id, options).then((request) => request(axios, basePath));
+        storesGet(userId?: number, options?: any): AxiosPromise<Array<Store>> {
+            return StoreApiFp(configuration).storesGet(userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -481,6 +466,16 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         storesStopServicePost(storeId?: number, options?: any): AxiosPromise<object> {
             return StoreApiFp(configuration).storesStopServicePost(storeId, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Get Store Detail
+         * @param {number} storeId storeId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storesStoreIdGet(storeId: number, options?: any): AxiosPromise<InlineResponse2005> {
+            return StoreApiFp(configuration).storesStoreIdGet(storeId, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -507,25 +502,12 @@ export class StoreApi extends BaseAPI {
      * 
      * @summary Get Stores
      * @param {number} [userId] 
-     * @param {number} [storeId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public storesGet(userId?: number, storeId?: number, options?: any) {
-        return StoreApiFp(this.configuration).storesGet(userId, storeId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get Store Detail
-     * @param {number} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StoreApi
-     */
-    public storesIdGet(id: number, options?: any) {
-        return StoreApiFp(this.configuration).storesIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    public storesGet(userId?: number, options?: any) {
+        return StoreApiFp(this.configuration).storesGet(userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -574,6 +556,18 @@ export class StoreApi extends BaseAPI {
      */
     public storesStopServicePost(storeId?: number, options?: any) {
         return StoreApiFp(this.configuration).storesStopServicePost(storeId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get Store Detail
+     * @param {number} storeId storeId
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public storesStoreIdGet(storeId: number, options?: any) {
+        return StoreApiFp(this.configuration).storesStoreIdGet(storeId, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

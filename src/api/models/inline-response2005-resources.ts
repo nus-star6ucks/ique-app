@@ -16,27 +16,21 @@
 /**
  * 
  * @export
- * @interface InlineResponse2003Resources
+ * @interface InlineResponse2005Resources
  */
-export interface InlineResponse2003Resources {
+export interface InlineResponse2005Resources {
     /**
      * 
      * @type {string}
-     * @memberof InlineResponse2003Resources
+     * @memberof InlineResponse2005Resources
      */
     description: string;
     /**
      * 
      * @type {string}
-     * @memberof InlineResponse2003Resources
+     * @memberof InlineResponse2005Resources
      */
     imageUrl: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineResponse2003Resources
-     */
-    rating: number;
 }
 
 

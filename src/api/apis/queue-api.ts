@@ -25,6 +25,8 @@ import { InlineResponse2012 } from '../models';
 // @ts-ignore
 import { InlineResponse401 } from '../models';
 // @ts-ignore
+import { QueueInfo } from '../models';
+// @ts-ignore
 import { QueueTicket } from '../models';
 /**
  * QueueApi - axios parameter creator
@@ -68,14 +70,19 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 用户未取号，获取当前 store 所有 queue 的waiting size
-         * @summary Get Queue Info 
-         * @param {number} [queueId] 
+         * （SMS调用QMS）用户未取号，获取当前 store 所有 queue 的 waiting size
+         * @summary Get Queue Info Detail
+         * @param {string} queueId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queuesGet: async (queueId?: number, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/queues`;
+        queuesQueueIdGet: async (queueId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'queueId' is not null or undefined
+            if (queueId === null || queueId === undefined) {
+                throw new RequiredError('queueId','Required parameter queueId was null or undefined when calling queuesQueueIdGet.');
+            }
+            const localVarPath = `/queues/{queueId}`
+                .replace(`{${"queueId"}}`, encodeURIComponent(String(queueId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -84,10 +91,6 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (queueId !== undefined) {
-                localVarQueryParameter['queueId'] = queueId;
-            }
 
 
     
@@ -103,51 +106,15 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 用户取号后，获取在当前队列中自己前面还有多少人排队
-         * @summary Get Customer Ticket Info
-         * @param {number} [ticketId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        queuesTicketsGet: async (ticketId?: number, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/queues/tickets`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (ticketId !== undefined) {
-                localVarQueryParameter['ticketId'] = ticketId;
-            }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 1. get tickets by storeId: 用户获取某家商店的排队信息 2. get tickets by userId：用户获取自己的所有取号的 ticket 信息 3. get tickets by userId & storeId：用户获取自己取号的某家商店的 ticket 信息 4. get a ticket by ticketId：用户获取取号详细信息
+         * 1. get tickets by storeId: 用户获取某家商店的排队信息 2. get tickets by userId：用户获取自己的所有取号的 ticket 信息 3. get tickets by userId & storeId：用户获取自己取号的某家商店的 ticket 信息 
          * @summary Get Queue Tickets
          * @param {number} [userId] 
          * @param {number} [storeId] 
-         * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ticketsGet: async (userId?: number, storeId?: number, ticketId?: number, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/tickets`;
+        queuesTicketsGet: async (userId?: number, storeId?: number, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/queues/tickets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -165,9 +132,41 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['storeId'] = storeId;
             }
 
-            if (ticketId !== undefined) {
-                localVarQueryParameter['ticketId'] = ticketId;
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * get a ticket by ticketId：用户获取取号详细信息，获取在当前队列中自己前面还有多少人排队
+         * @summary Get Queue Ticket Detail
+         * @param {string} ticketId ticketId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queuesTicketsTicketIdGet: async (ticketId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'ticketId' is not null or undefined
+            if (ticketId === null || ticketId === undefined) {
+                throw new RequiredError('ticketId','Required parameter ticketId was null or undefined when calling queuesTicketsTicketIdGet.');
             }
+            const localVarPath = `/queues/tickets/{ticketId}`
+                .replace(`{${"ticketId"}}`, encodeURIComponent(String(ticketId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
 
     
@@ -183,17 +182,13 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary Create Queue Ticket
-         * @param {number} queueId 
+         * 用户取号
+         * @summary Create Queue Ticket Copy
+         * @param {QueueTicket} [queueTicket] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ticketsPost: async (queueId: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'queueId' is not null or undefined
-            if (queueId === null || queueId === undefined) {
-                throw new RequiredError('queueId','Required parameter queueId was null or undefined when calling ticketsPost.');
-            }
+        ticketsPost: async (queueTicket?: QueueTicket, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/tickets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -204,17 +199,17 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (queueId !== undefined) {
-                localVarQueryParameter['queueId'] = queueId;
-            }
-
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof queueTicket !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(queueTicket !== undefined ? queueTicket : {}) : (queueTicket || "");
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -245,58 +240,57 @@ export const QueueApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * 用户未取号，获取当前 store 所有 queue 的waiting size
-         * @summary Get Queue Info 
-         * @param {number} [queueId] 
+         * （SMS调用QMS）用户未取号，获取当前 store 所有 queue 的 waiting size
+         * @summary Get Queue Info Detail
+         * @param {string} queueId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async queuesGet(queueId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2004>> {
-            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesGet(queueId, options);
+        async queuesQueueIdGet(queueId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QueueInfo>> {
+            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesQueueIdGet(queueId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         * 用户取号后，获取在当前队列中自己前面还有多少人排队
-         * @summary Get Customer Ticket Info
-         * @param {number} [ticketId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async queuesTicketsGet(ticketId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2004>> {
-            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesTicketsGet(ticketId, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 1. get tickets by storeId: 用户获取某家商店的排队信息 2. get tickets by userId：用户获取自己的所有取号的 ticket 信息 3. get tickets by userId & storeId：用户获取自己取号的某家商店的 ticket 信息 4. get a ticket by ticketId：用户获取取号详细信息
+         * 1. get tickets by storeId: 用户获取某家商店的排队信息 2. get tickets by userId：用户获取自己的所有取号的 ticket 信息 3. get tickets by userId & storeId：用户获取自己取号的某家商店的 ticket 信息 
          * @summary Get Queue Tickets
          * @param {number} [userId] 
          * @param {number} [storeId] 
-         * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async ticketsGet(userId?: number, storeId?: number, ticketId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<QueueTicket>>> {
-            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).ticketsGet(userId, storeId, ticketId, options);
+        async queuesTicketsGet(userId?: number, storeId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<QueueTicket>>> {
+            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesTicketsGet(userId, storeId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         * 
-         * @summary Create Queue Ticket
-         * @param {number} queueId 
+         * get a ticket by ticketId：用户获取取号详细信息，获取在当前队列中自己前面还有多少人排队
+         * @summary Get Queue Ticket Detail
+         * @param {string} ticketId ticketId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async ticketsPost(queueId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2012>> {
-            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).ticketsPost(queueId, options);
+        async queuesTicketsTicketIdGet(ticketId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2004>> {
+            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesTicketsTicketIdGet(ticketId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 用户取号
+         * @summary Create Queue Ticket Copy
+         * @param {QueueTicket} [queueTicket] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async ticketsPost(queueTicket?: QueueTicket, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2012>> {
+            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).ticketsPost(queueTicket, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -322,46 +316,45 @@ export const QueueApiFactory = function (configuration?: Configuration, basePath
             return QueueApiFp(configuration).queueCheckinPost(ticketId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 用户未取号，获取当前 store 所有 queue 的waiting size
-         * @summary Get Queue Info 
-         * @param {number} [queueId] 
+         * （SMS调用QMS）用户未取号，获取当前 store 所有 queue 的 waiting size
+         * @summary Get Queue Info Detail
+         * @param {string} queueId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queuesGet(queueId?: number, options?: any): AxiosPromise<InlineResponse2004> {
-            return QueueApiFp(configuration).queuesGet(queueId, options).then((request) => request(axios, basePath));
+        queuesQueueIdGet(queueId: string, options?: any): AxiosPromise<QueueInfo> {
+            return QueueApiFp(configuration).queuesQueueIdGet(queueId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 用户取号后，获取在当前队列中自己前面还有多少人排队
-         * @summary Get Customer Ticket Info
-         * @param {number} [ticketId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        queuesTicketsGet(ticketId?: number, options?: any): AxiosPromise<InlineResponse2004> {
-            return QueueApiFp(configuration).queuesTicketsGet(ticketId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 1. get tickets by storeId: 用户获取某家商店的排队信息 2. get tickets by userId：用户获取自己的所有取号的 ticket 信息 3. get tickets by userId & storeId：用户获取自己取号的某家商店的 ticket 信息 4. get a ticket by ticketId：用户获取取号详细信息
+         * 1. get tickets by storeId: 用户获取某家商店的排队信息 2. get tickets by userId：用户获取自己的所有取号的 ticket 信息 3. get tickets by userId & storeId：用户获取自己取号的某家商店的 ticket 信息 
          * @summary Get Queue Tickets
          * @param {number} [userId] 
          * @param {number} [storeId] 
-         * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ticketsGet(userId?: number, storeId?: number, ticketId?: number, options?: any): AxiosPromise<Array<QueueTicket>> {
-            return QueueApiFp(configuration).ticketsGet(userId, storeId, ticketId, options).then((request) => request(axios, basePath));
+        queuesTicketsGet(userId?: number, storeId?: number, options?: any): AxiosPromise<Array<QueueTicket>> {
+            return QueueApiFp(configuration).queuesTicketsGet(userId, storeId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Create Queue Ticket
-         * @param {number} queueId 
+         * get a ticket by ticketId：用户获取取号详细信息，获取在当前队列中自己前面还有多少人排队
+         * @summary Get Queue Ticket Detail
+         * @param {string} ticketId ticketId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        ticketsPost(queueId: number, options?: any): AxiosPromise<InlineResponse2012> {
-            return QueueApiFp(configuration).ticketsPost(queueId, options).then((request) => request(axios, basePath));
+        queuesTicketsTicketIdGet(ticketId: string, options?: any): AxiosPromise<InlineResponse2004> {
+            return QueueApiFp(configuration).queuesTicketsTicketIdGet(ticketId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 用户取号
+         * @summary Create Queue Ticket Copy
+         * @param {QueueTicket} [queueTicket] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        ticketsPost(queueTicket?: QueueTicket, options?: any): AxiosPromise<InlineResponse2012> {
+            return QueueApiFp(configuration).ticketsPost(queueTicket, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -386,53 +379,52 @@ export class QueueApi extends BaseAPI {
     }
 
     /**
-     * 用户未取号，获取当前 store 所有 queue 的waiting size
-     * @summary Get Queue Info 
-     * @param {number} [queueId] 
+     * （SMS调用QMS）用户未取号，获取当前 store 所有 queue 的 waiting size
+     * @summary Get Queue Info Detail
+     * @param {string} queueId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QueueApi
      */
-    public queuesGet(queueId?: number, options?: any) {
-        return QueueApiFp(this.configuration).queuesGet(queueId, options).then((request) => request(this.axios, this.basePath));
+    public queuesQueueIdGet(queueId: string, options?: any) {
+        return QueueApiFp(this.configuration).queuesQueueIdGet(queueId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 用户取号后，获取在当前队列中自己前面还有多少人排队
-     * @summary Get Customer Ticket Info
-     * @param {number} [ticketId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueueApi
-     */
-    public queuesTicketsGet(ticketId?: number, options?: any) {
-        return QueueApiFp(this.configuration).queuesTicketsGet(ticketId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 1. get tickets by storeId: 用户获取某家商店的排队信息 2. get tickets by userId：用户获取自己的所有取号的 ticket 信息 3. get tickets by userId & storeId：用户获取自己取号的某家商店的 ticket 信息 4. get a ticket by ticketId：用户获取取号详细信息
+     * 1. get tickets by storeId: 用户获取某家商店的排队信息 2. get tickets by userId：用户获取自己的所有取号的 ticket 信息 3. get tickets by userId & storeId：用户获取自己取号的某家商店的 ticket 信息 
      * @summary Get Queue Tickets
      * @param {number} [userId] 
      * @param {number} [storeId] 
-     * @param {number} [ticketId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QueueApi
      */
-    public ticketsGet(userId?: number, storeId?: number, ticketId?: number, options?: any) {
-        return QueueApiFp(this.configuration).ticketsGet(userId, storeId, ticketId, options).then((request) => request(this.axios, this.basePath));
+    public queuesTicketsGet(userId?: number, storeId?: number, options?: any) {
+        return QueueApiFp(this.configuration).queuesTicketsGet(userId, storeId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @summary Create Queue Ticket
-     * @param {number} queueId 
+     * get a ticket by ticketId：用户获取取号详细信息，获取在当前队列中自己前面还有多少人排队
+     * @summary Get Queue Ticket Detail
+     * @param {string} ticketId ticketId
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QueueApi
      */
-    public ticketsPost(queueId: number, options?: any) {
-        return QueueApiFp(this.configuration).ticketsPost(queueId, options).then((request) => request(this.axios, this.basePath));
+    public queuesTicketsTicketIdGet(ticketId: string, options?: any) {
+        return QueueApiFp(this.configuration).queuesTicketsTicketIdGet(ticketId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 用户取号
+     * @summary Create Queue Ticket Copy
+     * @param {QueueTicket} [queueTicket] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueueApi
+     */
+    public ticketsPost(queueTicket?: QueueTicket, options?: any) {
+        return QueueApiFp(this.configuration).ticketsPost(queueTicket, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

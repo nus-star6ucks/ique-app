@@ -16,27 +16,33 @@
 /**
  * 
  * @export
- * @interface InlineResponse2003Resources
+ * @interface QueueInfo
  */
-export interface InlineResponse2003Resources {
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse2003Resources
-     */
-    description: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse2003Resources
-     */
-    imageUrl: string;
+export interface QueueInfo {
     /**
      * 
      * @type {number}
-     * @memberof InlineResponse2003Resources
+     * @memberof QueueInfo
      */
-    rating: number;
+    queueId: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof QueueInfo
+     */
+    seatTypeName: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof QueueInfo
+     */
+    waitingSize: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof QueueInfo
+     */
+    estimateWaitingTime: number;
 }
 
 
