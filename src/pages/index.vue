@@ -9,7 +9,7 @@ const { isLoading, state: storesData, isReady } = useAsyncState(storeApi.storesG
 </script>
 
 <template>
-  <div class="space-y-4">
+  <div class="space-y-4 mb-20">
     <header class="flex items-center justify-between mb-12">
       <h1 class="text-xl font-medium">
         iQue

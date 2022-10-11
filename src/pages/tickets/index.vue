@@ -33,7 +33,7 @@ const { state: tickets, isLoading } = useAsyncState(async () => {
         <MagnifyingGlassIcon class="w-4 h-4" />
       </button>
     </header>
-    <div class="space-y-4">
+    <div class="space-y-4 mb-20">
       <Loading :loading="isLoading" />
       <RouterLink
         v-for="ticket in tickets"
