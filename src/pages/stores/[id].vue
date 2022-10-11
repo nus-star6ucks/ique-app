@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import { ArrowLeftIcon } from '@heroicons/vue/24/outline/index.js'
+import { ArrowLeftIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
 import { useRouteParams } from '@vueuse/router'
 import { StarIcon as StarSolidIcon } from '@heroicons/vue/24/solid/index.js'
 import { ref } from 'vue'
@@ -90,9 +90,15 @@ const { state: store, isLoading } = useAsyncState(storeApi.storesStoreIdGet(+sto
         <ul class="divide-y divide-gray-100">
           <li v-for="q in store.queuesInfo" :key="q.queueId" class="flex items-center justify-between py-4">
             <p v-text="q.seatTypeName" />
-            <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
-              Queue
-            </button>
+            <div class="space-x-4 flex items-center">
+              <span class="flex items-center text-gray-600">
+                <UserIcon class="w-4 h-4" />
+                <span class="ml-1" v-text="q.waitingSize" />
+              </span>
+              <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
+                Queue
+              </button>
+            </div>
           </li>
         </ul>
       </div>
