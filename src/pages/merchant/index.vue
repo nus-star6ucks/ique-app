@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ArrowLeftIcon, PlusIcon } from '@heroicons/vue/24/outline/index.js'
+import { ArrowLeftIcon, MapPinIcon, PlusIcon } from '@heroicons/vue/24/outline/index.js'
 import { useUserStore } from '~/stores/user'
 import { storeApi } from '~/utils'
 
@@ -21,29 +21,32 @@ const { state: stores, isLoading } = useAsyncState(storeApi.storesGet(user?.id).
     <Loading v-if="isLoading" :loading="true" />
     <div class="p-8">
       <section class="grid grid-cols-2 gap-4">
-        <RouterLink v-for="store in stores" :key="store.id" :to="`/merchant/stores/${store.id}`" class="relative block border border-gray-100 rounded-lg overflow-hidden">
+        <div v-for="store in stores" :key="store.id" class="relative block border border-gray-100 rounded-lg overflow-hidden">
           <img
             :alt="store.name"
             :src="store.resources.imageUrl"
             class="h-48 w-full object-cover lg:h-64"
           >
-          <span class="inline-block absolute text-white rounded-md top-0 bg-emerald-500 px-3 py-1 text-sm" v-text="store.type" />
-
+          <span :class="{ 'bg-gray-400': store.status === 'stopService', 'bg-emerald-500': store.status === 'onService' }" class="inline-block absolute text-white rounded-md top-0 px-3 py-1 text-sm uppercase" v-text="store.status" />
           <div class="p-6">
-            <h5 class="text-lg font-bold">
+            <h5 class="text-xl font-bold">
               <span v-text="store.name" />
-              <span :class="{ 'bg-gray-400': store.status === 'stopService', 'bg-emerald-500': store.status === 'onService' }" class="inline-block ml-2 text-white rounded-md  px-3 py-1 text-xs font-normal uppercase" v-text="store.status" />
             </h5>
-            <p class="mt-2 text-sm text-gray-700" v-text="store.address" />
-
-            <!-- <button
+            <p class="mt-2 text-sm text-gray-600 flex flex-wrap space-x-1">
+              <MapPinIcon class="w-4" />
+              <span v-text="store.address" />
+            </p>
+            <RouterLink
+              :to="`/merchant/stores/${store.id}`"
               type="button"
-              class="mt-4 block w-full rounded-lg bg-emerald-500 p-4 text-sm"
+              :disabled="store.status === 'stopService'"
+              :class="{ 'bg-gray-400': store.status === 'stopService', 'bg-emerald-500': store.status === 'onService' }"
+              class="mt-4 text-center block w-full rounded-lg text-white p-4 text-sm"
             >
-              Add to Cart
-            </button> -->
+              Serve
+            </RouterLink>
           </div>
-        </RouterLink>
+        </div>
       </section>
       <section class="mt-8 space-y-4 h-full overflow-auto">
         <RouterLink to="/merchant/stores/create" class="mb-2 w-full block flex items-center justify-center space-x-2 text-white bg-emerald-500 rounded-lg shadow-md shadow-emerald-500/40 py-4">
@@ -56,7 +59,7 @@ const { state: stores, isLoading } = useAsyncState(storeApi.storesGet(user?.id).
   <aside class="bg-white col-span-2 p-8 flex flex-col justify-between h-100vh">
     <header class="flex items-center justify-center text-gray-800 mb-2 h-9">
       <h2>
-        Me
+        Update Store Detail
       </h2>
     </header>
   </aside>
