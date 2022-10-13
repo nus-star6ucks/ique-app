@@ -10,6 +10,17 @@ import Inspect from 'vite-plugin-inspect'
 import WindiCSS from 'vite-plugin-windicss'
 
 export default defineConfig({
+  server: {
+    proxy: {
+      // with options
+      '/api': {
+        target: 'http://34.142.186.216.nip.io',
+        changeOrigin: true,
+        secure: false,
+        rewrite: path => path.replace(/^\/api/, ''),
+      },
+    },
+  },
   base: '',
   resolve: {
     alias: {
