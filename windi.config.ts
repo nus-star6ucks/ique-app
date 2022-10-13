@@ -7,7 +7,7 @@ export default defineConfig({
   theme: {
     extend: {
       colors: {
-        gray: colors.slate,
+        gray: colors.neutral,
       },
     },
   },

@@ -7,8 +7,7 @@ body,
   font-size: 14px;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  background-color: #faf9fa;
-  @apply tracking-wide text-gray-800;
+  @apply tracking-wide text-gray-800 bg-gray-50;
 }
 
 main.merchant {

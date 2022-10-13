@@ -9,7 +9,7 @@ import { queueApi, storeApi } from '~/utils'
 const keyword = ref<string>('')
 
 const storeId = useRouteParams('id')
-const { state: store, isStoreLoading } = useAsyncState(storeApi.storesStoreIdGet(+storeId).then(d => d.data), undefined)
+const { state: store, isLoading: isStoreLoading } = useAsyncState(storeApi.storesStoreIdGet(+storeId).then(d => d.data), undefined)
 const { state: tickets, isLoading } = useAsyncState(queueApi.queuesTicketsGet(undefined, +storeId).then(d => d.data), [])
 
 const filteredTickets = computed(() => tickets.value.filter(t => t.status === 'pending').filter(t => `${t.queueNumber}`.includes(keyword.value) || `${t.seatType.name}`.includes(keyword.value)))
@@ -36,6 +36,7 @@ const queues = computed(() => {
       <div class="w-9 h-9" />
     </header>
     <section class="mt-8 space-y-4 h-full overflow-auto">
+      <Loading v-if="isStoreLoading" :loading="true" />
       <div v-if="store" class="grid grid-cols-2 gap-4">
         <section class="space-y-4 bg-white border px-6 py-4 border-gray-100 rounded-lg">
           <div class="flex items-start justify-between mb-8">
@@ -94,7 +95,7 @@ const queues = computed(() => {
       </h2>
     </header>
     <section class="mt-8 space-y-4 h-full overflow-auto">
-      <Loading v-if="isLoading" :loading="isLoading" />
+      <Loading v-if="isLoading" :loading="true" />
       <article v-for="ticket in filteredTickets" :key="ticket.id" class="rounded-lg overflow-hidden border border-gray-100 bg-white flex items-center justify-between">
         <div class="p-4">
           <div>
