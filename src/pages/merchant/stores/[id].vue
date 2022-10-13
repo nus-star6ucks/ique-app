@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ArrowLeftIcon, CheckIcon, ForwardIcon, PhoneIcon, RocketLaunchIcon, XMarkIcon } from '@heroicons/vue/24/outline/index.js'
-import { PlayIcon, StopIcon } from '@heroicons/vue/24/solid/index.js'
+import { StopIcon } from '@heroicons/vue/24/solid/index.js'
 import { useRouteParams } from '@vueuse/router'
 import dayjs from 'dayjs'
 import type { SeatType } from '~/api/models'

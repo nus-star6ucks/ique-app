@@ -48,6 +48,6 @@ import { MapPinIcon } from '@heroicons/vue/24/outline/index.js'
 
 <route lang="yaml">
 meta:
-  layout: home
-  classNames: merchant
+  layout: default
+  classNames: m-0 h-100vh p-0 merchant
 </route>
