@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { ArrowLeftIcon, ForwardIcon, PhoneIcon, XMarkIcon } from '@heroicons/vue/24/outline/index.js'
-import { StarIcon as StarSolidIcon } from '@heroicons/vue/24/solid/index.js'
+import { ArrowLeftIcon, CheckIcon, ForwardIcon, PhoneIcon, RocketLaunchIcon, XMarkIcon } from '@heroicons/vue/24/outline/index.js'
+import { PlayIcon, StopIcon } from '@heroicons/vue/24/solid/index.js'
 import { useRouteParams } from '@vueuse/router'
 import dayjs from 'dayjs'
 import type { SeatType } from '~/api/models'
@@ -12,7 +12,7 @@ const storeId = useRouteParams('id')
 const { state: store, isStoreLoading } = useAsyncState(storeApi.storesStoreIdGet(+storeId).then(d => d.data), undefined)
 const { state: tickets, isLoading } = useAsyncState(queueApi.queuesTicketsGet(undefined, +storeId).then(d => d.data), [])
 
-const filteredTickets = computed(() => tickets.value.filter(t => `${t.queueNumber}`.includes(keyword.value) || `${t.seatType.name}`.includes(keyword.value)))
+const filteredTickets = computed(() => tickets.value.filter(t => t.status === 'pending').filter(t => `${t.queueNumber}`.includes(keyword.value) || `${t.seatType.name}`.includes(keyword.value)))
 const queues = computed(() => {
   const memo: Record<string, { seatType: SeatType; queueId: number; count: number }> = {}
   tickets.value.forEach((t) => {
@@ -25,7 +25,7 @@ const queues = computed(() => {
 </script>
 
 <template>
-  <div class="block relative col-span-3 p-8">
+  <div class="block relative col-span-3 p-8 h-100vh">
     <header class="flex items-center justify-between text-gray-800 mb-2">
       <RouterLink v-slot="{ navigate }" to="/tickets" custom>
         <button class="bg-white p-2 rounded-lg" @click="navigate">
@@ -35,13 +35,48 @@ const queues = computed(() => {
       <h2>Store Detail</h2>
       <div class="w-9 h-9" />
     </header>
-    <section class="mt-8 space-y-4">
-      <section v-if="store" class="space-y-4">
-        <div class="overflow-hidden rounded-lg bg-center bg-cover h-20vh my-4" :style="`background-image: url(${store.resources.imageUrl});`" />
-        <div>
-          <h2 class="text-2xl font-bold py-2" v-text="store.name" />
+    <section class="mt-8 space-y-4 h-full overflow-auto">
+      <div v-if="store" class="grid grid-cols-2 gap-4">
+        <section class="space-y-4 bg-white border px-6 py-4 border-gray-100 rounded-lg">
+          <div class="flex items-start justify-between mb-8">
+            <div>
+              <h2 class="text-xl font-bold mb-2 leading-none" v-text="store.name" />
+              <p class="text-gray-600" v-text="store.type" />
+            </div>
+            <span class="text-white px-6 py-1 text-xs bg-emerald-500 rounded-md">ACTIVE</span>
+          </div>
+          <div class="flex space-x-2">
+            <div>
+              <h3 class="text-2xl font-bold mb-1" v-text="tickets.filter(t => t.status === 'pending').length" />
+              <p class="text-sm text-gray-400">
+                Queueing
+              </p>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold mb-1" v-text="tickets.filter(t => t.status === 'seated').length" />
+              <p class="text-sm text-gray-400">
+                Served
+              </p>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold mb-1" v-text="queues.length" />
+              <p class="text-sm text-gray-400">
+                Active Queues
+              </p>
+            </div>
+          </div>
+        </section>
+        <div class="grid grid-cols-2 gap-4">
+          <button class="opacity-40 bg-emerald-50 text-emerald-500 rounded-lg flex flex-col items-center justify-center text-lg">
+            <RocketLaunchIcon class="w-12 mb-4" />
+            <span>Start Service</span>
+          </button>
+          <button class="bg-red-50 text-red-500 text-lg rounded-lg flex flex-col items-center justify-center text-lg">
+            <StopIcon class="w-12 mb-4" />
+            <span>Stop Service</span>
+          </button>
         </div>
-      </section>
+      </div>
       <div class="grid grid-cols-3 gap-4">
         <article v-for="queue in queues" :key="queue.queueId" class="rounded-lg border border-gray-100 bg-white p-6">
           <div>
@@ -77,13 +112,17 @@ const queues = computed(() => {
         </div>
 
         <div class="flex">
-          <button class="text-center text-sm bg-yellow-500 text-white px-4 py-6">
-            <ForwardIcon class="w-6" />
-            <span>Skip</span>
-          </button>
-          <button class="text-center text-sm bg-emerald-500 text-white px-4 py-6">
+          <button class="text-center text-sm bg-sky-500 text-white px-4 py-6 flex flex-col items-center">
             <PhoneIcon class="w-6" />
-            <span>Call</span>
+            <span class="mt-2">Call</span>
+          </button>
+          <button class="text-center text-sm bg-yellow-500 text-white px-4 py-6 flex flex-col items-center">
+            <ForwardIcon class="w-6" />
+            <span class="mt-2">Skip</span>
+          </button>
+          <button class="text-center text-sm bg-emerald-500 text-white px-4 py-6 flex flex-col items-center">
+            <CheckIcon class="w-6" />
+            <span class="mt-2">Checkin</span>
           </button>
         </div>
       </article>
@@ -91,7 +130,7 @@ const queues = computed(() => {
     <div class="mt-8">
       <div class="relative">
         <input v-model="keyword" placeholder="Search..." name="keyword" type="text" class="px-4 pr-14 w-full border border-gray-100 bg-gray-50 rounded-lg py-2" minlength="6">
-        <a v-show="!!keyword.trim()" href="javascript:;" class="absolute inset-y-0 right-4 top-2 inline-flex" @click="keyword = ''">
+        <a v-if="!!keyword" href="javascript:;" class="absolute inset-y-0 right-4 top-2 inline-flex" @click="keyword = ''">
           <XMarkIcon class="w-6 h-6 text-gray-400" />
         </a>
       </div>
