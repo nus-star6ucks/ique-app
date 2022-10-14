@@ -12,6 +12,8 @@
  */
 
 
+import { SeatType } from './seat-type';
+import { StoresResources } from './stores-resources';
 
 /**
  * 
@@ -27,57 +29,75 @@ export interface InlineObject3 {
     id: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof InlineObject3
      */
-    username?: string;
+    merchantId?: number;
     /**
      * 
      * @type {string}
      * @memberof InlineObject3
      */
-    password?: string;
+    name?: string;
+    /**
+     * StoreType
+     * @type {string}
+     * @memberof InlineObject3
+     */
+    type?: InlineObject3TypeEnum;
     /**
      * 
      * @type {string}
      * @memberof InlineObject3
      */
-    userType: InlineObject3UserTypeEnum;
+    address?: string;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof InlineObject3
      */
-    phoneNumber?: string;
+    phoneNumbers?: Array<string>;
     /**
-     * 
+     * queue ids
+     * @type {Array<SeatType>}
+     * @memberof InlineObject3
+     */
+    seatTypes?: Array<SeatType>;
+    /**
+     * Store Status
      * @type {string}
      * @memberof InlineObject3
      */
     status?: InlineObject3StatusEnum;
     /**
-     * timestamp
+     * 
+     * @type {StoresResources}
+     * @memberof InlineObject3
+     */
+    resources?: StoresResources;
+    /**
+     * 
      * @type {number}
      * @memberof InlineObject3
      */
-    createTime?: number;
+    registerTime?: number;
 }
 
 /**
     * @export
     * @enum {string}
     */
-export enum InlineObject3UserTypeEnum {
-    Customer = 'customer',
-    Merchant = 'merchant'
+export enum InlineObject3TypeEnum {
+    Restaurant = 'Restaurant',
+    Cafe = 'Cafe'
 }
 /**
     * @export
     * @enum {string}
     */
 export enum InlineObject3StatusEnum {
-    Active = 'active',
-    Cancelled = 'cancelled'
+    OnService = 'onService',
+    StopService = 'stopService'
 }
 
 

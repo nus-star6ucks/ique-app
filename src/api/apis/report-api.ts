@@ -31,17 +31,13 @@ export const ReportApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * 
          * @summary Get Reports
-         * @param {number} merchantId 
          * @param {number} storeId 
+         * @param {number} [merchantId] 
          * @param {number} [reportId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reportsGet: async (merchantId: number, storeId: number, reportId?: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'merchantId' is not null or undefined
-            if (merchantId === null || merchantId === undefined) {
-                throw new RequiredError('merchantId','Required parameter merchantId was null or undefined when calling reportsGet.');
-            }
+        reportsGet: async (storeId: number, merchantId?: number, reportId?: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeId' is not null or undefined
             if (storeId === null || storeId === undefined) {
                 throw new RequiredError('storeId','Required parameter storeId was null or undefined when calling reportsGet.');
@@ -93,14 +89,14 @@ export const ReportApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get Reports
-         * @param {number} merchantId 
          * @param {number} storeId 
+         * @param {number} [merchantId] 
          * @param {number} [reportId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async reportsGet(merchantId: number, storeId: number, reportId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Report>>> {
-            const localVarAxiosArgs = await ReportApiAxiosParamCreator(configuration).reportsGet(merchantId, storeId, reportId, options);
+        async reportsGet(storeId: number, merchantId?: number, reportId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Report>>> {
+            const localVarAxiosArgs = await ReportApiAxiosParamCreator(configuration).reportsGet(storeId, merchantId, reportId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -118,14 +114,14 @@ export const ReportApiFactory = function (configuration?: Configuration, basePat
         /**
          * 
          * @summary Get Reports
-         * @param {number} merchantId 
          * @param {number} storeId 
+         * @param {number} [merchantId] 
          * @param {number} [reportId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        reportsGet(merchantId: number, storeId: number, reportId?: number, options?: any): AxiosPromise<Array<Report>> {
-            return ReportApiFp(configuration).reportsGet(merchantId, storeId, reportId, options).then((request) => request(axios, basePath));
+        reportsGet(storeId: number, merchantId?: number, reportId?: number, options?: any): AxiosPromise<Array<Report>> {
+            return ReportApiFp(configuration).reportsGet(storeId, merchantId, reportId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -140,15 +136,15 @@ export class ReportApi extends BaseAPI {
     /**
      * 
      * @summary Get Reports
-     * @param {number} merchantId 
      * @param {number} storeId 
+     * @param {number} [merchantId] 
      * @param {number} [reportId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ReportApi
      */
-    public reportsGet(merchantId: number, storeId: number, reportId?: number, options?: any) {
-        return ReportApiFp(this.configuration).reportsGet(merchantId, storeId, reportId, options).then((request) => request(this.axios, this.basePath));
+    public reportsGet(storeId: number, merchantId?: number, reportId?: number, options?: any) {
+        return ReportApiFp(this.configuration).reportsGet(storeId, merchantId, reportId, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

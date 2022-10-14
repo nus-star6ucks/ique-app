@@ -191,8 +191,8 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storesStartServicePost: async (storeId?: number, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/stores/startService`;
+        storesStartPost: async (storeId?: number, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/stores/start`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -226,8 +226,8 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storesStopServicePost: async (storeId?: number, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/stores/stopService`;
+        storesStopPost: async (storeId?: number, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/stores/stop`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -362,8 +362,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storesStartServicePost(storeId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await StoreApiAxiosParamCreator(configuration).storesStartServicePost(storeId, options);
+        async storesStartPost(storeId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await StoreApiAxiosParamCreator(configuration).storesStartPost(storeId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -376,8 +376,8 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storesStopServicePost(storeId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await StoreApiAxiosParamCreator(configuration).storesStopServicePost(storeId, options);
+        async storesStopPost(storeId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await StoreApiAxiosParamCreator(configuration).storesStopPost(storeId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -453,8 +453,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storesStartServicePost(storeId?: number, options?: any): AxiosPromise<object> {
-            return StoreApiFp(configuration).storesStartServicePost(storeId, options).then((request) => request(axios, basePath));
+        storesStartPost(storeId?: number, options?: any): AxiosPromise<object> {
+            return StoreApiFp(configuration).storesStartPost(storeId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -463,8 +463,8 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storesStopServicePost(storeId?: number, options?: any): AxiosPromise<object> {
-            return StoreApiFp(configuration).storesStopServicePost(storeId, options).then((request) => request(axios, basePath));
+        storesStopPost(storeId?: number, options?: any): AxiosPromise<object> {
+            return StoreApiFp(configuration).storesStopPost(storeId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -542,8 +542,8 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public storesStartServicePost(storeId?: number, options?: any) {
-        return StoreApiFp(this.configuration).storesStartServicePost(storeId, options).then((request) => request(this.axios, this.basePath));
+    public storesStartPost(storeId?: number, options?: any) {
+        return StoreApiFp(this.configuration).storesStartPost(storeId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -554,8 +554,8 @@ export class StoreApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public storesStopServicePost(storeId?: number, options?: any) {
-        return StoreApiFp(this.configuration).storesStopServicePost(storeId, options).then((request) => request(this.axios, this.basePath));
+    public storesStopPost(storeId?: number, options?: any) {
+        return StoreApiFp(this.configuration).storesStopPost(storeId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

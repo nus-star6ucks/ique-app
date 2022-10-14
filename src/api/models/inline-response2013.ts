@@ -12,7 +12,6 @@
  */
 
 
-import { SeatType } from './seat-type';
 
 /**
  * 
@@ -25,66 +24,13 @@ export interface InlineResponse2013 {
      * @type {number}
      * @memberof InlineResponse2013
      */
-    id: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineResponse2013
-     */
-    storeId: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineResponse2013
-     */
-    customerId: number;
-    /**
-     * 
-     * @type {SeatType}
-     * @memberof InlineResponse2013
-     */
-    seatType: SeatType;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineResponse2013
-     */
-    queueNumber: number;
+    seatTypeId: number;
     /**
      * 
      * @type {number}
      * @memberof InlineResponse2013
      */
     queueId: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineResponse2013
-     */
-    startTime: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof InlineResponse2013
-     */
-    endTime: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse2013
-     */
-    status: InlineResponse2013StatusEnum;
 }
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum InlineResponse2013StatusEnum {
-    Pending = 'pending',
-    Seated = 'seated',
-    Skipped = 'skipped'
-}
-
 
 

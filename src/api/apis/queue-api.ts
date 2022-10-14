@@ -23,11 +23,7 @@ import { InlineResponse2004 } from '../models';
 // @ts-ignore
 import { InlineResponse2012 } from '../models';
 // @ts-ignore
-import { InlineResponse2013 } from '../models';
-// @ts-ignore
 import { InlineResponse401 } from '../models';
-// @ts-ignore
-import { QueueInfo } from '../models';
 // @ts-ignore
 import { QueueTicket } from '../models';
 /**
@@ -43,8 +39,8 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queueCheckinPost: async (ticketId?: string, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/queue/checkin`;
+        queuesCheckinPost: async (ticketId?: string, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/queues/checkin`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -57,42 +53,6 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
             if (ticketId !== undefined) {
                 localVarQueryParameter['ticketId'] = ticketId;
             }
-
-
-    
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * （SMS调用QMS）用户未取号，获取当前 store 所有 queue 的 waiting size
-         * @summary Get Queue Info Detail
-         * @param {number} queueId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        queuesQueueIdGet: async (queueId: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'queueId' is not null or undefined
-            if (queueId === null || queueId === undefined) {
-                throw new RequiredError('queueId','Required parameter queueId was null or undefined when calling queuesQueueIdGet.');
-            }
-            const localVarPath = `/queues/{queueId}`
-                .replace(`{${"queueId"}}`, encodeURIComponent(String(queueId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
 
 
     
@@ -185,41 +145,6 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 用户取号
-         * @summary Create Queue Ticket Copy
-         * @param {QueueTicket} [queueTicket] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        testTicketsPost: async (queueTicket?: QueueTicket, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/test/tickets/`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof queueTicket !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(queueTicket !== undefined ? queueTicket : {}) : (queueTicket || "");
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 用户取号
          * @summary Create Queue Ticket
          * @param {number} queueId 
          * @param {*} [options] Override http request option.
@@ -273,22 +198,8 @@ export const QueueApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async queueCheckinPost(ticketId?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse401>> {
-            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queueCheckinPost(ticketId, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * （SMS调用QMS）用户未取号，获取当前 store 所有 queue 的 waiting size
-         * @summary Get Queue Info Detail
-         * @param {number} queueId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async queuesQueueIdGet(queueId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<QueueInfo>> {
-            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesQueueIdGet(queueId, options);
+        async queuesCheckinPost(ticketId?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse401>> {
+            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesCheckinPost(ticketId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -325,20 +236,6 @@ export const QueueApiFp = function(configuration?: Configuration) {
         },
         /**
          * 用户取号
-         * @summary Create Queue Ticket Copy
-         * @param {QueueTicket} [queueTicket] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async testTicketsPost(queueTicket?: QueueTicket, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2013>> {
-            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).testTicketsPost(queueTicket, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 用户取号
          * @summary Create Queue Ticket
          * @param {number} queueId 
          * @param {*} [options] Override http request option.
@@ -367,18 +264,8 @@ export const QueueApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queueCheckinPost(ticketId?: string, options?: any): AxiosPromise<InlineResponse401> {
-            return QueueApiFp(configuration).queueCheckinPost(ticketId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * （SMS调用QMS）用户未取号，获取当前 store 所有 queue 的 waiting size
-         * @summary Get Queue Info Detail
-         * @param {number} queueId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        queuesQueueIdGet(queueId: number, options?: any): AxiosPromise<QueueInfo> {
-            return QueueApiFp(configuration).queuesQueueIdGet(queueId, options).then((request) => request(axios, basePath));
+        queuesCheckinPost(ticketId?: string, options?: any): AxiosPromise<InlineResponse401> {
+            return QueueApiFp(configuration).queuesCheckinPost(ticketId, options).then((request) => request(axios, basePath));
         },
         /**
          * 1. get tickets by storeId: 用户获取某家商店的排队信息 2. get tickets by userId：用户获取自己的所有取号的 ticket 信息 3. get tickets by userId & storeId：用户获取自己取号的某家商店的 ticket 信息 
@@ -400,16 +287,6 @@ export const QueueApiFactory = function (configuration?: Configuration, basePath
          */
         queuesTicketsTicketIdGet(ticketId: number, options?: any): AxiosPromise<InlineResponse2004> {
             return QueueApiFp(configuration).queuesTicketsTicketIdGet(ticketId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 用户取号
-         * @summary Create Queue Ticket Copy
-         * @param {QueueTicket} [queueTicket] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        testTicketsPost(queueTicket?: QueueTicket, options?: any): AxiosPromise<InlineResponse2013> {
-            return QueueApiFp(configuration).testTicketsPost(queueTicket, options).then((request) => request(axios, basePath));
         },
         /**
          * 用户取号
@@ -439,20 +316,8 @@ export class QueueApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof QueueApi
      */
-    public queueCheckinPost(ticketId?: string, options?: any) {
-        return QueueApiFp(this.configuration).queueCheckinPost(ticketId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * （SMS调用QMS）用户未取号，获取当前 store 所有 queue 的 waiting size
-     * @summary Get Queue Info Detail
-     * @param {number} queueId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueueApi
-     */
-    public queuesQueueIdGet(queueId: number, options?: any) {
-        return QueueApiFp(this.configuration).queuesQueueIdGet(queueId, options).then((request) => request(this.axios, this.basePath));
+    public queuesCheckinPost(ticketId?: string, options?: any) {
+        return QueueApiFp(this.configuration).queuesCheckinPost(ticketId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -478,18 +343,6 @@ export class QueueApi extends BaseAPI {
      */
     public queuesTicketsTicketIdGet(ticketId: number, options?: any) {
         return QueueApiFp(this.configuration).queuesTicketsTicketIdGet(ticketId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 用户取号
-     * @summary Create Queue Ticket Copy
-     * @param {QueueTicket} [queueTicket] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueueApi
-     */
-    public testTicketsPost(queueTicket?: QueueTicket, options?: any) {
-        return QueueApiFp(this.configuration).testTicketsPost(queueTicket, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

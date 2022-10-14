@@ -14,6 +14,7 @@
 
 
 export * from './apis/queue-api';
+export * from './apis/queue-interior-api';
 export * from './apis/report-api';
 export * from './apis/store-api';
 export * from './apis/user-api';

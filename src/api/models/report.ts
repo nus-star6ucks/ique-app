@@ -49,6 +49,12 @@ export interface Report {
      * @memberof Report
      */
     createdTime: number;
+    /**
+     * time unit of report
+     * @type {string}
+     * @memberof Report
+     */
+    unit: ReportUnitEnum;
 }
 
 /**
@@ -56,7 +62,18 @@ export interface Report {
     * @enum {string}
     */
 export enum ReportTypeEnum {
-    AverageWaitTime = 'averageWaitTime'
+    AWT = 'AWT',
+    WCNADN = 'WCN_ADN'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ReportUnitEnum {
+    Day = 'day',
+    Week = 'week',
+    Month = 'month',
+    Year = 'year'
 }
 
 

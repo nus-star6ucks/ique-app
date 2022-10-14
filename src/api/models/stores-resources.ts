@@ -16,25 +16,25 @@
 /**
  * 
  * @export
- * @interface InlineResponse2003Resources
+ * @interface StoresResources
  */
-export interface InlineResponse2003Resources {
+export interface StoresResources {
     /**
      * 
      * @type {string}
-     * @memberof InlineResponse2003Resources
+     * @memberof StoresResources
      */
     description: string;
     /**
      * 
      * @type {string}
-     * @memberof InlineResponse2003Resources
+     * @memberof StoresResources
      */
     imageUrl: string;
     /**
      * 
      * @type {number}
-     * @memberof InlineResponse2003Resources
+     * @memberof StoresResources
      */
     ratings: number;
 }

@@ -12,8 +12,8 @@
  */
 
 
-import { InlineResponse2003Resources } from './inline-response2003-resources';
 import { SeatType } from './seat-type';
+import { StoresResources } from './stores-resources';
 
 /**
  * 
@@ -58,6 +58,12 @@ export interface InlineResponse2003 {
      */
     phoneNumbers: Array<string>;
     /**
+     * queue ids
+     * @type {Array<SeatType>}
+     * @memberof InlineResponse2003
+     */
+    seatTypes: Array<SeatType>;
+    /**
      * Store Status
      * @type {string}
      * @memberof InlineResponse2003
@@ -65,22 +71,16 @@ export interface InlineResponse2003 {
     status?: InlineResponse2003StatusEnum;
     /**
      * 
+     * @type {StoresResources}
+     * @memberof InlineResponse2003
+     */
+    resources: StoresResources;
+    /**
+     * 
      * @type {number}
      * @memberof InlineResponse2003
      */
     registerTime?: number;
-    /**
-     * queue ids
-     * @type {Array<SeatType>}
-     * @memberof InlineResponse2003
-     */
-    seatTypes: Array<SeatType>;
-    /**
-     * 
-     * @type {InlineResponse2003Resources}
-     * @memberof InlineResponse2003
-     */
-    resources: InlineResponse2003Resources;
 }
 
 /**

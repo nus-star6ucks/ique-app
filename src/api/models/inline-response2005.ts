@@ -12,8 +12,8 @@
  */
 
 
-import { InlineResponse2003Resources } from './inline-response2003-resources';
 import { QueueInfo } from './queue-info';
+import { StoresResources } from './stores-resources';
 
 /**
  * 
@@ -77,10 +77,10 @@ export interface InlineResponse2005 {
     queuesInfo: Array<QueueInfo>;
     /**
      * 
-     * @type {InlineResponse2003Resources}
+     * @type {StoresResources}
      * @memberof InlineResponse2005
      */
-    resources: InlineResponse2003Resources;
+    resources: StoresResources;
 }
 
 /**
