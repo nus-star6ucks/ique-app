@@ -25,7 +25,7 @@ const props = defineProps<{
         <div class="mt-4 w-full flex items-center justify-between items-center text-gray-500 text-sm">
           <span class="flex items-center space-x-1">
             <MapPinIcon class="w-5" />
-            <span>400m</span>
+            <span v-text="props.store.address" />
           </span>
         </div>
       </div>
