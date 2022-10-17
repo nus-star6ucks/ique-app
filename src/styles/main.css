@@ -87,7 +87,7 @@ main.with-tabbar {
 }
 
 .me .menu {
-  @apply divide-y divide-gray-200;
+  @apply divide-y divide-gray-100;
 }
 
 .me .menu li {

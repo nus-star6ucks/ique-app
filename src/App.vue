@@ -8,7 +8,7 @@ useHead({
     {
       name: 'theme-color',
       content: computed(() => {
-        return (router.currentRoute.value.meta?.themeColor as string) || '#faf9fa'
+        return (router.currentRoute.value.meta?.themeColor as string) || '#fafafa'
       }),
     },
   ],

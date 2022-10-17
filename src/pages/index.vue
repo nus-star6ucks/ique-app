@@ -6,6 +6,14 @@ import { storeApi } from '../utils'
 import StoreCard from '~/components/StoreCard.vue'
 
 const { isLoading, state: storesData, isReady } = useAsyncState(storeApi.storesGet().then(data => data.data), [])
+useHead({
+  meta: [
+    {
+      name: 'theme-color',
+      content: '#fafafa',
+    },
+  ],
+})
 </script>
 
 <template>

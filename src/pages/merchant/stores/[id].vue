@@ -27,7 +27,7 @@ const queues = computed(() => {
 <template>
   <div class="block relative col-span-3 p-8 h-100vh">
     <header class="flex items-center justify-between text-gray-800 mb-2">
-      <RouterLink v-slot="{ navigate }" to="/tickets" custom>
+      <RouterLink v-slot="{ navigate }" to="/merchant" custom>
         <button class="bg-white p-2 rounded-lg" @click="navigate">
           <ArrowLeftIcon class="w-5 h-5 text-gray-800" />
         </button>

@@ -12,7 +12,7 @@ export default {
       meta: [
         {
           name: 'theme-color',
-          content: '#faf9fa',
+          content: () => userStore.user ? '#fafafa' : '#10b981',
         },
       ],
     })
