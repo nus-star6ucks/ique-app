@@ -36,10 +36,11 @@ export default defineComponent({
           password: this.password,
           phoneNumber: this.phone,
           userType: 'customer',
-        })
+        } as any)
         this.$router.push('/')
       }
       catch (e) {
+        // eslint-disable-next-line no-console
         console.log(e)
       }
       finally {
@@ -99,9 +100,6 @@ export default defineComponent({
           <button type="submit" class="text-center w-full bg-emerald-500 shadow-md shadow-emerald-500/40 text-white rounded-lg uppercase py-4">
             Sign up
           </button>
-          <p class="text-center mt-4 text-gray-400 px-4 text-xs">
-            By clicking Sign up, you agree to your <a href="javascript:;">Terms and Conditions</a> and <a href="javascript:;">Privacy Statement</a>
-          </p>
         </div>
       </form>
     </div>

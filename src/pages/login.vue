@@ -93,7 +93,7 @@ export default defineComponent({
           Login
         </button>
         <p class="text-center mt-4 text-gray-400 px-4 text-xs">
-          By clicking Login, you agree to your <a href="javascript:;">Terms and Conditions</a> and <a href="javascript:;">Privacy Statement</a>
+          By clicking Login, you agree to our <a href="javascript:;">Terms and Conditions</a> and <a href="javascript:;">Privacy Statement</a>
         </p>
       </div>
     </form>

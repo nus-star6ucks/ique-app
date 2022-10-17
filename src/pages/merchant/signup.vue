@@ -1,10 +1,43 @@
 <script lang="ts" setup>
-import { BuildingStorefrontIcon } from '@heroicons/vue/24/outline/index.js'
+import { UserPlusIcon } from '@heroicons/vue/24/outline/index.js'
+import { useSnackStore } from '~/stores/snack'
+import { userApi } from '~/utils'
 
 const username = ref<string>('')
 const password = ref<string>('')
 const passwordConfirmation = ref<string>('')
 const phoneNumber = ref<string>('')
+const loading = ref<boolean>(false)
+
+const router = useRouter()
+const snackStore = useSnackStore()
+
+async function onSubmit() {
+  if (password.value !== passwordConfirmation.value) {
+    snackStore.show({ message: 'Password and its confirmation are mismatched!', mode: 'error' })
+    return
+  }
+  if (loading.value)
+    return
+  loading.value = true
+  try {
+    await userApi.usersPost({
+      username: username.value,
+      password: password.value,
+      phoneNumber: phoneNumber.value,
+      userType: 'merchant',
+    } as any)
+    snackStore.show({ message: 'Signed up successfully, please login.', mode: 'success' })
+    router.replace('/merchant/login')
+  }
+  catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e)
+  }
+  finally {
+    loading.value = false
+  }
+}
 </script>
 
 <template>
@@ -14,14 +47,14 @@ const phoneNumber = ref<string>('')
         class="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:py-12 lg:px-16 xl:col-span-6"
       >
         <div class="max-w-xl lg:max-w-3xl">
-          <BuildingStorefrontIcon class="block text-emerald-500 w-24" />
+          <UserPlusIcon class="block text-emerald-500 w-24" />
           <h1
             class="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl"
           >
             Join Us
           </h1>
 
-          <form class="mt-8 grid grid-cols-6 gap-6">
+          <form class="mt-8 grid grid-cols-6 gap-6" @submit.prevent="onSubmit">
             <div class="col-span-6">
               <label for="username" class="block text-gray-700">
                 Username
@@ -40,7 +73,7 @@ const phoneNumber = ref<string>('')
                 id="phoneNumber"
                 v-model="phoneNumber"
                 name="phoneNumber"
-                type="phoneNumber"
+                type="tel"
                 class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
               >
             </div>
@@ -66,13 +99,14 @@ const phoneNumber = ref<string>('')
                 id="passwordConfirmation"
                 v-model="passwordConfirmation"
                 name="passwordConfirmation"
-                type="passwordConfirmation"
+                type="password"
                 class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
               >
             </div>
 
             <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
               <button
+                type="submit"
                 class="inline-block shrink-0 rounded-md border border-emerald-500 bg-emerald-500 px-12 py-3 text-white transition hover:bg-transparent hover:text-emerald-500 focus:outline-none focus:ring active:text-emerald-500"
               >
                 Register
