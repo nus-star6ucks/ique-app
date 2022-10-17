@@ -103,7 +103,9 @@ import { BuildingStorefrontIcon } from '@heroicons/vue/24/outline/index.js'
 
               <p class="mt-4 text-gray-500 sm:mt-0">
                 Already have a Store?
-                <a href="#" class="text-gray-700 underline">Back to Dashboard</a>.
+                <RouterLink to="/merchant" class="text-gray-700 underline">
+                  Back to Dashboard.
+                </RouterLink>
               </p>
             </div>
           </form>

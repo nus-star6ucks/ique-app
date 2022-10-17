@@ -3,22 +3,116 @@ import { ArrowLeftIcon, CheckIcon, ForwardIcon, PhoneIcon, RocketLaunchIcon, XMa
 import { StopIcon } from '@heroicons/vue/24/solid/index.js'
 import { useRouteParams } from '@vueuse/router'
 import dayjs from 'dayjs'
+import { useRequest } from 'vue-request'
 import type { SeatType } from '~/api/models'
+import { useSnackStore } from '~/stores/snack'
 import { queueApi, storeApi } from '~/utils'
+const snackStore = useSnackStore()
 
 const keyword = ref<string>('')
 
 const storeId = useRouteParams('id')
-const { state: store, isLoading: isStoreLoading } = useAsyncState(storeApi.storesStoreIdGet(+storeId).then(d => d.data), undefined)
-const { state: tickets, isLoading } = useAsyncState(queueApi.queuesTicketsGet(undefined, +storeId).then(d => d.data), [])
 
-const filteredTickets = computed(() => tickets.value.filter(t => t.status === 'pending').filter(t => `${t.queueNumber}`.includes(keyword.value) || `${t.seatType.name}`.includes(keyword.value)))
+const { data: store, loading: isStoreLoading } = useRequest(storeApi.storesStoreIdGet(+storeId).then(d => d.data))
+
+const { run: startService, loading: startServiceLoading } = useRequest(() => storeApi.storesStartPost(+storeId), {
+  manual: true,
+  onSuccess() {
+    snackStore.show({ mode: 'success', message: 'Started successfully!' })
+  },
+  onError() {
+    snackStore.show({ mode: 'error', message: 'Unexpected error!' })
+  },
+})
+
+function confirmStartService() {
+  // eslint-disable-next-line no-alert
+  if (window.confirm('Are you sure to start the service?'))
+    startService()
+}
+
+const { run: stopService, loading: stopServiceLoading } = useRequest(() => storeApi.storesStopPost(+storeId), {
+  manual: true,
+  onSuccess() {
+    snackStore.show({ mode: 'success', message: 'Stopped successfully!' })
+  },
+  onError() {
+    snackStore.show({ mode: 'error', message: 'Unexpected error!' })
+  },
+})
+
+function confirmStopService() {
+  // eslint-disable-next-line no-alert
+  if (window.confirm('Are you sure to stop the service?'))
+    stopService()
+}
+
+const ticketsProcessing = ref<Record<string, unknown>>({})
+const { run: callTicket, loading: callTicketLoading } = useRequest((ticketId: number) => queueApi.queuesCallPost(`${ticketId}`), {
+  manual: true,
+  onBefore([ticketId]) {
+    ticketsProcessing.value = { ...ticketsProcessing.value, [ticketId]: true }
+  },
+  onSuccess() {
+    snackStore.show({ mode: 'success', message: 'Called successfully!' })
+  },
+  onError() {
+    snackStore.show({ mode: 'error', message: 'Unexpected error!' })
+  },
+  onAfter([ticketId]) {
+    delete ticketsProcessing.value[ticketId]
+    ticketsProcessing.value = { ...ticketsProcessing.value }
+  },
+})
+
+const { run: skipTicket, loading: skipTicketLoading } = useRequest((ticketId: number) => queueApi.queuesSkipPost(`${ticketId}`), {
+  manual: true,
+  onBefore([ticketId]) {
+    ticketsProcessing.value = { ...ticketsProcessing.value, [ticketId]: true }
+  },
+  onSuccess() {
+    snackStore.show({ mode: 'success', message: 'Skipped successfully!' })
+  },
+  onError() {
+    snackStore.show({ mode: 'error', message: 'Unexpected error!' })
+  },
+  onAfter([ticketId]) {
+    delete ticketsProcessing.value[ticketId]
+    ticketsProcessing.value = { ...ticketsProcessing.value }
+  },
+})
+
+const { run: checkinTicket, loading: checkinTicketLoading } = useRequest((ticketId: number) => queueApi.queuesCheckinPost(`${ticketId}`), {
+  manual: true,
+  onBefore([ticketId]) {
+    ticketsProcessing.value = { ...ticketsProcessing.value, [ticketId]: true }
+  },
+  onSuccess() {
+    snackStore.show({ mode: 'success', message: 'Checked in successfully!' })
+  },
+  onError() {
+    snackStore.show({ mode: 'error', message: 'Unexpected error!' })
+  },
+  onAfter([ticketId]) {
+    delete ticketsProcessing.value[ticketId]
+    ticketsProcessing.value = { ...ticketsProcessing.value }
+  },
+})
+
+const { data: tickets, loading: isLoading } = useRequest(queueApi.queuesTicketsGet(undefined, +storeId).then(d => d.data), {
+  refreshDeps: [callTicketLoading, skipTicketLoading, checkinTicketLoading, startServiceLoading],
+})
+const filteredTickets = computed(() => tickets.value?.filter(t => t.status === 'pending').filter(t => `${t.queueNumber}`.includes(keyword.value) || `${t.seatType.name}`.includes(keyword.value)))
 const queues = computed(() => {
+  if (!tickets.value)
+    return []
+
+  // get queues by tickets
   const memo: Record<string, { seatType: SeatType; queueId: number; count: number }> = {}
   tickets.value.forEach((t) => {
     if (memo[t.queueId])
       return
-    memo[t.queueId] = ({ seatType: t.seatType, queueId: t.queueId, count: tickets.value.filter(tk => t.queueId === tk.queueId).length })
+    memo[t.queueId] = ({ seatType: t.seatType, queueId: t.queueId, count: tickets.value?.filter(tk => t.queueId === tk.queueId).length || 0 })
   })
   return Object.values(memo)
 })
@@ -44,9 +138,10 @@ const queues = computed(() => {
               <h2 class="text-xl font-bold mb-2 leading-none" v-text="store.name" />
               <p class="text-gray-600" v-text="store.type" />
             </div>
-            <span class="text-white px-6 py-1 text-xs bg-emerald-500 rounded-md">ACTIVE</span>
+            <span v-if="store.status === 'onService'" class="text-white px-6 py-1 text-xs bg-emerald-500 rounded-md uppercase">on service</span>
+            <span v-if="store.status === 'stopService'" class="text-white px-6 py-1 text-xs bg-red-500 rounded-md uppercase">out of service</span>
           </div>
-          <div class="flex space-x-2">
+          <div v-if="tickets" class="flex space-x-2">
             <div>
               <h3 class="text-2xl font-bold mb-1" v-text="tickets.filter(t => t.status === 'pending').length" />
               <p class="text-sm text-gray-400">
@@ -68,11 +163,11 @@ const queues = computed(() => {
           </div>
         </section>
         <div class="grid grid-cols-2 gap-4">
-          <button class="opacity-40 bg-emerald-50 text-emerald-500 rounded-lg flex flex-col items-center justify-center text-lg">
+          <button :disabled="startServiceLoading || store.status === 'onService'" class="bg-emerald-50 text-emerald-500 rounded-lg flex flex-col items-center justify-center text-lg" @click="confirmStartService">
             <RocketLaunchIcon class="w-12 mb-4" />
             <span>Start Service</span>
           </button>
-          <button class="bg-red-50 text-red-500 text-lg rounded-lg flex flex-col items-center justify-center text-lg">
+          <button :disabled="stopServiceLoading || store.status === 'stopService'" class="bg-red-50 text-red-500 text-lg rounded-lg flex flex-col items-center justify-center text-lg" @click="confirmStopService">
             <StopIcon class="w-12 mb-4" />
             <span>Stop Service</span>
           </button>
@@ -96,38 +191,48 @@ const queues = computed(() => {
     </header>
     <section class="mt-8 space-y-4 h-full overflow-auto">
       <Loading v-if="isLoading" :loading="true" />
-      <article v-for="ticket in filteredTickets" :key="ticket.id" class="rounded-lg overflow-hidden border border-gray-100 bg-white flex items-center justify-between">
-        <div class="p-4">
-          <div>
-            <h3 class="text-xl font-medium text-gray-900 space-x-2 whitespace-nowrap">
-              <span v-text="ticket.seatType.name" />
-              <span v-text="ticket.queueNumber" />
-            </h3>
+      <div v-if="store?.status === 'stopService'" class="relative rounded-lg border border-gray-200 p-8 text-center opacity-70">
+        <h2 class="text-2xl font-medium uppercase">
+          Out of Service
+        </h2>
+        <p class="mt-4 text-sm text-gray-500">
+          Click on Start Service to queue up!
+        </p>
+      </div>
+      <template v-else>
+        <article v-for="ticket in filteredTickets" :key="ticket.id" class="rounded-lg overflow-hidden border border-gray-100 bg-white flex items-center justify-between">
+          <div class="p-4">
+            <div>
+              <h3 class="text-xl font-medium text-gray-900 space-x-2 whitespace-nowrap">
+                <span v-text="ticket.seatType.name" />
+                <span v-text="ticket.queueNumber" />
+              </h3>
+            </div>
+            <div class="mt-1 flex">
+              <p class="text-xs">
+                <span class="text-gray-500" v-text="dayjs(ticket.startTime).toNow()" />
+              </p>
+            </div>
           </div>
-          <div class="mt-1 flex">
-            <p class="text-xs">
-              <span class="text-gray-500" v-text="dayjs(ticket.startTime).toNow()" />
-            </p>
-          </div>
-        </div>
 
-        <div class="flex">
-          <button class="text-center text-sm bg-sky-500 text-white px-4 py-6 flex flex-col items-center">
-            <PhoneIcon class="w-6" />
-            <span class="mt-2">Call</span>
-          </button>
-          <button class="text-center text-sm bg-yellow-500 text-white px-4 py-6 flex flex-col items-center">
-            <ForwardIcon class="w-6" />
-            <span class="mt-2">Skip</span>
-          </button>
-          <button class="text-center text-sm bg-emerald-500 text-white px-4 py-6 flex flex-col items-center">
-            <CheckIcon class="w-6" />
-            <span class="mt-2">Checkin</span>
-          </button>
-        </div>
-      </article>
+          <div class="flex">
+            <button class="text-center text-sm bg-sky-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.id}`)" @click="callTicket(ticket.id)">
+              <PhoneIcon class="w-6" />
+              <span class="mt-2">Call</span>
+            </button>
+            <button class="text-center text-sm bg-yellow-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.id}`)" @click="skipTicket(ticket.id)">
+              <ForwardIcon class="w-6" />
+              <span class="mt-2">Skip</span>
+            </button>
+            <button class="text-center text-sm bg-emerald-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.id}`)" @click="checkinTicket(ticket.id)">
+              <CheckIcon class="w-6" />
+              <span class="mt-2">Checkin</span>
+            </button>
+          </div>
+        </article>
+      </template>
     </section>
-    <div class="mt-8">
+    <div v-if="store?.status === 'onService'" class="mt-8">
       <div class="relative">
         <input v-model="keyword" placeholder="Search..." name="keyword" type="text" class="px-4 pr-14 w-full border border-gray-100 bg-gray-50 rounded-lg py-2" minlength="6">
         <a v-if="!!keyword" href="javascript:;" class="absolute inset-y-0 right-4 top-2 inline-flex" @click="keyword = ''">

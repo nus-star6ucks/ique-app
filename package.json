@@ -9,7 +9,6 @@
     "preview": "vite preview",
     "preview-https": "serve dist",
     "test": "vitest",
-    "test:e2e": "cypress open",
     "test:unit": "vitest",
     "typecheck": "vue-tsc --noEmit",
     "up": "taze major -I"
@@ -34,6 +33,7 @@
     "url": "^0.11.0",
     "vue": "^3.2.40",
     "vue-demi": "^0.13.11",
+    "vue-request": "^1.2.4",
     "vue-router": "^4.1.5"
   },
   "devDependencies": {
@@ -43,9 +43,7 @@
     "@vue/test-utils": "^2.1.0",
     "critters": "^0.0.16",
     "cross-env": "^7.0.3",
-    "cypress": "^10.9.0",
     "eslint": "^8.24.0",
-    "eslint-plugin-cypress": "^2.12.1",
     "https-localhost": "^4.7.1",
     "nano-staged": "^0.8.0",
     "pnpm": "^7.12.2",
