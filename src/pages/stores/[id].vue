@@ -16,8 +16,10 @@ import Loading from '~/components/Loading.vue'
 import WithAuth from '~/components/WithAuth.vue'
 import { useSnackStore } from '~/stores/snack'
 import type { QueueInfo } from '~/api/models'
+import { useUserStore } from '~/stores/user'
 
 const snackStore = useSnackStore()
+const userStore = useUserStore()
 const router = useRouter()
 
 const selectedQueueInfo = ref<QueueInfo>(undefined!)
@@ -31,11 +33,11 @@ function deselectQueueInfo() {
 
 const queueTicketRequesting = ref<boolean>(false)
 function queue() {
-  if (!selectedQueueInfo.value)
+  if (!selectedQueueInfo.value || !userStore.user)
     return
 
   queueTicketRequesting.value = true
-  queueApi.ticketsPost(selectedQueueInfo.value.queueId).then(({ data }) => {
+  queueApi.queuesTicketsPost(selectedQueueInfo.value.queueId, userStore.user.id).then(({ data }) => {
     snackStore.show({ mode: 'success', message: 'Queued successfully!' })
     router.push(`/tickets/${data.ticketId}`)
   }).catch((e) => {
