@@ -3,6 +3,7 @@ import { BuildingStorefrontIcon } from '@heroicons/vue/24/outline/index.js'
 
 const username = ref<string>('')
 const password = ref<string>('')
+const passwordConfirmation = ref<string>('')
 const phoneNumber = ref<string>('')
 </script>
 
@@ -32,6 +33,19 @@ const phoneNumber = ref<string>('')
             </div>
 
             <div class="col-span-6">
+              <label for="phoneNumber" class="block text-gray-700">
+                Phone
+              </label>
+              <input
+                id="phoneNumber"
+                v-model="phoneNumber"
+                name="phoneNumber"
+                type="phoneNumber"
+                class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
+              >
+            </div>
+
+            <div class="col-span-6">
               <label for="password" class="block text-gray-700">
                 Password
               </label>
@@ -45,14 +59,14 @@ const phoneNumber = ref<string>('')
             </div>
 
             <div class="col-span-6">
-              <label for="phoneNumber" class="block text-gray-700">
-                Phone
+              <label for="passwordConfirmation" class="block text-gray-700">
+                Password Confirmation
               </label>
               <input
-                id="phoneNumber"
-                v-model="phoneNumber"
-                name="phoneNumber"
-                type="phoneNumber"
+                id="passwordConfirmation"
+                v-model="passwordConfirmation"
+                name="passwordConfirmation"
+                type="passwordConfirmation"
                 class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
               >
             </div>

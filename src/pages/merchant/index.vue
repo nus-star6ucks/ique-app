@@ -39,8 +39,17 @@ function updateStore() {
       </h2>
       <div class="w-9 h-9" />
     </header>
-    <div class="p-8 overflow-y-scroll">
-      <form v-if="selectedStore" class="grid grid-cols-6 gap-6" @submit.prevent="updateStore">
+    <div class="p-8">
+      <div v-if="!selectedStore" class="relative rounded-lg border border-gray-200 p-8 text-center opacity-70">
+        <h2 class="text-2xl font-medium uppercase">
+          Do Something
+        </h2>
+        <p class="mt-4 text-sm text-gray-500">
+          Click on Settings to update store detail
+        </p>
+      </div>
+
+      <form v-else class="grid grid-cols-6 gap-6" @submit.prevent="updateStore">
         <div class="col-span-6 sm:col-span-3">
           <label
             for="name"
@@ -58,7 +67,6 @@ function updateStore() {
             class="mt-1 p-2 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
           >
         </div>
-
         <div class="col-span-6 sm:col-span-3">
           <label
             for="type"
@@ -147,6 +155,12 @@ function updateStore() {
             class="inline-block shrink-0 rounded-md border border-emerald-500 bg-emerald-500 px-12 py-3 text-white transition hover:bg-transparent hover:text-emerald-500 focus:outline-none focus:ring active:text-emerald-500"
           >
             Submit
+          </button>
+          <button
+            class="inline-block shrink-0 rounded-md border border-gray-500 bg-gray-500 px-12 py-3 text-white transition"
+            @click="updateStoreDetailStore.setSelectedStore(undefined)"
+          >
+            Cancel
           </button>
         </div>
       </form>

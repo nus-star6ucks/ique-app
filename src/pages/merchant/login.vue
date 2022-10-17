@@ -25,7 +25,7 @@ const password = ref<string>('')
                 Username
               </label>
               <input
-                v-model.trim="username" placeholder="Username" name="username" required type="text"
+                v-model.trim="username" name="username" required type="text"
                 class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
               >
             </div>

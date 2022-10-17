@@ -33,8 +33,8 @@ watch(selectedStore, (newState, prevState) => {
         </header>
         <Loading v-if="isLoading" :loading="true" />
         <div class="p-8">
-          <section class="grid grid-cols-2 gap-4">
-            <div v-for="store in stores" :key="store.id" class="relative block border border-gray-100 rounded-lg overflow-hidden">
+          <section class="grid grid-cols-2 gap-8">
+            <div v-for="store in stores" :key="store.id" class="relative block border border-gray-200 rounded-lg overflow-hidden">
               <img
                 :alt="store.name"
                 :src="store.resources.imageUrl"
