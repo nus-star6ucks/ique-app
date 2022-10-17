@@ -104,7 +104,6 @@ const queues = computed(() => {
               <span v-text="ticket.queueNumber" />
             </h3>
           </div>
-
           <div class="mt-1 flex">
             <p class="text-xs">
               <span class="text-gray-500" v-text="dayjs(ticket.startTime).toNow()" />
