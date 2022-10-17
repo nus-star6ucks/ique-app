@@ -27,16 +27,28 @@ export interface InlineResponse2012 {
     ticketId: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof InlineResponse2012
      */
-    queueNumber: string;
+    queueNumber: number;
     /**
      * 
      * @type {string}
      * @memberof InlineResponse2012
      */
     seatTypeName: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineResponse2012
+     */
+    waitingSize: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse2012
+     */
+    estimateWaitingTime: string;
 }
 
 

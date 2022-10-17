@@ -31,6 +31,8 @@ import { InlineResponse2001 } from '../models';
 // @ts-ignore
 import { InlineResponse2002 } from '../models';
 // @ts-ignore
+import { InlineResponse2006 } from '../models';
+// @ts-ignore
 import { InlineResponse201 } from '../models';
 // @ts-ignore
 import { InlineResponse401 } from '../models';
@@ -418,7 +420,7 @@ export const UserApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async usersVerifyGet(authorization?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+        async usersVerifyGet(authorization?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2006>> {
             const localVarAxiosArgs = await UserApiAxiosParamCreator(configuration).usersVerifyGet(authorization, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -508,7 +510,7 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersVerifyGet(authorization?: string, options?: any): AxiosPromise<InlineResponse200> {
+        usersVerifyGet(authorization?: string, options?: any): AxiosPromise<InlineResponse2006> {
             return UserApiFp(configuration).usersVerifyGet(authorization, options).then((request) => request(axios, basePath));
         },
     };

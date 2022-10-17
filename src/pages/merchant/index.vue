@@ -1,10 +1,7 @@
 <script lang="ts" setup>
 import { useSnackStore } from '~/stores/snack'
 import { useUpdateStoreDetailStore } from '~/stores/updateStoreDetail'
-import { useUserStore } from '~/stores/user'
 import { storeApi } from '~/utils'
-
-const userStore = useUserStore()
 
 const updateStoreLoading = ref<boolean>(false)
 const updateStoreDetailStore = useUpdateStoreDetailStore()

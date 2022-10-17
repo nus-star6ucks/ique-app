@@ -46,16 +46,16 @@ export interface InlineResponse2004 {
     queueNumber: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof InlineResponse2004
      */
-    startTime: number;
+    startTime: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof InlineResponse2004
      */
-    endTime: number;
+    endTime: string;
     /**
      * 
      * @type {string}

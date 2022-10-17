@@ -16,43 +16,37 @@
 /**
  * 
  * @export
- * @interface InlineResponse200
+ * @interface InlineResponse2006
  */
-export interface InlineResponse200 {
+export interface InlineResponse2006 {
     /**
      * 
      * @type {number}
-     * @memberof InlineResponse200
+     * @memberof InlineResponse2006
      */
     id: number;
     /**
      * 
      * @type {string}
-     * @memberof InlineResponse200
+     * @memberof InlineResponse2006
      */
     username: string;
     /**
      * 
      * @type {string}
-     * @memberof InlineResponse200
+     * @memberof InlineResponse2006
      */
-    userType: InlineResponse200UserTypeEnum;
+    userType: InlineResponse2006UserTypeEnum;
     /**
      * 
      * @type {string}
-     * @memberof InlineResponse200
+     * @memberof InlineResponse2006
      */
-    phoneNumber: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InlineResponse200
-     */
-    status: InlineResponse200StatusEnum;
+    status: InlineResponse2006StatusEnum;
     /**
      * timestamp
      * @type {number}
-     * @memberof InlineResponse200
+     * @memberof InlineResponse2006
      */
     createTime: number;
 }
@@ -61,7 +55,7 @@ export interface InlineResponse200 {
     * @export
     * @enum {string}
     */
-export enum InlineResponse200UserTypeEnum {
+export enum InlineResponse2006UserTypeEnum {
     Customer = 'customer',
     Merchant = 'merchant'
 }
@@ -69,7 +63,7 @@ export enum InlineResponse200UserTypeEnum {
     * @export
     * @enum {string}
     */
-export enum InlineResponse200StatusEnum {
+export enum InlineResponse2006StatusEnum {
     Active = 'active',
     Cancelled = 'cancelled'
 }

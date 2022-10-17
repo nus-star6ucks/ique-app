@@ -187,11 +187,15 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Start Service
-         * @param {number} [storeId] 
+         * @param {number} storeId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storesStartPost: async (storeId?: number, options: any = {}): Promise<RequestArgs> => {
+        storesStartPost: async (storeId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeId' is not null or undefined
+            if (storeId === null || storeId === undefined) {
+                throw new RequiredError('storeId','Required parameter storeId was null or undefined when calling storesStartPost.');
+            }
             const localVarPath = `/stores/start`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -222,11 +226,15 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Stop Service
-         * @param {number} [storeId] 
+         * @param {number} storeId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storesStopPost: async (storeId?: number, options: any = {}): Promise<RequestArgs> => {
+        storesStopPost: async (storeId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeId' is not null or undefined
+            if (storeId === null || storeId === undefined) {
+                throw new RequiredError('storeId','Required parameter storeId was null or undefined when calling storesStopPost.');
+            }
             const localVarPath = `/stores/stop`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -358,11 +366,11 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Start Service
-         * @param {number} [storeId] 
+         * @param {number} storeId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storesStartPost(storeId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async storesStartPost(storeId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
             const localVarAxiosArgs = await StoreApiAxiosParamCreator(configuration).storesStartPost(storeId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -372,11 +380,11 @@ export const StoreApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Stop Service
-         * @param {number} [storeId] 
+         * @param {number} storeId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storesStopPost(storeId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async storesStopPost(storeId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
             const localVarAxiosArgs = await StoreApiAxiosParamCreator(configuration).storesStopPost(storeId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -449,21 +457,21 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Start Service
-         * @param {number} [storeId] 
+         * @param {number} storeId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storesStartPost(storeId?: number, options?: any): AxiosPromise<object> {
+        storesStartPost(storeId: number, options?: any): AxiosPromise<object> {
             return StoreApiFp(configuration).storesStartPost(storeId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Stop Service
-         * @param {number} [storeId] 
+         * @param {number} storeId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storesStopPost(storeId?: number, options?: any): AxiosPromise<object> {
+        storesStopPost(storeId: number, options?: any): AxiosPromise<object> {
             return StoreApiFp(configuration).storesStopPost(storeId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -537,24 +545,24 @@ export class StoreApi extends BaseAPI {
     /**
      * 
      * @summary Start Service
-     * @param {number} [storeId] 
+     * @param {number} storeId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public storesStartPost(storeId?: number, options?: any) {
+    public storesStartPost(storeId: number, options?: any) {
         return StoreApiFp(this.configuration).storesStartPost(storeId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Stop Service
-     * @param {number} [storeId] 
+     * @param {number} storeId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public storesStopPost(storeId?: number, options?: any) {
+    public storesStopPost(storeId: number, options?: any) {
         return StoreApiFp(this.configuration).storesStopPost(storeId, options).then((request) => request(this.axios, this.basePath));
     }
 
