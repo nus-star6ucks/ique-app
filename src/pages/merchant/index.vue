@@ -1,20 +1,23 @@
 <script lang="ts" setup>
-import type { Store } from '~/api/models'
 import { useSnackStore } from '~/stores/snack'
+import { useUpdateStoreDetailStore } from '~/stores/updateStoreDetail'
 import { useUserStore } from '~/stores/user'
 import { storeApi } from '~/utils'
 
 const userStore = useUserStore()
-const { state: stores, isLoading, execute: refresh } = useAsyncState(storeApi.storesGet(userStore.user?.id).then(d => d.data), [])
 
-const selectedStore = ref<Store & { phoneNumbersText: string }>(undefined!)
 const updateStoreLoading = ref<boolean>(false)
+const updateStoreDetailStore = useUpdateStoreDetailStore()
 
+const selectedStore = computed(() => updateStoreDetailStore?.updateStoreDetail?.selectedStore)
 const snackStore = useSnackStore()
 
 function updateStore() {
   updateStoreLoading.value = true
   const formData = selectedStore.value
+  if (!formData)
+    return
+
   storeApi.storesPut({
     id: formData.id,
     name: formData.name,
@@ -23,8 +26,7 @@ function updateStore() {
     resources: formData.resources,
   }).then(() => {
     snackStore.show({ mode: 'success', message: 'Updated Successfully!' })
-    selectedStore.value = undefined!
-    refresh()
+    updateStoreDetailStore.setSelectedStore(undefined!)
   }).finally(() => {
     updateStoreLoading.value = false
   })

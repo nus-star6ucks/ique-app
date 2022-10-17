@@ -1,15 +1,19 @@
 <script lang="ts" setup>
-import { AdjustmentsHorizontalIcon, ArrowLeftIcon, ArrowLeftOnRectangleIcon, HeartIcon, MapPinIcon, PlusIcon } from '@heroicons/vue/24/outline/index.js'
+import { ArrowLeftIcon, MapPinIcon, PlusIcon } from '@heroicons/vue/24/outline/index.js'
 import { useRouter } from 'vue-router'
-import type { Store } from '~/api/models'
-import { useSnackStore } from '~/stores/snack'
+import { useUpdateStoreDetailStore } from '~/stores/updateStoreDetail'
 import { useUserStore } from '~/stores/user'
 import { storeApi } from '~/utils'
 
+const updateStoreDetailStore = useUpdateStoreDetailStore()
 const userStore = useUserStore()
 const { state: stores, isLoading, execute: refresh } = useAsyncState(storeApi.storesGet(userStore.user?.id).then(d => d.data), [])
+const selectedStore = computed(() => updateStoreDetailStore?.updateStoreDetail?.selectedStore)
 
-const selectedStore = ref<Store & { phoneNumbersText: string }>(undefined!)
+watch(selectedStore, (newState, prevState) => {
+  if (prevState && !newState)
+    refresh()
+})
 </script>
 
 <template>
@@ -54,15 +58,14 @@ const selectedStore = ref<Store & { phoneNumbersText: string }>(undefined!)
                   >
                     Serve
                   </RouterLink>
-                <!-- <a
+                  <a
                     href="javascript:;"
                     type="button"
                     class="text-center w-full rounded-lg text-white bg-gray-700 p-2 uppercase"
-                     -- @click="() => (selectedStore = { ...store, phoneNumbersText: store.phoneNumbers.join('\n') })"
+                    @click="updateStoreDetailStore.setSelectedStore({ selectedStore: { ...store, phoneNumbersText: store.phoneNumbers.join(`\n`) } })"
                   >
-                    >
                     Settings
-                  </a> -->
+                  </a>
                 </div>
               </div>
             </div>
