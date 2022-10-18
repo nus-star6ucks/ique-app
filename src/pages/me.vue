@@ -1,33 +1,22 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { ArrowLeftOnRectangleIcon, HeartIcon } from '@heroicons/vue/24/outline/index.js'
 import Welcome from '../components/Welcome.vue'
 import { useUserStore } from '../stores/user'
-export default {
-  components: {
-    ArrowLeftOnRectangleIcon, Welcome, HeartIcon,
-  },
-  setup() {
-    const userStore = useUserStore()
-    useHead({
-      meta: [
-        {
-          name: 'theme-color',
-          content: () => userStore.user ? '#fafafa' : '#10b981',
-        },
-      ],
-    })
 
-    return {
-      userStore,
-    }
-  },
-  methods: {
-    confirmLogout() {
-      // eslint-disable-next-line no-alert
-      if (window.confirm('Are you sure?'))
-        this.userStore.logout()
+const userStore = useUserStore()
+useHead({
+  meta: [
+    {
+      name: 'theme-color',
+      content: () => userStore.user ? '#fafafa' : '#10b981',
     },
-  },
+  ],
+})
+
+function confirmLogout() {
+  // eslint-disable-next-line no-alert
+  if (window.confirm('Are you sure?'))
+    userStore.logout()
 }
 </script>
 

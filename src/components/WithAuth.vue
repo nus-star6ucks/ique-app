@@ -17,7 +17,7 @@ onMounted(() => {
   if (userType === 'customer' && user?.userType === 'customer')
     return
 
-  router.replace(userType === 'customer' ? '/me' : '/merchant')
+  router.replace(userType === 'customer' ? '/me' : '/merchant/login')
 })
 </script>
 

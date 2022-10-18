@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { UserPlusIcon } from '@heroicons/vue/24/outline/index.js'
+import { UserUserTypeEnum } from '~/api/models'
 import { useSnackStore } from '~/stores/snack'
 import { userApi } from '~/utils'
 
@@ -41,7 +42,7 @@ async function onSubmit() {
 </script>
 
 <template>
-  <WithoutAuth>
+  <WithoutAuth :user-type="UserUserTypeEnum.Merchant">
     <section class="bg-white">
       <div class="lg:grid lg:min-h-screen lg:grid-cols-12">
         <main

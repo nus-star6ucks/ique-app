@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { UserUserTypeEnum } from '~/api/models'
 import { useSnackStore } from '~/stores/snack'
 import { useUpdateStoreDetailStore } from '~/stores/updateStoreDetail'
 import { storeApi } from '~/utils'
@@ -31,7 +32,7 @@ function updateStore() {
 </script>
 
 <template>
-  <div>
+  <WithAuth :user-type="UserUserTypeEnum.Merchant">
     <header class="flex items-center justify-center text-gray-800 mb-2 p-8">
       <div class="w-9 h-9" />
       <h2>
@@ -165,7 +166,7 @@ function updateStore() {
         </div>
       </form>
     </div>
-  </div>
+  </WithAuth>
 </template>
 
 <route lang="yaml">
