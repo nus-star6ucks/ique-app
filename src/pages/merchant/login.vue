@@ -101,8 +101,7 @@ async function onSubmit() {
           class="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6"
         >
           <img
-            alt="Pattern"
-            src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2FmZXxlbnwwfHwwfHw%3D&auto=format"
+            src="/assets/demo.jpeg"
             class="absolute inset-0 h-full w-full object-cover"
           >
         </aside>

@@ -7,6 +7,7 @@ const { userType = 'customer' } = defineProps<{
 }>()
 const userStore = useUserStore()
 const router = useRouter()
+const token = useLocalStorage('token', '')
 
 onMounted(() => {
   const { user } = userStore
@@ -16,7 +17,8 @@ onMounted(() => {
   if (userType === 'customer' && user?.userType === 'customer')
     return
 
-  router.replace(userType === 'customer' ? '/me' : '/merchant/login')
+  if (!token.value)
+    router.replace(userType === 'customer' ? '/me' : '/merchant/login')
 })
 </script>
 

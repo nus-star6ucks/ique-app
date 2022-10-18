@@ -5,7 +5,7 @@ import Loading from '../components/Loading.vue'
 import { storeApi } from '../utils'
 import StoreCard from '~/components/StoreCard.vue'
 
-const { data: stores, loading: isLoading } = useRequest(storeApi.storesGet().then(d => d.data))
+const { data: stores, loading: isLoading } = useRequest(() => storeApi.storesGet().then(d => d.data))
 
 useHead({
   meta: [

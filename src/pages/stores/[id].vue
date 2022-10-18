@@ -49,7 +49,7 @@ function queue() {
 }
 
 const storeId = useRouteParams('id')
-const { data: store, loading: isLoading } = useRequest(storeApi.storesStoreIdGet(+storeId).then(d => d.data))
+const { data: store, loading: isLoading } = useRequest(() => storeApi.storesStoreIdGet(+storeId).then(d => d.data))
 </script>
 
 <template>

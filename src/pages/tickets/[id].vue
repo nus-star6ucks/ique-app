@@ -9,7 +9,7 @@ import WithAuth from '~/components/WithAuth.vue'
 
 const ticketId = useRouteParams('id')
 
-const { data, loading: isLoading } = useRequest(queueApi.queuesTicketsTicketIdGet(+ticketId).then(async ({ data }) => {
+const { data, loading: isLoading } = useRequest(() => queueApi.queuesTicketsTicketIdGet(+ticketId).then(async ({ data }) => {
   const { data: store } = await storeApi.storesStoreIdGet(data.storeId)
   return {
     ticket: data,

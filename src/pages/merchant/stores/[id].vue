@@ -47,7 +47,7 @@ function confirmStopService() {
     stopService()
 }
 
-const { data: store, loading: isStoreLoading } = useRequest(storeApi.storesStoreIdGet(+storeId).then(d => d.data), {
+const { data: store, loading: isStoreLoading } = useRequest(() => storeApi.storesStoreIdGet(+storeId).then(d => d.data), {
   refreshDeps: [startServiceLoading, stopServiceLoading],
 })
 
@@ -103,7 +103,7 @@ const { run: checkinTicket, loading: checkinTicketLoading } = useRequest((ticket
   },
 })
 
-const { data: tickets, loading: isLoading } = useRequest(queueApi.queuesTicketsGet(undefined, +storeId).then(d => d.data), {
+const { data: tickets, loading: isLoading } = useRequest(() => queueApi.queuesTicketsGet(undefined, +storeId).then(d => d.data), {
   refreshDeps: [callTicketLoading, skipTicketLoading, checkinTicketLoading, startServiceLoading],
 })
 const filteredTickets = computed(() => tickets.value?.filter(t => t.status === 'pending').filter(t => `${t.queueNumber}`.includes(keyword.value) || `${t.seatType.name}`.includes(keyword.value)))
