@@ -2,6 +2,7 @@
 import { ArrowLeftIcon, MapPinIcon, PlusIcon } from '@heroicons/vue/24/outline/index.js'
 import { useRequest } from 'vue-request'
 import { useRouter } from 'vue-router'
+import { UserUserTypeEnum } from '~/api/models'
 import { useUpdateStoreDetailStore } from '~/stores/updateStoreDetail'
 import { useUserStore } from '~/stores/user'
 import { storeApi } from '~/utils'
@@ -19,7 +20,7 @@ watch(selectedStore, (newState, prevState) => {
 </script>
 
 <template>
-  <WithAuth>
+  <WithAuth :user-type="UserUserTypeEnum.Merchant">
     <main :class="[useRouter().currentRoute.value.meta.classNames]" class="m-0 h-100vh grid grid-cols-5 p-0 merchant">
       <div class="block relative col-span-3 h-100vh overflow-y-scroll">
         <header class="p-8 flex items-center justify-between text-gray-800 mb-2 sticky top-0 z-10 bg-gray-50">
