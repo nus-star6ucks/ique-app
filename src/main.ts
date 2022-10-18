@@ -11,6 +11,7 @@ import 'virtual:windi.css'
 import './styles/main.css'
 import { useUserStore } from './stores/user'
 import { userApi } from './utils'
+import { UserUserTypeEnum } from './api/models'
 
 const pinia = createPinia()
 
@@ -27,7 +28,6 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore(pinia)
   const token = useLocalStorage('token', '')
-
   if (typeof userStore.user === 'undefined' && token.value) {
     userApi.usersGet().then(({ data }) => {
       userStore.setUser(data)
@@ -40,6 +40,16 @@ router.beforeEach((to, from, next) => {
       userStore.logout()
       next('/')
     })
+    return
+  }
+
+  if (userStore.user?.userType === UserUserTypeEnum.Customer && to.path.startsWith('/merchant')) {
+    next('/')
+    return
+  }
+
+  if (userStore.user?.userType === UserUserTypeEnum.Merchant && !to.path.startsWith('/merchant')) {
+    next('/merchant')
     return
   }
 
