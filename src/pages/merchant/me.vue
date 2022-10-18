@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { AdjustmentsHorizontalIcon, ArrowLeftOnRectangleIcon, HeartIcon } from '@heroicons/vue/24/outline/index.js'
+import { AdjustmentsHorizontalIcon, ArrowLeftOnRectangleIcon, HeartIcon, XMarkIcon } from '@heroicons/vue/24/outline/index.js'
 import { useRequest } from 'vue-request'
 import { useSnackStore } from '~/stores/snack'
 import { useUserStore } from '~/stores/user'
@@ -30,12 +30,19 @@ const { run: deleteMySelf, loading: deleteLoading } = useRequest((id: number) =>
   },
 })
 function confirmDelete() {
-  if (!userStore.user || deleteLoading)
+  const { user } = userStore
+  if (!user?.id || deleteLoading.value)
     return
   // eslint-disable-next-line no-alert
   const userInput = window.prompt('This action cannot be undone, please type your username to continue: ')
-  if (userInput === userStore.user.username)
-    deleteMySelf(+userStore.user.id)
+  if (userInput === user.username)
+    deleteMySelf(+user.id)
+}
+
+function confirmLogout() {
+  // eslint-disable-next-line no-alert
+  if (window.confirm('Are you sure?'))
+    userStore.logout()
 }
 </script>
 
@@ -71,10 +78,10 @@ function confirmDelete() {
           <span class="text">Settings</span>
         </li>
         <li @click="confirmDelete">
-          <span class="icon"><AdjustmentsHorizontalIcon class="w-6 h-6" /></span>
+          <span class="icon"><XMarkIcon class="w-6 h-6" /></span>
           <span class="text">Delete Account</span>
         </li>
-        <li>
+        <li @click="confirmLogout">
           <span class="icon"><ArrowLeftOnRectangleIcon class="w-6 h-6" /></span>
           <span class="text">Logout</span>
         </li>

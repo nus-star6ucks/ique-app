@@ -2,7 +2,7 @@
 import type { UserUserTypeEnum } from '~/api/models'
 import { useUserStore } from '~/stores/user'
 
-const props = defineProps<{
+const { userType = 'customer' } = defineProps<{
   userType?: UserUserTypeEnum
 }>()
 const userStore = useUserStore()
@@ -10,7 +10,6 @@ const router = useRouter()
 
 onMounted(() => {
   const { user } = userStore
-  const { userType = 'customer' } = props
   if (userType === 'merchant' && user?.userType === 'merchant')
     return
 

@@ -32,7 +32,7 @@ const { run: deleteMySelf, loading: deleteLoading } = useRequest((id: number) =>
   },
 })
 function confirmDelete() {
-  if (!userStore.user || deleteLoading)
+  if (!userStore.user || deleteLoading.value)
     return
   // eslint-disable-next-line no-alert
   const userInput = window.prompt('This action cannot be undone, please type your username to continue: ')
