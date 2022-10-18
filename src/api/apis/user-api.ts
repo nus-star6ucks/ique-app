@@ -517,12 +517,97 @@ export const UserApiFactory = function (configuration?: Configuration, basePath?
 };
 
 /**
+ * UserApi - interface
+ * @export
+ * @interface UserApi
+ */
+export interface UserApiInterface {
+    /**
+     * 
+     * @summary Delete User
+     * @param {number} [id] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApiInterface
+     */
+    usersDelete(id?: number, options?: any): AxiosPromise<object>;
+
+    /**
+     * 
+     * @summary Get User
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApiInterface
+     */
+    usersGet(options?: any): AxiosPromise<InlineResponse200>;
+
+    /**
+     * 
+     * @summary Login
+     * @param {InlineObject2} [inlineObject2] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApiInterface
+     */
+    usersLoginPost(inlineObject2?: InlineObject2, options?: any): AxiosPromise<InlineResponse2002>;
+
+    /**
+     * 
+     * @summary Logout
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApiInterface
+     */
+    usersLogoutPost(options?: any): AxiosPromise<object>;
+
+    /**
+     * user signup
+     * @summary Signup
+     * @param {InlineObject1} [inlineObject1] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApiInterface
+     */
+    usersPost(inlineObject1?: InlineObject1, options?: any): AxiosPromise<InlineResponse201>;
+
+    /**
+     * 
+     * @summary Update User Info
+     * @param {InlineObject} [inlineObject] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApiInterface
+     */
+    usersPut(inlineObject?: InlineObject, options?: any): AxiosPromise<InlineResponse2001>;
+
+    /**
+     * 
+     * @summary Refresh Token
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApiInterface
+     */
+    usersRefreshGet(options?: any): AxiosPromise<object>;
+
+    /**
+     * Headers 里带上 token，返回 User 详细信息，如 token 失效返回 401。
+     * @summary Verify User Token
+     * @param {string} [authorization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserApiInterface
+     */
+    usersVerifyGet(authorization?: string, options?: any): AxiosPromise<InlineResponse2006>;
+
+}
+
+/**
  * UserApi - object-oriented interface
  * @export
  * @class UserApi
  * @extends {BaseAPI}
  */
-export class UserApi extends BaseAPI {
+export class UserApi extends BaseAPI implements UserApiInterface {
     /**
      * 
      * @summary Delete User

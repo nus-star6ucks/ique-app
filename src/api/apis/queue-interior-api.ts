@@ -232,12 +232,50 @@ export const QueueInteriorApiFactory = function (configuration?: Configuration, 
 };
 
 /**
+ * QueueInteriorApi - interface
+ * @export
+ * @interface QueueInteriorApi
+ */
+export interface QueueInteriorApiInterface {
+    /**
+     * （SMS调用QMS）用户未取号，获取当前 store 所有 queue 的 waiting size
+     * @summary Get Queue Info Detail
+     * @param {number} queueId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueueInteriorApiInterface
+     */
+    queuesQueueIdGet(queueId: number, options?: any): AxiosPromise<QueueInfo>;
+
+    /**
+     * sms.startService() ---> qms.createQueues()
+     * @summary Create Queues
+     * @param {Array<SeatType>} [seatType] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueueInteriorApiInterface
+     */
+    queuesStartPost(seatType?: Array<SeatType>, options?: any): AxiosPromise<Array<InlineResponse2013>>;
+
+    /**
+     * sms.stopService() ---> qms.deleteQueues()
+     * @summary Delete Queues
+     * @param {Array<number>} [requestBody] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueueInteriorApiInterface
+     */
+    queuesStopPost(requestBody?: Array<number>, options?: any): AxiosPromise<object>;
+
+}
+
+/**
  * QueueInteriorApi - object-oriented interface
  * @export
  * @class QueueInteriorApi
  * @extends {BaseAPI}
  */
-export class QueueInteriorApi extends BaseAPI {
+export class QueueInteriorApi extends BaseAPI implements QueueInteriorApiInterface {
     /**
      * （SMS调用QMS）用户未取号，获取当前 store 所有 queue 的 waiting size
      * @summary Get Queue Info Detail
