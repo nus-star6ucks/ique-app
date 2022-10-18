@@ -182,10 +182,11 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
          * @summary Create Queue Ticket
          * @param {number} queueId 
          * @param {number} customerId 
+         * @param {number} storeId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queuesTicketsPost: async (queueId: number, customerId: number, options: any = {}): Promise<RequestArgs> => {
+        queuesTicketsPost: async (queueId: number, customerId: number, storeId: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'queueId' is not null or undefined
             if (queueId === null || queueId === undefined) {
                 throw new RequiredError('queueId','Required parameter queueId was null or undefined when calling queuesTicketsPost.');
@@ -193,6 +194,10 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
             // verify required parameter 'customerId' is not null or undefined
             if (customerId === null || customerId === undefined) {
                 throw new RequiredError('customerId','Required parameter customerId was null or undefined when calling queuesTicketsPost.');
+            }
+            // verify required parameter 'storeId' is not null or undefined
+            if (storeId === null || storeId === undefined) {
+                throw new RequiredError('storeId','Required parameter storeId was null or undefined when calling queuesTicketsPost.');
             }
             const localVarPath = `/queues/tickets`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -210,6 +215,10 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
 
             if (customerId !== undefined) {
                 localVarQueryParameter['customerId'] = customerId;
+            }
+
+            if (storeId !== undefined) {
+                localVarQueryParameter['storeId'] = storeId;
             }
 
 
@@ -332,11 +341,12 @@ export const QueueApiFp = function(configuration?: Configuration) {
          * @summary Create Queue Ticket
          * @param {number} queueId 
          * @param {number} customerId 
+         * @param {number} storeId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async queuesTicketsPost(queueId: number, customerId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2012>> {
-            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesTicketsPost(queueId, customerId, options);
+        async queuesTicketsPost(queueId: number, customerId: number, storeId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2012>> {
+            const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesTicketsPost(queueId, customerId, storeId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -411,11 +421,12 @@ export const QueueApiFactory = function (configuration?: Configuration, basePath
          * @summary Create Queue Ticket
          * @param {number} queueId 
          * @param {number} customerId 
+         * @param {number} storeId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queuesTicketsPost(queueId: number, customerId: number, options?: any): AxiosPromise<InlineResponse2012> {
-            return QueueApiFp(configuration).queuesTicketsPost(queueId, customerId, options).then((request) => request(axios, basePath));
+        queuesTicketsPost(queueId: number, customerId: number, storeId: number, options?: any): AxiosPromise<InlineResponse2012> {
+            return QueueApiFp(configuration).queuesTicketsPost(queueId, customerId, storeId, options).then((request) => request(axios, basePath));
         },
         /**
          * get a ticket by ticketId：用户获取取号详细信息，获取在当前队列中自己前面还有多少人排队
@@ -491,12 +502,13 @@ export class QueueApi extends BaseAPI {
      * @summary Create Queue Ticket
      * @param {number} queueId 
      * @param {number} customerId 
+     * @param {number} storeId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QueueApi
      */
-    public queuesTicketsPost(queueId: number, customerId: number, options?: any) {
-        return QueueApiFp(this.configuration).queuesTicketsPost(queueId, customerId, options).then((request) => request(this.axios, this.basePath));
+    public queuesTicketsPost(queueId: number, customerId: number, storeId: number, options?: any) {
+        return QueueApiFp(this.configuration).queuesTicketsPost(queueId, customerId, storeId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

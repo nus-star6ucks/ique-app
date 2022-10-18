@@ -45,10 +45,10 @@ export interface InlineResponse2012 {
     waitingSize: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof InlineResponse2012
      */
-    estimateWaitingTime: string;
+    estimateWaitingTime: number;
 }
 
 

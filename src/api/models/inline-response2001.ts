@@ -30,31 +30,31 @@ export interface InlineResponse2001 {
      * @type {string}
      * @memberof InlineResponse2001
      */
-    username: string;
+    username?: string;
     /**
      * 
      * @type {string}
      * @memberof InlineResponse2001
      */
-    password: string;
+    password?: string;
     /**
      * 
      * @type {string}
      * @memberof InlineResponse2001
      */
-    userType: InlineResponse2001UserTypeEnum;
+    userType?: InlineResponse2001UserTypeEnum;
     /**
      * 
      * @type {string}
      * @memberof InlineResponse2001
      */
-    phoneNumber: string;
+    phoneNumber?: string;
     /**
      * 
      * @type {string}
      * @memberof InlineResponse2001
      */
-    status: InlineResponse2001StatusEnum;
+    status?: InlineResponse2001StatusEnum;
     /**
      * timestamp
      * @type {number}
