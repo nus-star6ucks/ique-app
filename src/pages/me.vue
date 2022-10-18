@@ -8,7 +8,7 @@ useHead({
   meta: [
     {
       name: 'theme-color',
-      content: () => userStore.user ? '#fafafa' : '#10b981',
+      content: () => userStore.user ? '#10b981' : '#fafafa',
     },
   ],
 })
