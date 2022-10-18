@@ -5,6 +5,8 @@ import { setupLayouts } from 'virtual:generated-layouts'
 import { createHead } from '@vueuse/head'
 import { createPinia } from 'pinia'
 
+import { initializeApp } from 'firebase/app'
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 import App from './App.vue'
 
 import 'virtual:windi.css'
@@ -12,6 +14,17 @@ import './styles/main.css'
 import { useUserStore } from './stores/user'
 import { userApi } from './utils'
 import { UserUserTypeEnum } from './api/models'
+
+dotenv.config()
+
+initializeApp({
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDERID,
+  appId: process.env.FIREBASE_APP_ID,
+})
 
 const pinia = createPinia()
 
