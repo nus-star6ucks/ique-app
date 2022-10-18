@@ -1,13 +1,42 @@
 <script lang="ts" setup>
 import { AdjustmentsHorizontalIcon, ArrowLeftOnRectangleIcon, HeartIcon } from '@heroicons/vue/24/outline/index.js'
 import { useRequest } from 'vue-request'
+import { useSnackStore } from '~/stores/snack'
 import { useUserStore } from '~/stores/user'
-import { storeApi } from '~/utils'
+import { storeApi, userApi } from '~/utils'
 
 const userStore = useUserStore()
-const { data: stores } = useRequest(storeApi.storesGet(userStore.user?.id).then(d => d.data))
+const snackStore = useSnackStore()
 
+const { data: stores } = useRequest(storeApi.storesGet(userStore.user?.id).then(d => d.data))
 const updateDetailSwitch = ref<boolean>(false)
+
+const password = ref<string>('')
+const passwordConfirmation = ref<string>('')
+
+// const { run: updateDetail } = useRequest((id: number) => userApi.usersPut({ id }))
+// function onSubmit(e: any) {
+//   if (password.value || passwordConfirmation.value) {
+//     if (password.value !== passwordConfirmation.value)
+//       snackStore.show({ mode: 'error', message: 'Password and its confirmation are mismatched!' })
+//   }
+// }
+
+const { run: deleteMySelf, loading: deleteLoading } = useRequest((id: number) => userApi.usersDelete(id), {
+  manual: true,
+  onSuccess() {
+    snackStore.show({ mode: 'success', message: 'Farewell!' })
+    userStore.logout()
+  },
+})
+function confirmDelete() {
+  if (!userStore.user || deleteLoading)
+    return
+  // eslint-disable-next-line no-alert
+  const userInput = window.prompt('This action cannot be undone, please type your username to continue: ')
+  if (userInput === userStore.user.username)
+    deleteMySelf(+userStore.user.id)
+}
 </script>
 
 <template>
@@ -41,6 +70,10 @@ const updateDetailSwitch = ref<boolean>(false)
           <span class="icon"><AdjustmentsHorizontalIcon class="w-6 h-6" /></span>
           <span class="text">Settings</span>
         </li>
+        <li @click="confirmDelete">
+          <span class="icon"><AdjustmentsHorizontalIcon class="w-6 h-6" /></span>
+          <span class="text">Delete Account</span>
+        </li>
         <li>
           <span class="icon"><ArrowLeftOnRectangleIcon class="w-6 h-6" /></span>
           <span class="text">Logout</span>
@@ -52,9 +85,10 @@ const updateDetailSwitch = ref<boolean>(false)
             Username (Cannot be changed)
           </label>
           <input
-            id="imageUrl"
-            name="imageUrl"
+            id="username"
+            name="username"
             readonly
+            :value="userStore.user.username"
             class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
           >
         </div>
@@ -68,7 +102,7 @@ const updateDetailSwitch = ref<boolean>(false)
             type="tel"
             name="phoneNumber"
             class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
-            v-text="userStore.user.username"
+            :value="userStore.user.phoneNumber"
           >
         </div>
         <div class="col-span-6">
@@ -77,6 +111,8 @@ const updateDetailSwitch = ref<boolean>(false)
           </label>
           <input
             id="password"
+            v-model.trim="password"
+            type="password"
             name="password"
             placeholder="Leave it empty if it is no need to modify"
             class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
@@ -88,7 +124,9 @@ const updateDetailSwitch = ref<boolean>(false)
           </label>
           <input
             id="passwordConfirmation"
+            v-model.trim="passwordConfirmation"
             name="passwordConfirmation"
+            type="password"
             class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
           >
         </div>

@@ -1,9 +1,14 @@
 <script lang="ts" setup>
-import { ArrowLeftOnRectangleIcon, HeartIcon } from '@heroicons/vue/24/outline/index.js'
+import { ArrowLeftOnRectangleIcon, HeartIcon, XMarkIcon } from '@heroicons/vue/24/outline/index.js'
+import { useRequest } from 'vue-request'
 import Welcome from '../components/Welcome.vue'
 import { useUserStore } from '../stores/user'
+import { useSnackStore } from '~/stores/snack'
+import { userApi } from '~/utils'
 
 const userStore = useUserStore()
+const snackStore = useSnackStore()
+
 useHead({
   meta: [
     {
@@ -17,6 +22,22 @@ function confirmLogout() {
   // eslint-disable-next-line no-alert
   if (window.confirm('Are you sure?'))
     userStore.logout()
+}
+
+const { run: deleteMySelf, loading: deleteLoading } = useRequest((id: number) => userApi.usersDelete(id), {
+  manual: true,
+  onSuccess() {
+    snackStore.show({ mode: 'success', message: 'Farewell!' })
+    userStore.logout()
+  },
+})
+function confirmDelete() {
+  if (!userStore.user || deleteLoading)
+    return
+  // eslint-disable-next-line no-alert
+  const userInput = window.prompt('This action cannot be undone, please type your username to continue: ')
+  if (userInput === userStore.user.username)
+    deleteMySelf(+userStore.user.id)
 }
 </script>
 
@@ -73,6 +94,10 @@ function confirmLogout() {
         <li>
           <span class="icon"><HeartIcon class="w-6 h-6" /></span>
           <span class="text">Rate Us</span>
+        </li>
+        <li @click="confirmDelete">
+          <span class="icon"><XMarkIcon class="w-6 h-6" /></span>
+          <span class="text">Delete Account</span>
         </li>
         <li @click="confirmLogout">
           <span class="icon"><ArrowLeftOnRectangleIcon class="w-6 h-6" /></span>

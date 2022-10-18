@@ -4,6 +4,7 @@ export interface LoginUser {
   id: number
   username: string
   userType: string
+  phoneNumber: string
   createTime: number
 }
 
