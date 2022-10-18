@@ -2,18 +2,20 @@
 import dayjs from 'dayjs'
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline/index.js'
 import { useRouteParams } from '@vueuse/router'
+import { useRequest } from 'vue-request'
 import { humanEstimateTime, queueApi, storeApi } from '~/utils'
 import Loading from '~/components/Loading.vue'
 import WithAuth from '~/components/WithAuth.vue'
 
 const ticketId = useRouteParams('id')
-const { state: data, isLoading } = useAsyncState(queueApi.queuesTicketsTicketIdGet(+ticketId).then(async ({ data }) => {
+
+const { data, loading: isLoading } = useRequest(queueApi.queuesTicketsTicketIdGet(+ticketId).then(async ({ data }) => {
   const { data: store } = await storeApi.storesStoreIdGet(data.storeId)
   return {
     ticket: data,
     store,
   }
-}), undefined)
+}))
 
 const store = computed(() => data.value?.store)
 const ticket = computed(() => data.value?.ticket)

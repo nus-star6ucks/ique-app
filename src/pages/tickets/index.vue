@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline/index.js'
+import { useRequest } from 'vue-request'
 import { useUserStore } from '~/stores/user'
 import { queueApi, storeApi } from '~/utils'
 import Loading from '~/components/Loading.vue'
 import WithAuth from '~/components/WithAuth.vue'
 
 const { user } = useUserStore()
-const { state: tickets, isLoading } = useAsyncState(async () => {
+
+const { data: tickets, loading: isLoading } = useRequest(async () => {
   if (!user?.id)
     return []
   const { data: tickets } = await queueApi.queuesTicketsGet(user?.id)
@@ -20,7 +22,7 @@ const { state: tickets, isLoading } = useAsyncState(async () => {
       queue: queueData,
     }
   }))
-}, [])
+})
 </script>
 
 <template>

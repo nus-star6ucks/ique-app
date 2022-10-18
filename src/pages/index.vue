@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { ChevronRightIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline/index.js'
-import { useAsyncState } from '@vueuse/core'
+import { useRequest } from 'vue-request'
 import Loading from '../components/Loading.vue'
 import { storeApi } from '../utils'
 import StoreCard from '~/components/StoreCard.vue'
 
-const { isLoading, state: storesData, isReady } = useAsyncState(storeApi.storesGet().then(data => data.data), [])
+const { data: stores, loading: isLoading } = useRequest(storeApi.storesGet().then(d => d.data))
+
 useHead({
   meta: [
     {
@@ -59,8 +60,8 @@ useHead({
         Nearest
       </button>
     </section>
-    <section v-if="isReady" class="grid grid-cols-2 gap-4">
-      <StoreCard v-for="store in storesData" :key="store.id" :store="store" />
+    <section v-if="stores" class="grid grid-cols-2 gap-4">
+      <StoreCard v-for="store in stores" :key="store.id" :store="store" />
     </section>
     <Loading :loading="isLoading" />
   </div>

@@ -1,55 +1,40 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { ArrowLeftIcon, LockClosedIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
 import { useUserStore } from '~/stores/user'
 import { userApi } from '~/utils'
 import WithoutAuth from '~/components/WithoutAuth.vue'
 import { useSnackStore } from '~/stores/snack'
 
-export default defineComponent({
-  components: {
-    ArrowLeftIcon,
-    LockClosedIcon,
-    UserIcon,
-    WithoutAuth,
-  },
-  setup() {
-    const userStore = useUserStore()
-    const snackStore = useSnackStore()
-    return { userStore, snackStore }
-  },
-  data() {
-    return {
-      username: '',
-      password: '',
-      loading: false,
-    }
-  },
-  methods: {
-    async onSubmit() {
-      if (this.loading)
-        return
-      this.loading = true
-      try {
-        const { data } = await userApi.usersLoginPost({
-          username: this.username,
-          password: this.password,
-        })
-        this.userStore.login(data.token)
-        this.snackStore.show({ message: `Welcome back, ${this.username}`, mode: 'success' })
-        window.setTimeout(() => {
-          window.location.reload()
-        }, 1500)
-      }
-      catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(e)
-      }
-      finally {
-        this.loading = false
-      }
-    },
-  },
-})
+const userStore = useUserStore()
+const snackStore = useSnackStore()
+
+const username = ref<string>('')
+const password = ref<string>('')
+const loading = ref<boolean>(false)
+
+async function onSubmit() {
+  if (loading.value)
+    return
+  loading.value = true
+  try {
+    const { data } = await userApi.usersLoginPost({
+      username: username.value,
+      password: password.value,
+    })
+    userStore.login(data.token)
+    snackStore.show({ message: `Welcome back, ${username.value}`, mode: 'success' })
+    window.setTimeout(() => {
+      window.location.reload()
+    }, 1500)
+  }
+  catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e)
+  }
+  finally {
+    loading.value = false
+  }
+}
 </script>
 
 <template>

@@ -1,19 +1,13 @@
 <script lang="ts" setup>
-import { AdjustmentsHorizontalIcon, ArrowLeftIcon, ArrowLeftOnRectangleIcon, HeartIcon, MapPinIcon, PlusIcon } from '@heroicons/vue/24/outline/index.js'
-import type { Store } from '~/api/models'
-import { useSnackStore } from '~/stores/snack'
+import { AdjustmentsHorizontalIcon, ArrowLeftOnRectangleIcon, HeartIcon } from '@heroicons/vue/24/outline/index.js'
+import { useRequest } from 'vue-request'
 import { useUserStore } from '~/stores/user'
 import { storeApi } from '~/utils'
 
 const userStore = useUserStore()
-const { state: stores, isLoading, execute: refresh } = useAsyncState(storeApi.storesGet(userStore.user?.id).then(d => d.data), [])
+const { data: stores } = useRequest(storeApi.storesGet(userStore.user?.id).then(d => d.data))
 
 const updateDetailSwitch = ref<boolean>(false)
-
-const selectedStore = ref<Store & { phoneNumbersText: string }>(undefined!)
-const updateStoreLoading = ref<boolean>(false)
-
-const snackStore = useSnackStore()
 </script>
 
 <template>
@@ -28,7 +22,7 @@ const snackStore = useSnackStore()
         </div>
         <div class="rounded-md bg-contain w-14 h-14" :style="`background-image: url('https://i.pravatar.cc/150?u=${userStore.user?.username}')`" />
       </div>
-      <div class="flex space-x-8 mt-8">
+      <div v-if="stores" class="flex space-x-8 mt-8">
         <div>
           <h3 class="font-semibold text-xl mb-1" v-text="stores.length" />
           <p class="text-gray-200">

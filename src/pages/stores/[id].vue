@@ -11,6 +11,7 @@ import {
   TransitionChild,
   TransitionRoot,
 } from '@headlessui/vue'
+import { useRequest } from 'vue-request'
 import { humanEstimateTime, queueApi, storeApi } from '~/utils'
 import Loading from '~/components/Loading.vue'
 import WithAuth from '~/components/WithAuth.vue'
@@ -48,7 +49,7 @@ function queue() {
 }
 
 const storeId = useRouteParams('id')
-const { state: store, isLoading } = useAsyncState(storeApi.storesStoreIdGet(+storeId).then(async ({ data }) => data), undefined)
+const { data: store, loading: isLoading } = useRequest(storeApi.storesStoreIdGet(+storeId).then(d => d.data))
 </script>
 
 <template>

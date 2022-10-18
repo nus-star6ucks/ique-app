@@ -1,54 +1,44 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { ArrowLeftIcon, LockClosedIcon, PhoneIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
-import { useUserStore } from '~/stores/user'
 import { userApi } from '~/utils'
 import WithoutAuth from '~/components/WithoutAuth.vue'
+import { useSnackStore } from '~/stores/snack'
 
-export default defineComponent({
-  components: {
-    ArrowLeftIcon,
-    UserIcon,
-    PhoneIcon,
-    LockClosedIcon,
-    WithoutAuth,
-  },
-  setup() {
-    const userStore = useUserStore()
-    return { userStore }
-  },
-  data() {
-    return {
-      username: '',
-      password: '',
-      passwordConfirmation: '',
-      phone: '',
-      loading: false,
-    }
-  },
-  methods: {
-    async onSubmit() {
-      if (this.loading)
-        return
-      this.loading = true
-      try {
-        await userApi.usersPost({
-          username: this.username,
-          password: this.password,
-          phoneNumber: this.phone,
-          userType: 'customer',
-        } as any)
-        this.$router.push('/')
-      }
-      catch (e) {
-        // eslint-disable-next-line no-console
-        console.log(e)
-      }
-      finally {
-        this.loading = false
-      }
-    },
-  },
-})
+const username = ref<string>('')
+const password = ref<string>('')
+const passwordConfirmation = ref<string>('')
+const phoneNumber = ref<string>('')
+const loading = ref<boolean>(false)
+
+const router = useRouter()
+const snackStore = useSnackStore()
+
+async function onSubmit() {
+  if (password.value !== passwordConfirmation.value) {
+    snackStore.show({ message: 'Password and its confirmation are mismatched!', mode: 'error' })
+    return
+  }
+  if (loading.value)
+    return
+  loading.value = true
+  try {
+    await userApi.usersPost({
+      username: username.value,
+      password: password.value,
+      phoneNumber: phoneNumber.value,
+      userType: 'customer',
+    } as any)
+    snackStore.show({ message: 'Signed up successfully, please login.', mode: 'success' })
+    router.replace('/login')
+  }
+  catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e)
+  }
+  finally {
+    loading.value = false
+  }
+}
 </script>
 
 <template>

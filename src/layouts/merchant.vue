@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ArrowLeftIcon, MapPinIcon, PlusIcon } from '@heroicons/vue/24/outline/index.js'
+import { useRequest } from 'vue-request'
 import { useRouter } from 'vue-router'
 import { useUpdateStoreDetailStore } from '~/stores/updateStoreDetail'
 import { useUserStore } from '~/stores/user'
@@ -7,9 +8,10 @@ import { storeApi } from '~/utils'
 
 const updateStoreDetailStore = useUpdateStoreDetailStore()
 const userStore = useUserStore()
-const { state: stores, isLoading, execute: refresh } = useAsyncState(storeApi.storesGet(userStore.user?.id).then(d => d.data), [])
-const selectedStore = computed(() => updateStoreDetailStore?.updateStoreDetail?.selectedStore)
+const { data: stores, loading: isLoading, run: refresh } = useRequest(storeApi.storesGet(userStore.user?.id).then(d => d.data))
 
+// refresh when remove the selection
+const selectedStore = computed(() => updateStoreDetailStore?.updateStoreDetail?.selectedStore)
 watch(selectedStore, (newState, prevState) => {
   if (prevState && !newState)
     refresh()
