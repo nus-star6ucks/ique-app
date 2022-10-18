@@ -1,6 +1,51 @@
 <script lang="ts" setup>
 import { BuildingStorefrontIcon } from '@heroicons/vue/24/outline/index.js'
+import { useRequest } from 'vue-request'
 import { UserUserTypeEnum } from '~/api/models'
+import { useSnackStore } from '~/stores/snack'
+import { useUserStore } from '~/stores/user'
+import { storeApi } from '~/utils'
+
+useHead({
+  meta: [
+    {
+      name: 'theme-color',
+      content: () => '#fff',
+    },
+  ],
+})
+
+const router = useRouter()
+const snackStore = useSnackStore()
+const userStore = useUserStore()
+const { run: create, loading } = useRequest(storeApi.storesPost, {
+  manual: true,
+  onSuccess() {
+    snackStore.show({ mode: 'success', message: 'Created successfully!' })
+    router.replace('/merchant')
+  },
+  onError() {
+    snackStore.show({ mode: 'error', message: 'Unexpected error!' })
+  },
+})
+
+function onSubmit({ target: { name, type, address, imageUrl, description } }: any) {
+  if (!userStore?.user?.id)
+    return
+
+  create({
+    merchantId: userStore.user.id,
+    name: name.value,
+    type: type.value,
+    phoneNumbers: [],
+    seatTypes: [],
+    resources: {
+      description: description.value,
+      ratings: 4,
+      imageUrl: imageUrl.value,
+    },
+  } as any)
+}
 </script>
 
 <template>
@@ -18,7 +63,7 @@ import { UserUserTypeEnum } from '~/api/models'
               Create a Store
             </h1>
 
-            <form class="mt-8 grid grid-cols-6 gap-6">
+            <form class="mt-8 grid grid-cols-6 gap-6" @submit.prevent="onSubmit">
               <div class="col-span-6 sm:col-span-3">
                 <label
                   for="name"
@@ -101,6 +146,8 @@ import { UserUserTypeEnum } from '~/api/models'
 
               <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
                 <button
+                  type="submit"
+                  :disabled="loading"
                   class="inline-block shrink-0 rounded-md border border-emerald-500 bg-emerald-500 px-12 py-3 text-white transition hover:bg-transparent hover:text-emerald-500 focus:outline-none focus:ring active:text-emerald-500"
                 >
                   Create Now
