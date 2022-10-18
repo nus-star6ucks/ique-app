@@ -18,7 +18,7 @@ useHead({
 const router = useRouter()
 const snackStore = useSnackStore()
 const userStore = useUserStore()
-const { run: create, loading } = useRequest(storeApi.storesPost, {
+const { run: create, loading } = useRequest((payload: any) => storeApi.storesPost(payload).then(d => d.data), {
   manual: true,
   onSuccess() {
     snackStore.show({ mode: 'success', message: 'Created successfully!' })
@@ -77,6 +77,7 @@ function onSubmit({ target: { name, type, address, imageUrl, description } }: an
                   type="text"
                   name="name"
                   minlength="6"
+                  required
                   class="mt-1 p-2 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
                 >
               </div>
@@ -127,6 +128,7 @@ function onSubmit({ target: { name, type, address, imageUrl, description } }: an
                   id="imageUrl"
                   type="url"
                   name="imageUrl"
+                  required
                   class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
                 >
               </div>
