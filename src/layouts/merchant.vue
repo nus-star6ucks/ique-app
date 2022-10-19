@@ -2,7 +2,6 @@
 import { ArrowLeftIcon, MapPinIcon, PlusIcon } from '@heroicons/vue/24/outline/index.js'
 import { useRequest } from 'vue-request'
 import { useRouter } from 'vue-router'
-import { UserUserTypeEnum } from '~/api/models'
 import { useUpdateStoreDetailStore } from '~/stores/updateStoreDetail'
 import { useUserStore } from '~/stores/user'
 import { storeApi } from '~/utils'

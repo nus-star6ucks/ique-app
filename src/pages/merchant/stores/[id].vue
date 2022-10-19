@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ArrowLeftIcon, CheckIcon, ForwardIcon, PhoneIcon, RocketLaunchIcon, XMarkIcon } from '@heroicons/vue/24/outline/index.js'
+import { ArrowLeftIcon, ArrowSmallRightIcon, CheckIcon, ForwardIcon, PhoneIcon, PlusIcon, RocketLaunchIcon, UserIcon, XMarkIcon } from '@heroicons/vue/24/outline/index.js'
 import { StopIcon } from '@heroicons/vue/24/solid/index.js'
 import { useRouteParams } from '@vueuse/router'
 import dayjs from 'dayjs'
@@ -57,8 +57,8 @@ const { run: callTicket, loading: callTicketLoading } = useRequest((ticketId: nu
   onBefore([ticketId]) {
     ticketsProcessing.value = { ...ticketsProcessing.value, [ticketId]: true }
   },
-  onSuccess() {
-    snackStore.show({ mode: 'success', message: 'Called successfully!' })
+  onSuccess(_, [ticketId]) {
+    snackStore.show({ mode: 'success', message: `#${ticketId} called successfully!` })
   },
   onError() {
     snackStore.show({ mode: 'error', message: 'Unexpected error!' })
@@ -74,8 +74,8 @@ const { run: skipTicket, loading: skipTicketLoading } = useRequest((ticketId: nu
   onBefore([ticketId]) {
     ticketsProcessing.value = { ...ticketsProcessing.value, [ticketId]: true }
   },
-  onSuccess() {
-    snackStore.show({ mode: 'success', message: 'Skipped successfully!' })
+  onSuccess(_, [ticketId]) {
+    snackStore.show({ mode: 'success', message: `#${ticketId} skipped successfully!` })
   },
   onError() {
     snackStore.show({ mode: 'error', message: 'Unexpected error!' })
@@ -91,8 +91,8 @@ const { run: checkinTicket, loading: checkinTicketLoading } = useRequest((ticket
   onBefore([ticketId]) {
     ticketsProcessing.value = { ...ticketsProcessing.value, [ticketId]: true }
   },
-  onSuccess() {
-    snackStore.show({ mode: 'success', message: 'Checked in successfully!' })
+  onSuccess(_, [ticketId]) {
+    snackStore.show({ mode: 'success', message: `#${ticketId} checked in successfully!` })
   },
   onError() {
     snackStore.show({ mode: 'error', message: 'Unexpected error!' })
@@ -112,11 +112,12 @@ const queues = computed(() => {
     return []
 
   // get queues by tickets
-  const memo: Record<string, { seatType: SeatType; queueId: number; count: number }> = {}
+  const memo: Record<string, { seatType: SeatType; queueId: number; count: number; firstTicketId: number }> = {}
   tickets.value.forEach((t) => {
     if (memo[t.queueId])
       return
-    memo[t.queueId] = ({ seatType: t.seatType, queueId: t.queueId, count: tickets.value?.filter(tk => t.queueId === tk.queueId).length || 0 })
+    const ticketsInQueue = tickets.value?.filter(tk => t.queueId === tk.queueId) || []
+    memo[t.queueId] = ({ seatType: t.seatType, queueId: t.queueId, count: ticketsInQueue.length || 0, firstTicketId: ticketsInQueue?.[0].id ?? NaN })
   })
   return Object.values(memo)
 })
@@ -144,7 +145,7 @@ const queues = computed(() => {
                 <p class="text-gray-600" v-text="store.type" />
               </div>
               <span v-if="store.status === 'onService'" class="text-white px-6 py-1 text-xs bg-emerald-500 rounded-md uppercase">on service</span>
-              <span v-if="store.status === 'stopService'" class="text-white px-6 py-1 text-xs bg-red-500 rounded-md uppercase">out of service</span>
+              <span v-if="store.status === 'stopService'" class="text-white px-6 py-1 text-xs bg-red-500 rounded-md uppercase">off service</span>
             </div>
             <div v-if="tickets" class="flex space-x-2">
               <div>
@@ -178,13 +179,44 @@ const queues = computed(() => {
             </button>
           </div>
         </div>
-        <div class="grid grid-cols-3 gap-4">
-          <article v-for="queue in queues" :key="queue.queueId" class="rounded-lg border border-gray-100 bg-white p-6">
-            <div>
-              <p class="text-sm text-gray-500" v-text="queue.seatType.name" />
-              <p class="text-2xl font-medium text-gray-900" v-text="queue.count" />
-            </div>
-          </article>
+        <div>
+          <h3 class="mb-2 text-xl font-bold">
+            Queues
+          </h3>
+          <div class="bg-white overflow-hidden rounded-lg p-4">
+            <ul class="divide-y divide-gray-100">
+              <li v-for="q in queues" :key="q.queueId" class="flex items-center justify-between py-4">
+                <p class="flex items-center">
+                  <span class="text-gray-600" v-text="q.seatType.name" />
+                </p>
+                <div class="space-x-2 flex items-center text-sm">
+                  <span class="flex items-center text-gray-600 mr-2 justify-start min-w-12">
+                    <ArrowSmallRightIcon class="w-4 h-4 text-gray-400" />
+                    <span class="ml-1" v-text="`#${q.firstTicketId}`" />
+                  </span>
+                  <span class="flex items-center text-gray-600 pr-4">
+                    <UserIcon class="w-4 h-4 text-gray-400" />
+                    <span class="ml-1" v-text="q.count" />
+                  </span>
+                  <button class="bg-sky-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="callTicket(q.firstTicketId)">
+                    Call
+                  </button>
+                  <button class="bg-yellow-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="skipTicket(q.firstTicketId)">
+                    Skip
+                  </button>
+                  <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="checkinTicket(q.firstTicketId)">
+                    Checkin
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <p class="text-right mt-4">
+            <button class="bg-emerald-500 text-white flex items-center">
+              <PlusIcon class="w-4 h-4" />
+              <span>New Seattype</span>
+            </button>
+          </p>
         </div>
       </section>
     </div>

@@ -32,13 +32,16 @@ function deselectQueueInfo() {
   selectedQueueInfo.value = undefined!
 }
 
+const storeId = useRouteParams('id')
+const { data: store, loading: isLoading } = useRequest(() => storeApi.storesStoreIdGet(+storeId).then(d => d.data))
+
 const queueTicketRequesting = ref<boolean>(false)
 function queue() {
-  if (!selectedQueueInfo.value || !userStore.user)
+  if (!selectedQueueInfo.value || !userStore.user || !store.value?.id)
     return
 
   queueTicketRequesting.value = true
-  queueApi.queuesTicketsPost(selectedQueueInfo.value.queueId, userStore.user.id).then(({ data }) => {
+  queueApi.queuesTicketsPost(selectedQueueInfo.value.queueId, userStore.user.id, +store.value?.id).then(({ data }) => {
     snackStore.show({ mode: 'success', message: 'Queued successfully!' })
     router.push(`/tickets/${data.ticketId}`)
   }).catch((e) => {
@@ -47,9 +50,6 @@ function queue() {
     queueTicketRequesting.value = false
   })
 }
-
-const storeId = useRouteParams('id')
-const { data: store, loading: isLoading } = useRequest(() => storeApi.storesStoreIdGet(+storeId).then(d => d.data))
 </script>
 
 <template>
