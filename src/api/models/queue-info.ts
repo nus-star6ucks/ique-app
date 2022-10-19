@@ -12,6 +12,7 @@
  */
 
 
+import { SeatType } from './seat-type';
 
 /**
  * 
@@ -27,10 +28,10 @@ export interface QueueInfo {
     queueId: number;
     /**
      * 
-     * @type {string}
+     * @type {SeatType}
      * @memberof QueueInfo
      */
-    seatTypeName: string;
+    seatType: SeatType;
     /**
      * 
      * @type {number}
