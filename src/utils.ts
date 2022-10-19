@@ -1,3 +1,4 @@
+import axios from 'axios'
 import * as dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { QueueApi, StoreApi, UserApi } from './api'
@@ -8,17 +9,28 @@ const API_BASEURL = 'https://mock.apifox.cn/m1/1701091-0-default'
 const API_UMS_URL = 'https://mock.apifox.cn/m1/1701091-0-9ec0a847'
 const API_SMS_URL = 'https://mock.apifox.cn/m1/1701091-0-b519d081'
 
-const accessToken = localStorage.getItem('token') || ''
+// const API_BASEURL = '/api'
+// const API_UMS_URL = '/api'
+// const API_SMS_URL = '/api'
 
-export const storeApi = new StoreApi({
-  accessToken,
-}, API_SMS_URL)
-export const queueApi = new QueueApi({
-  accessToken,
-}, API_BASEURL)
-export const userApi = new UserApi({
-  accessToken,
-}, API_UMS_URL)
+const accessToken = localStorage.getItem('token') || ''
+if (accessToken.trim())
+  axios.defaults.headers.Authorization = `Bearer ${accessToken}`
+
+axios.interceptors.response.use((response) => {
+  return response
+}, (error) => {
+  if (error.response.status === 401 && accessToken) {
+    localStorage.removeItem('token')
+    return error.response
+  }
+
+  return Promise.reject(error)
+})
+
+export const storeApi = new StoreApi({}, API_SMS_URL)
+export const queueApi = new QueueApi({}, API_BASEURL)
+export const userApi = new UserApi({}, API_UMS_URL)
 
 export const humanEstimateTime = (secs: number) => {
   const HOUR = 60 * 60

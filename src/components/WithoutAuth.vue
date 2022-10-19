@@ -5,11 +5,11 @@ const { userType = 'customer' } = defineProps<{
   userType?: UserUserTypeEnum
 }>()
 
-const token = useLocalStorage('token', '')
 const router = useRouter()
 
 onMounted(() => {
-  if (token.value)
+  const token = localStorage.getItem('token')
+  if (token)
     router.replace(userType === 'customer' ? '/' : '/merchant')
 })
 </script>

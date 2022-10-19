@@ -1,20 +1,26 @@
 <script lang="ts" setup>
-import { ArrowLeftIcon, ArrowSmallRightIcon, CheckIcon, ForwardIcon, PhoneIcon, PlusIcon, RocketLaunchIcon, UserIcon, XMarkIcon } from '@heroicons/vue/24/outline/index.js'
+import { ArrowLeftIcon, ArrowSmallRightIcon, CheckIcon, ForwardIcon, PhoneIcon, PlusSmallIcon, RocketLaunchIcon, Cog6ToothIcon as SettingsIcon, UserIcon, XMarkIcon } from '@heroicons/vue/24/outline/index.js'
 import { StopIcon } from '@heroicons/vue/24/solid/index.js'
 import { useRouteParams } from '@vueuse/router'
 import dayjs from 'dayjs'
 import { useRequest } from 'vue-request'
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  TransitionChild,
+  TransitionRoot,
+} from '@headlessui/vue'
 import type { SeatType } from '~/api/models'
 import { useSnackStore } from '~/stores/snack'
 import { queueApi, storeApi } from '~/utils'
 import { UserUserTypeEnum } from '~/api/models'
 
 const snackStore = useSnackStore()
-
 const keyword = ref<string>('')
-
 const storeId = useRouteParams('id')
 
+// Switch Service
 const { run: startService, loading: startServiceLoading } = useRequest(() => storeApi.storesStartPost(+storeId), {
   manual: true,
   onSuccess() {
@@ -46,12 +52,15 @@ function confirmStopService() {
   if (window.confirm('Are you sure to stop the service?'))
     stopService()
 }
+// Switch Service END
 
 const { data: store, loading: isStoreLoading } = useRequest(() => storeApi.storesStoreIdGet(+storeId).then(d => d.data), {
   refreshDeps: [startServiceLoading, stopServiceLoading],
 })
 
 const ticketsProcessing = ref<Record<string, unknown>>({})
+
+// Call, Skip, Checkin
 const { run: callTicket, loading: callTicketLoading } = useRequest((ticketId: number) => queueApi.queuesCallPost(`${ticketId}`), {
   manual: true,
   onBefore([ticketId]) {
@@ -102,16 +111,17 @@ const { run: checkinTicket, loading: checkinTicketLoading } = useRequest((ticket
     ticketsProcessing.value = { ...ticketsProcessing.value }
   },
 })
+// Call, Skip, Checkin END
 
 const { data: tickets, loading: isLoading } = useRequest(() => queueApi.queuesTicketsGet(undefined, +storeId).then(d => d.data), {
   refreshDeps: [callTicketLoading, skipTicketLoading, checkinTicketLoading, startServiceLoading],
 })
 const filteredTickets = computed(() => tickets.value?.filter(t => t.status === 'pending').filter(t => `${t.queueNumber}`.includes(keyword.value) || `${t.seatType.name}`.includes(keyword.value)))
+
+// Get queues by tickets
 const queues = computed(() => {
   if (!tickets.value)
     return []
-
-  // get queues by tickets
   const memo: Record<string, { seatType: SeatType; queueId: number; count: number; firstTicketId: number }> = {}
   tickets.value.forEach((t) => {
     if (memo[t.queueId])
@@ -121,6 +131,26 @@ const queues = computed(() => {
   })
   return Object.values(memo)
 })
+
+// Update SeatType
+const isCoeSeatTypeModalOpen = ref<boolean>(true)
+const selectedSeatType = ref<SeatType>({ id: NaN, name: '' })
+function setCoeSeatTypeModal(mode?: SeatType | 'create') {
+  const defaultSeatTypeState = { id: NaN, name: '' }
+  if (mode === 'create') {
+    selectedSeatType.value = defaultSeatTypeState
+    isCoeSeatTypeModalOpen.value = true
+    return
+  }
+  if (!mode) {
+    selectedSeatType.value = defaultSeatTypeState
+    isCoeSeatTypeModalOpen.value = false
+    return
+  }
+  selectedSeatType.value = mode
+  isCoeSeatTypeModalOpen.value = true
+}
+// Update SeatType END
 </script>
 
 <template>
@@ -180,14 +210,24 @@ const queues = computed(() => {
           </div>
         </div>
         <div>
-          <h3 class="mb-2 text-xl font-bold">
-            Queues
-          </h3>
+          <div class="mb-2 flex items-center justify-between">
+            <h3 class="text-xl font-bold">
+              Queues
+            </h3>
+            <button class="bg-emerald-500 items-center flex rounded-md text-white text-sm py-1 px-2 mr-4" @click="setCoeSeatTypeModal('create')">
+              <PlusSmallIcon class="w-4" />
+              <span>New</span>
+            </button>
+          </div>
           <div class="bg-white overflow-hidden rounded-lg p-4">
             <ul class="divide-y divide-gray-100">
               <li v-for="q in queues" :key="q.queueId" class="flex items-center justify-between py-4">
-                <p class="flex items-center">
+                <p class="flex">
                   <span class="text-gray-600" v-text="q.seatType.name" />
+                  <button class="text-xs flex items-center ml-2 bg-gray-100 text-gray-500 p-1 rounded-md" @click="setCoeSeatTypeModal(q.seatType)">
+                    <SettingsIcon class="w-3.5 mt-0.5 mr-1" />
+                    <span>Settings</span>
+                  </button>
                 </p>
                 <div class="space-x-2 flex items-center text-sm">
                   <span class="flex items-center text-gray-600 mr-2 justify-start min-w-12">
@@ -211,12 +251,6 @@ const queues = computed(() => {
               </li>
             </ul>
           </div>
-          <p class="text-right mt-4">
-            <button class="bg-emerald-500 text-white flex items-center">
-              <PlusIcon class="w-4 h-4" />
-              <span>New Seattype</span>
-            </button>
-          </p>
         </div>
       </section>
     </div>
@@ -279,6 +313,97 @@ const queues = computed(() => {
       </div>
     </aside>
   </WithAuth>
+  <TransitionRoot appear :show="isCoeSeatTypeModalOpen" as="template">
+    <Dialog as="div" class="relative z-10" @close="setCoeSeatTypeModal()">
+      <TransitionChild
+        as="template"
+        enter="duration-300 ease-out"
+        enter-from="opacity-0"
+        enter-to="opacity-100"
+        leave="duration-200 ease-in"
+        leave-from="opacity-100"
+        leave-to="opacity-0"
+      >
+        <div class="fixed inset-0 bg-black bg-opacity-25" />
+      </TransitionChild>
+
+      <div class="fixed inset-0 overflow-y-auto">
+        <div
+          class="flex min-h-full items-center justify-center p-4 text-center"
+        >
+          <TransitionChild
+            as="template"
+            enter="duration-300 ease-out"
+            enter-from="opacity-0 scale-95"
+            enter-to="opacity-100 scale-100"
+            leave="duration-200 ease-in"
+            leave-from="opacity-100 scale-100"
+            leave-to="opacity-0 scale-95"
+          >
+            <DialogPanel
+              class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+            >
+              <DialogTitle
+                as="h3"
+                class="text-lg font-medium leading-6 text-gray-900"
+              >
+                <span v-text="Number.isNaN(selectedSeatType.id) ? 'Create' : 'Update'" /> a Queue
+              </DialogTitle>
+              <form class="my-4">
+                <div class="space-y-2">
+                  <div v-if="!Number.isNaN(selectedSeatType.id)">
+                    <label for="imageUrl" class="block text-gray-700">
+                      ID (Cannot be changed)
+                    </label>
+                    <input
+                      name="id"
+                      readonly
+                      :value="selectedSeatType.id"
+                      class="p-2 mt-1 w-full rounded-md border-gray-200 bg-gray-100 text-gray-400 border border-gray-200"
+                    >
+                  </div>
+                  <div>
+                    <label for="name" class="block text-gray-700">
+                      Name
+                    </label>
+                    <input
+                      id="name"
+                      v-model="selectedSeatType.name"
+                      type="text"
+                      name="name"
+                      required
+                      class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
+                    >
+                  </div>
+                  <div class="space-x-2 pt-4">
+                    <button
+                      type="submit"
+                      class="inline-flex justify-center rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 transition-all hover:bg-emerald-200 disabled:bg-gray-100 disabled:text-gray-600"
+                    >
+                      Submit
+                    </button>
+                    <button
+                      type="button"
+                      class="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 transition-all hover:bg-red-200 disabled:bg-gray-100 disabled:text-gray-600"
+                    >
+                      Delete
+                    </button>
+                    <button
+                      type="button"
+                      class="inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm text-gray-400"
+                      @click="setCoeSeatTypeModal()"
+                    >
+                      Not now
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </DialogPanel>
+          </TransitionChild>
+        </div>
+      </div>
+    </Dialog>
+  </TransitionRoot>
 </template>
 
 <route lang="yaml">

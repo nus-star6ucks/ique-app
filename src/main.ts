@@ -10,9 +10,6 @@ import App from './App.vue'
 
 import 'virtual:windi.css'
 import './styles/main.css'
-import { useUserStore } from './stores/user'
-import { userApi } from './utils'
-import { UserUserTypeEnum } from './api/models'
 
 initializeApp({
   apiKey: import.meta.env.FIREBASE_API_KEY,
@@ -33,37 +30,6 @@ const routes = setupLayouts(generatedRoutes)
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
-})
-
-router.beforeEach((to, from, next) => {
-  const userStore = useUserStore(pinia)
-  const token = useLocalStorage('token', '')
-  if (typeof userStore.user === 'undefined' && token.value) {
-    userApi.usersGet().then(({ data }) => {
-      userStore.setUser(data)
-      if (data.userType === 'merchant') {
-        next('/merchant')
-        return
-      }
-      next()
-    }).catch(() => {
-      userStore.logout()
-      next('/')
-    })
-    return
-  }
-
-  if (userStore.user?.userType === UserUserTypeEnum.Customer && to.path.startsWith('/merchant')) {
-    next('/')
-    return
-  }
-
-  if (userStore.user?.userType === UserUserTypeEnum.Merchant && !to.path.startsWith('/merchant')) {
-    next('/merchant')
-    return
-  }
-
-  next()
 })
 
 app.use(pinia)

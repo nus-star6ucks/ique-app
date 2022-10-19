@@ -3,10 +3,10 @@ import { ArrowLeftIcon, LockClosedIcon, UserIcon } from '@heroicons/vue/24/outli
 import { useUserStore } from '~/stores/user'
 import { userApi } from '~/utils'
 import WithoutAuth from '~/components/WithoutAuth.vue'
-import { useSnackStore } from '~/stores/snack'
+// import { useSnackStore } from '~/stores/snack'
 
 const userStore = useUserStore()
-const snackStore = useSnackStore()
+// const snackStore = useSnackStore()
 
 const username = ref<string>('')
 const password = ref<string>('')
@@ -22,7 +22,7 @@ async function onSubmit() {
       password: password.value,
     })
     userStore.login(data.token)
-    snackStore.show({ message: `Welcome back, ${username.value}`, mode: 'success' })
+    // snackStore.show({ message: `Welcome back, ${username.value}`, mode: 'success' })
     window.setTimeout(() => {
       window.location.reload()
     }, 1500)

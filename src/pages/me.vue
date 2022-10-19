@@ -84,14 +84,6 @@ function confirmDelete() {
     <div class="mt-12">
       <ul class="menu">
         <li>
-          <span class="icon"><ArrowLeftOnRectangleIcon class="w-6 h-6" /></span>
-          <span class="text">Foo Bar Baz</span>
-        </li>
-        <li>
-          <span class="icon"><ArrowLeftOnRectangleIcon class="w-6 h-6" /></span>
-          <span class="text">Bar</span>
-        </li>
-        <li>
           <span class="icon"><HeartIcon class="w-6 h-6" /></span>
           <span class="text">Rate Us</span>
         </li>

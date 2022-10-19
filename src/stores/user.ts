@@ -21,11 +21,6 @@ export const useUserStore = defineStore('user', () => {
   const logout = () => {
     localStorage.removeItem('token')
     user.value = undefined
-    setToken('')
-
-    window.setTimeout(() => {
-      window.location.reload()
-    }, 500)
   }
 
   function setUser(_user: LoginUser) {

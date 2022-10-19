@@ -33,7 +33,7 @@ function deselectQueueInfo() {
 }
 
 const storeId = useRouteParams('id')
-const { data: store, loading: isLoading } = useRequest(() => storeApi.storesStoreIdGet(+storeId).then(d => d.data))
+const { data: store, loading: isLoading } = useRequest(() => storeApi.storesStoreIdGet(+(storeId.value || 0)).then(d => d.data))
 
 const queueTicketRequesting = ref<boolean>(false)
 function queue() {
