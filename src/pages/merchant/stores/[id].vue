@@ -133,7 +133,7 @@ const queues = computed(() => {
 })
 
 // Update SeatType
-const isCoeSeatTypeModalOpen = ref<boolean>(true)
+const isCoeSeatTypeModalOpen = ref<boolean>(false)
 const selectedSeatType = ref<SeatType>({ id: NaN, name: '' })
 function setCoeSeatTypeModal(mode?: SeatType | 'create') {
   const defaultSeatTypeState = { id: NaN, name: '' }
@@ -147,7 +147,7 @@ function setCoeSeatTypeModal(mode?: SeatType | 'create') {
     isCoeSeatTypeModalOpen.value = false
     return
   }
-  selectedSeatType.value = mode
+  selectedSeatType.value = { ...mode }
   isCoeSeatTypeModalOpen.value = true
 }
 // Update SeatType END
@@ -209,7 +209,7 @@ function setCoeSeatTypeModal(mode?: SeatType | 'create') {
             </button>
           </div>
         </div>
-        <div>
+        <div class="pb-12">
           <div class="mb-2 flex items-center justify-between">
             <h3 class="text-xl font-bold">
               Queues

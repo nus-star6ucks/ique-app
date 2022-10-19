@@ -99,7 +99,7 @@ function queue() {
       <div class="bg-white overflow-hidden rounded-lg p-4">
         <ul class="divide-y divide-gray-100">
           <li v-for="q in store.queuesInfo" :key="q.queueId" class="flex items-center justify-between py-4">
-            <p v-text="q.seatTypeName" />
+            <p v-text="q.seatType.name" />
             <div class="space-x-4 flex items-center">
               <span class="flex items-center text-gray-600">
                 <UserIcon class="w-4 h-4" />
@@ -151,7 +151,7 @@ function queue() {
               </DialogTitle>
               <div>
                 <p class="text-sm text-gray-500">
-                  You're requesting to queue <span v-text="selectedQueueInfo.seatTypeName" />. There are <span v-text="selectedQueueInfo.waitingSize" /> people waiting in front of you, expect to wait <span v-text="humanEstimateTime(selectedQueueInfo.estimateWaitingTime)" />.
+                  You're requesting to queue <span v-text="selectedQueueInfo.seatType.name" />. There are <span v-text="selectedQueueInfo.waitingSize" /> people waiting in front of you, expect to wait <span v-text="humanEstimateTime(selectedQueueInfo.estimateWaitingTime)" />.
                 </p>
               </div>
 

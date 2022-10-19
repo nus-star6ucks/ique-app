@@ -54,32 +54,7 @@ function confirmDelete() {
         </div>
         <div class="rounded-md bg-contain w-14 h-14" :style="`background-image: url('https://i.pravatar.cc/150?u=${userStore.user.username}')`" />
       </div>
-      <div class="flex space-x-8 mt-8">
-        <div>
-          <h3 class="font-semibold text-xl mb-1">
-            199
-          </h3>
-          <p class="text-gray-200">
-            Foos
-          </p>
-        </div>
-        <div>
-          <h3 class="font-semibold text-xl mb-1">
-            19
-          </h3>
-          <p class="text-gray-200">
-            Bar
-          </p>
-        </div>
-        <div>
-          <h3 class="font-semibold text-xl mb-1">
-            30
-          </h3>
-          <p class="text-gray-200">
-            Baz
-          </p>
-        </div>
-      </div>
+      <div class="h-24" />
     </div>
     <div class="mt-12">
       <ul class="menu">
