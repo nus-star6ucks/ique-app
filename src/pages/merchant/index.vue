@@ -20,6 +20,7 @@ function updateStore() {
     id: formData.id,
     name: formData.name,
     type: formData.type as any,
+    address: formData.address,
     phoneNumbers: formData.phoneNumbersText.split('\n'),
     resources: formData.resources,
   }).then(() => {

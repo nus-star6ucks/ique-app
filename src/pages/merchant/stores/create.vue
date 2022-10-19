@@ -38,7 +38,9 @@ function onSubmit({ target: { name, type, address, imageUrl, description } }: an
     name: name.value,
     type: type.value,
     phoneNumbers: [],
-    seatTypes: [],
+    seatTypes: [{
+      name: 'Big',
+    }],
     resources: {
       description: description.value,
       ratings: 4,

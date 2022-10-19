@@ -65,25 +65,25 @@ async function onSubmit() {
             <div class="absolute inset-y-0 left-4 top-4 inline-flex">
               <UserIcon class="w-6 h-6 text-gray-400" />
             </div>
-            <input placeholder="Username" name="username" required type="text" class="px-6 pl-14" minlength="6">
+            <input v-model="username" placeholder="Username" name="username" required type="text" class="px-6 pl-14" minlength="6">
           </div>
           <div class="relative">
             <div class="absolute inset-y-0 left-4 top-4 inline-flex">
               <PhoneIcon class="w-6 h-6 text-gray-400" />
             </div>
-            <input placeholder="Phone" name="phone" type="text" class="px-6 pl-14" required>
+            <input v-model="phoneNumber" placeholder="Phone" name="phone" type="text" class="px-6 pl-14" required>
           </div>
           <div class="relative">
             <div class="absolute inset-y-0 left-4 top-4 inline-flex">
               <LockClosedIcon class="w-6 h-6 text-gray-400" />
             </div>
-            <input placeholder="Password" name="password" minlength="6" required class="px-6 pl-14" type="password">
+            <input v-model="password" placeholder="Password" name="password" minlength="6" required class="px-6 pl-14" type="password">
           </div>
           <div class="relative">
             <div class="absolute inset-y-0 left-4 top-4 inline-flex">
               <LockClosedIcon class="w-6 h-6 text-gray-400" />
             </div>
-            <input placeholder="Password Confirmation" name="passwordConfirmation" minlength="6" required class="px-6 pl-14" type="password">
+            <input v-model="passwordConfirmation" placeholder="Password Confirmation" name="passwordConfirmation" minlength="6" required class="px-6 pl-14" type="password">
           </div>
         </div>
         <div>
