@@ -41,3 +41,5 @@ export const humanEstimateTime = (secs: number) => {
     return `${(secs / MIN).toFixed(1)} mins`
   return '1 min'
 }
+
+export const generateULong = () => +`${+Date.now()}${Math.floor(Math.random() * 1000)}`

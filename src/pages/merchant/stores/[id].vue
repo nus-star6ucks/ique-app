@@ -13,7 +13,7 @@ import {
 } from '@headlessui/vue'
 import type { SeatType } from '~/api/models'
 import { useSnackStore } from '~/stores/snack'
-import { queueApi, storeApi } from '~/utils'
+import { generateULong, queueApi, storeApi } from '~/utils'
 import { UserUserTypeEnum } from '~/api/models'
 
 const snackStore = useSnackStore()
@@ -21,7 +21,7 @@ const keyword = ref<string>('')
 const storeId = useRouteParams('id')
 
 // Switch Service
-const { run: startService, loading: startServiceLoading } = useRequest(() => storeApi.storesStartPost(+storeId), {
+const { run: startService, loading: startServiceLoading } = useRequest(() => storeApi.storesStartPost(+storeId.value!), {
   manual: true,
   onSuccess() {
     snackStore.show({ mode: 'success', message: 'Started successfully!' })
@@ -37,7 +37,7 @@ function confirmStartService() {
     startService()
 }
 
-const { run: stopService, loading: stopServiceLoading } = useRequest(() => storeApi.storesStopPost(+storeId), {
+const { run: stopService, loading: stopServiceLoading } = useRequest(() => storeApi.storesStopPost(+storeId.value!), {
   manual: true,
   onSuccess() {
     snackStore.show({ mode: 'success', message: 'Stopped successfully!' })
@@ -54,7 +54,7 @@ function confirmStopService() {
 }
 // Switch Service END
 
-const { data: store, loading: isStoreLoading } = useRequest(() => storeApi.storesStoreIdGet(+storeId).then(d => d.data), {
+const { data: store, loading: isStoreLoading } = useRequest(() => storeApi.storesStoreIdGet(+storeId.value!).then(d => d.data), {
   refreshDeps: [startServiceLoading, stopServiceLoading],
 })
 
@@ -113,32 +113,17 @@ const { run: checkinTicket, loading: checkinTicketLoading } = useRequest((ticket
 })
 // Call, Skip, Checkin END
 
-const { data: tickets, loading: isLoading } = useRequest(() => queueApi.queuesTicketsGet(undefined, +storeId).then(d => d.data), {
-  refreshDeps: [callTicketLoading, skipTicketLoading, checkinTicketLoading, startServiceLoading],
-})
-const filteredTickets = computed(() => tickets.value?.filter(t => t.status === 'pending').filter(t => `${t.queueNumber}`.includes(keyword.value) || `${t.seatType.name}`.includes(keyword.value)))
-
-// Get queues by tickets
-const queues = computed(() => {
-  if (!tickets.value)
-    return []
-  const memo: Record<string, { seatType: SeatType; queueId: number; count: number; firstTicketId: number }> = {}
-  tickets.value.forEach((t) => {
-    if (memo[t.queueId])
-      return
-    const ticketsInQueue = tickets.value?.filter(tk => t.queueId === tk.queueId) || []
-    memo[t.queueId] = ({ seatType: t.seatType, queueId: t.queueId, count: ticketsInQueue.length || 0, firstTicketId: ticketsInQueue?.[0].id ?? NaN })
-  })
-  return Object.values(memo)
-})
+// get seatTypes by store
+const seatTypes = computed(() => store.value?.queuesInfo.map(q => q.seatType) || [])
 
 // Update SeatType
 const isCoeSeatTypeModalOpen = ref<boolean>(false)
-const selectedSeatType = ref<SeatType>({ id: NaN, name: '' })
+
+const defaultSeatTypeState = { id: NaN, name: '' }
+const selectedSeatType = ref<SeatType>(defaultSeatTypeState)
 function setCoeSeatTypeModal(mode?: SeatType | 'create') {
-  const defaultSeatTypeState = { id: NaN, name: '' }
   if (mode === 'create') {
-    selectedSeatType.value = defaultSeatTypeState
+    selectedSeatType.value = { ...defaultSeatTypeState, id: generateULong() }
     isCoeSeatTypeModalOpen.value = true
     return
   }
@@ -151,6 +136,36 @@ function setCoeSeatTypeModal(mode?: SeatType | 'create') {
   isCoeSeatTypeModalOpen.value = true
 }
 // Update SeatType END
+
+const { loading: seatTypesLoading, run: updateSeatTypes } = useRequest((seatTypes: SeatType[]) => storeApi.storesPut({ id: +storeId.value!, seatTypes }), {
+  manual: true,
+  onSuccess() {
+    snackStore.show({ mode: 'success', message: 'Updated successfully!' })
+    setCoeSeatTypeModal()
+  },
+  onError() {
+    snackStore.show({ mode: 'error', message: 'Unexpected error!' })
+  },
+})
+
+const { data: tickets, loading: isLoading } = useRequest(() => queueApi.queuesTicketsGet(undefined, +storeId.value!).then(d => d.data), {
+  refreshDeps: [callTicketLoading, skipTicketLoading, checkinTicketLoading, startServiceLoading, seatTypesLoading],
+})
+const filteredTickets = computed(() => tickets.value?.filter(t => t.status === 'pending').filter(t => `${t.queueNumber}`.includes(keyword.value) || `${t.seatType.name}`.includes(keyword.value)))
+
+// Get queues by tickets
+const queues = computed(() => {
+  if (!tickets.value)
+    return []
+  const memo: Record<string, { seatType: SeatType; queueId: number; count: number; firstTicketId: number }> = {}
+  tickets.value.forEach((t) => {
+    if (memo[t.queueId])
+      return
+    const ticketsInQueue = tickets.value?.filter(tk => t.queueId === tk.queueId) || []
+    memo[t.queueId] = ({ seatType: t.seatType, queueId: t.queueId, count: ticketsInQueue.length || 0, firstTicketId: ticketsInQueue?.[0].id ?? 0 })
+  })
+  return Object.values(memo)
+})
 </script>
 
 <template>
@@ -347,11 +362,11 @@ function setCoeSeatTypeModal(mode?: SeatType | 'create') {
                 as="h3"
                 class="text-lg font-medium leading-6 text-gray-900"
               >
-                <span v-text="Number.isNaN(selectedSeatType.id) ? 'Create' : 'Update'" /> a Queue
+                Create / Update a Queue
               </DialogTitle>
-              <form class="my-4">
+              <form class="my-4" @submit.prevent="updateSeatTypes(seatTypes.map(s => s.id === selectedSeatType.id ? selectedSeatType : s))">
                 <div class="space-y-2">
-                  <div v-if="!Number.isNaN(selectedSeatType.id)">
+                  <div v-if="selectedSeatType.id !== 0">
                     <label for="imageUrl" class="block text-gray-700">
                       ID (Cannot be changed)
                     </label>
@@ -375,7 +390,7 @@ function setCoeSeatTypeModal(mode?: SeatType | 'create') {
                       class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
                     >
                   </div>
-                  <div class="space-x-2 pt-4">
+                  <div class="space-x-3 pt-4">
                     <button
                       type="submit"
                       class="inline-flex justify-center rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 transition-all hover:bg-emerald-200 disabled:bg-gray-100 disabled:text-gray-600"
@@ -383,8 +398,11 @@ function setCoeSeatTypeModal(mode?: SeatType | 'create') {
                       Submit
                     </button>
                     <button
+                      v-if="seatTypes.map(s => s.id).includes(selectedSeatType.id)"
+                      :disabled="seatTypesLoading"
                       type="button"
                       class="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 transition-all hover:bg-red-200 disabled:bg-gray-100 disabled:text-gray-600"
+                      @click="updateSeatTypes(seatTypes.filter(s => s.id === selectedSeatType.id))"
                     >
                       Delete
                     </button>
