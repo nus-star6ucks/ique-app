@@ -9,7 +9,7 @@ import WithAuth from '~/components/WithAuth.vue'
 
 const ticketId = useRouteParams('id')
 
-const { data, loading: isLoading } = useRequest(() => queueApi.queuesTicketsTicketIdGet(+ticketId).then(async ({ data }) => {
+const { data, loading: isLoading } = useRequest(() => queueApi.queuesTicketsTicketIdGet(+ticketId.value!).then(async ({ data }) => {
   const { data: store } = await storeApi.storesStoreIdGet(data.storeId)
   return {
     ticket: data,
@@ -55,7 +55,7 @@ const ticket = computed(() => data.value?.ticket)
             <h4 class="text-gray-400 mb-2 text-base">
               Type
             </h4>
-            <p class="text-gray-800 text-xl font-semibold" v-text="ticket.queueInfo.seatTypeName" />
+            <p class="text-gray-800 text-xl font-semibold" v-text="ticket.queueInfo.seatType.name" />
           </div>
           <div class="px-4 py-8">
             <h4 class="text-gray-400 mb-2 text-base">
