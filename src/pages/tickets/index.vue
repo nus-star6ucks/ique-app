@@ -37,26 +37,29 @@ const { data: tickets, loading: isLoading } = useRequest(async () => {
     </header>
     <div class="space-y-4 mb-20">
       <Loading :loading="isLoading" />
-      <RouterLink
-        v-for="ticket in tickets"
-        :key="ticket.id"
-        class="group grid grid-cols-5 overflow-hidden rounded-xl"
-        :to="`/tickets/${ticket.id}`"
-      >
-        <div class="col-span-2 relative rounded-xl overflow-hidden p-2">
-          <img
-            :src="ticket.store.resources.imageUrl"
-            class="absolute inset-0 h-full w-full object-cover z-0"
-          >
-        </div>
-
-        <div class="col-span-3">
-          <div class="my-4 p-6 bg-white rounded-xl">
-            <h3 class="mt-2 text-lg text-gray-800 font-bold" v-text="`${ticket.queueNumber} - ${ticket.seatType.name}`" />
-            <p class="mt-2 text-sm text-gray-500" v-text="ticket.store.name" />
+      <EmptyBlock v-if="tickets?.length === 0" />
+      <template v-else>
+        <RouterLink
+          v-for="ticket in tickets"
+          :key="ticket.id"
+          class="group grid grid-cols-5 overflow-hidden rounded-xl"
+          :to="`/tickets/${ticket.id}`"
+        >
+          <div class="col-span-2 relative rounded-xl overflow-hidden p-2">
+            <img
+              :src="ticket.store.resources.imageUrl"
+              class="absolute inset-0 h-full w-full object-cover z-0"
+            >
           </div>
-        </div>
-      </RouterLink>
+
+          <div class="col-span-3">
+            <div class="my-4 p-6 bg-white rounded-xl">
+              <h3 class="mt-2 text-lg text-gray-800 font-bold" v-text="`${ticket.queueNumber} - ${ticket.seatType.name}`" />
+              <p class="mt-2 text-sm text-gray-500" v-text="ticket.store.name" />
+            </div>
+          </div>
+        </RouterLink>
+      </template>
     </div>
   </WithAuth>
 </template>

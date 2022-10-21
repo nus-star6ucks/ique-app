@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     copy: typeof import('./components/WithAuth copy.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
+    EmptyBlock: typeof import('./components/EmptyBlock.vue')['default']
     Loading: typeof import('./components/Loading.vue')['default']
     MerchantTabbar: typeof import('./components/MerchantTabbar.vue')['default']
     Notification: typeof import('./components/Notification.vue')['default']

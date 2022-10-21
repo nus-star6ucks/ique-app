@@ -42,14 +42,7 @@ function updateStore() {
       <div class="w-9 h-9" />
     </header>
     <div class="p-8">
-      <div v-if="!selectedStore" class="relative rounded-lg border border-gray-200 p-8 text-center opacity-70">
-        <h2 class="text-2xl font-medium uppercase">
-          Do Something
-        </h2>
-        <p class="mt-4 text-sm text-gray-500">
-          Click on Settings to update store detail
-        </p>
-      </div>
+      <EmptyBlock v-if="!selectedStore" />
 
       <form v-else class="grid grid-cols-6 gap-6" @submit.prevent="updateStore">
         <div class="col-span-6 sm:col-span-3">

@@ -287,36 +287,39 @@ const queues = computed(() => {
           </p>
         </div>
         <template v-else>
-          <article v-for="ticket in filteredTickets" :key="ticket.id" class="rounded-lg overflow-hidden border border-gray-100 bg-white flex items-center justify-between">
-            <div class="p-4">
-              <div>
-                <h3 class="text-xl font-medium text-gray-900 space-x-2 whitespace-nowrap">
-                  <span v-text="ticket.seatType.name" />
-                  <span v-text="ticket.queueNumber" />
-                </h3>
+          <EmptyBlock v-if="filteredTickets?.length === 0" />
+          <template v-else>
+            <article v-for="ticket in filteredTickets" :key="ticket.id" class="rounded-lg overflow-hidden border border-gray-100 bg-white flex items-center justify-between">
+              <div class="p-4">
+                <div>
+                  <h3 class="text-xl font-medium text-gray-900 space-x-2 whitespace-nowrap">
+                    <span v-text="ticket.seatType.name" />
+                    <span v-text="ticket.queueNumber" />
+                  </h3>
+                </div>
+                <div class="mt-1 flex">
+                  <p class="text-xs">
+                    <span class="text-gray-500" v-text="dayjs(ticket.startTime).toNow()" />
+                  </p>
+                </div>
               </div>
-              <div class="mt-1 flex">
-                <p class="text-xs">
-                  <span class="text-gray-500" v-text="dayjs(ticket.startTime).toNow()" />
-                </p>
-              </div>
-            </div>
 
-            <div class="flex">
-              <button class="text-center text-sm bg-sky-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.id}`)" @click="callTicket(ticket.id)">
-                <PhoneIcon class="w-6" />
-                <span class="mt-2">Call</span>
-              </button>
-              <button class="text-center text-sm bg-yellow-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.id}`)" @click="skipTicket(ticket.id)">
-                <ForwardIcon class="w-6" />
-                <span class="mt-2">Skip</span>
-              </button>
-              <button class="text-center text-sm bg-emerald-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.id}`)" @click="checkinTicket(ticket.id)">
-                <CheckIcon class="w-6" />
-                <span class="mt-2">Checkin</span>
-              </button>
-            </div>
-          </article>
+              <div class="flex">
+                <button class="text-center text-sm bg-sky-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.id}`)" @click="callTicket(ticket.id)">
+                  <PhoneIcon class="w-6" />
+                  <span class="mt-2">Call</span>
+                </button>
+                <button class="text-center text-sm bg-yellow-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.id}`)" @click="skipTicket(ticket.id)">
+                  <ForwardIcon class="w-6" />
+                  <span class="mt-2">Skip</span>
+                </button>
+                <button class="text-center text-sm bg-emerald-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.id}`)" @click="checkinTicket(ticket.id)">
+                  <CheckIcon class="w-6" />
+                  <span class="mt-2">Checkin</span>
+                </button>
+              </div>
+            </article>
+          </template>
         </template>
       </section>
       <div v-if="store?.status === 'onService'" class="mt-8">
