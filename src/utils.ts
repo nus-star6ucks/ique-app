@@ -5,9 +5,9 @@ import { QueueApi, StoreApi, UserApi } from './api'
 
 dayjs.extend(relativeTime)
 
-const API_BASEURL = 'https://mock.apifox.cn/m1/1701091-0-default'
-const API_UMS_URL = 'https://mock.apifox.cn/m1/1701091-0-9ec0a847'
-const API_SMS_URL = 'https://mock.apifox.cn/m1/1701091-0-b519d081'
+const API_BASEURL = '/api'
+const API_UMS_URL = '/api'
+const API_SMS_URL = '/api'
 
 // const API_BASEURL = '/api'
 // const API_UMS_URL = '/api'
