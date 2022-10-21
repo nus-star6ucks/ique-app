@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { BuildingStorefrontIcon, TicketIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
+import { BuildingStorefrontIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
 </script>
 
 <template>

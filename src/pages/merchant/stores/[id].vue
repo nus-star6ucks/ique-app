@@ -113,13 +113,10 @@ const { run: checkinTicket, loading: checkinTicketLoading } = useRequest((ticket
 })
 // Call, Skip, Checkin END
 
-// get seatTypes by store
-const seatTypes = computed(() => store.value?.queuesInfo.map(q => q.seatType) || [])
-
 // Update SeatType
 const isCoeSeatTypeModalOpen = ref<boolean>(false)
 
-const defaultSeatTypeState = { id: NaN, name: '' }
+const defaultSeatTypeState = { id: 0, name: '' }
 const selectedSeatType = ref<SeatType>(defaultSeatTypeState)
 function setCoeSeatTypeModal(mode?: SeatType | 'create') {
   if (mode === 'create') {
@@ -153,18 +150,22 @@ const { data: tickets, loading: isLoading } = useRequest(() => queueApi.queuesTi
 })
 const filteredTickets = computed(() => tickets.value?.filter(t => t.status === 'pending').filter(t => `${t.queueNumber}`.includes(keyword.value) || `${t.seatType.name}`.includes(keyword.value)))
 
+// get seatTypes by store
+const seatTypes = computed(() => store.value?.queuesInfo.filter(q => !!q.queueId).map(q => q.seatType) || [])
+
 // Get queues by tickets
 const queues = computed(() => {
-  if (!tickets.value)
+  if (!store.value)
     return []
-  const memo: Record<string, { seatType: SeatType; queueId: number; count: number; firstTicketId: number }> = {}
-  tickets.value.forEach((t) => {
-    if (memo[t.queueId])
-      return
-    const ticketsInQueue = tickets.value?.filter(tk => t.queueId === tk.queueId) || []
-    memo[t.queueId] = ({ seatType: t.seatType, queueId: t.queueId, count: ticketsInQueue.length || 0, firstTicketId: ticketsInQueue?.[0].id ?? 0 })
+
+  return store.value.queuesInfo.map((q) => {
+    const ticketsInQueue = tickets.value?.filter(tk => q.queueId === tk.queueId) || []
+    return {
+      ...q,
+      count: ticketsInQueue.length || 0,
+      firstTicketId: ticketsInQueue.length > 0 ? ticketsInQueue[0].id : 0,
+    }
   })
-  return Object.values(memo)
 })
 </script>
 
