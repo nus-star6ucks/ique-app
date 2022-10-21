@@ -40,7 +40,7 @@ useHead({
       </div>
       <img src="/assets/banner.svg" class="w-32 absolute right-2 bottom-6">
     </div>
-    <section class="space-x-4 overflow-x-scroll no-scrollbar whitespace-nowrap">
+    <!-- <section class="space-x-4 overflow-x-scroll no-scrollbar whitespace-nowrap">
       <button class="bg-white px-4 py-2 rounded-lg">
         Nearest
       </button>
@@ -59,7 +59,7 @@ useHead({
       <button class="bg-white px-4 py-2 rounded-lg">
         Nearest
       </button>
-    </section>
+    </section> -->
     <section v-if="stores" class="grid grid-cols-2 gap-4">
       <StoreCard v-for="store in stores" :key="store.id" :store="store" />
     </section>
