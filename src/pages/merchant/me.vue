@@ -42,8 +42,12 @@ function confirmDelete() {
 
 function confirmLogout() {
   // eslint-disable-next-line no-alert
-  if (window.confirm('Are you sure?'))
+  if (window.confirm('Are you sure?')) {
     userStore.logout()
+    window.setTimeout(() => {
+      window.location.reload()
+    }, 1500)
+  }
 }
 </script>
 

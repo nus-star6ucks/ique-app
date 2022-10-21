@@ -10,11 +10,15 @@ const router = useRouter()
 
 onMounted(() => {
   const { user } = userStore
-  if (userType === 'merchant' && user?.userType === 'merchant')
+  if (userType === 'merchant' && user?.userType !== 'merchant') {
+    router.replace('/me')
     return
+  }
 
-  if (userType === 'customer' && user?.userType === 'customer')
+  if (userType === 'customer' && user?.userType !== 'customer') {
+    router.replace('/merchant')
     return
+  }
 
   const token = localStorage.getItem('token')
 
