@@ -105,11 +105,11 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Skip customer
-         * @param {string} [ticketId] 
+         * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queuesSkipPost: async (ticketId?: string, options: any = {}): Promise<RequestArgs> => {
+        queuesSkipPost: async (ticketId?: number, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/queues/skip`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -310,11 +310,11 @@ export const QueueApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Skip customer
-         * @param {string} [ticketId] 
+         * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async queuesSkipPost(ticketId?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse401>> {
+        async queuesSkipPost(ticketId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse401>> {
             const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesSkipPost(ticketId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -398,11 +398,11 @@ export const QueueApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Skip customer
-         * @param {string} [ticketId] 
+         * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queuesSkipPost(ticketId?: string, options?: any): AxiosPromise<InlineResponse401> {
+        queuesSkipPost(ticketId?: number, options?: any): AxiosPromise<InlineResponse401> {
             return QueueApiFp(configuration).queuesSkipPost(ticketId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -442,83 +442,12 @@ export const QueueApiFactory = function (configuration?: Configuration, basePath
 };
 
 /**
- * QueueApi - interface
- * @export
- * @interface QueueApi
- */
-export interface QueueApiInterface {
-    /**
-     * 
-     * @summary Call for customer
-     * @param {string} [ticketId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueueApiInterface
-     */
-    queuesCallPost(ticketId?: string, options?: any): AxiosPromise<InlineResponse401>;
-
-    /**
-     * 
-     * @summary Checkin for customer
-     * @param {string} [ticketId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueueApiInterface
-     */
-    queuesCheckinPost(ticketId?: string, options?: any): AxiosPromise<InlineResponse401>;
-
-    /**
-     * 
-     * @summary Skip customer
-     * @param {string} [ticketId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueueApiInterface
-     */
-    queuesSkipPost(ticketId?: string, options?: any): AxiosPromise<InlineResponse401>;
-
-    /**
-     * 1. get tickets by storeId: 用户获取某家商店的排队信息 2. get tickets by userId：用户获取自己的所有取号的 ticket 信息 3. get tickets by userId & storeId：用户获取自己取号的某家商店的 ticket 信息 
-     * @summary Get Queue Tickets
-     * @param {number} [userId] 
-     * @param {number} [storeId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueueApiInterface
-     */
-    queuesTicketsGet(userId?: number, storeId?: number, options?: any): AxiosPromise<Array<QueueTicket>>;
-
-    /**
-     * 用户取号
-     * @summary Create Queue Ticket
-     * @param {number} queueId 
-     * @param {number} customerId 
-     * @param {number} storeId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueueApiInterface
-     */
-    queuesTicketsPost(queueId: number, customerId: number, storeId: number, options?: any): AxiosPromise<InlineResponse2012>;
-
-    /**
-     * get a ticket by ticketId：用户获取取号详细信息，获取在当前队列中自己前面还有多少人排队
-     * @summary Get Queue Ticket Detail
-     * @param {number} ticketId ticketId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueueApiInterface
-     */
-    queuesTicketsTicketIdGet(ticketId: number, options?: any): AxiosPromise<InlineResponse2004>;
-
-}
-
-/**
  * QueueApi - object-oriented interface
  * @export
  * @class QueueApi
  * @extends {BaseAPI}
  */
-export class QueueApi extends BaseAPI implements QueueApiInterface {
+export class QueueApi extends BaseAPI {
     /**
      * 
      * @summary Call for customer
@@ -546,12 +475,12 @@ export class QueueApi extends BaseAPI implements QueueApiInterface {
     /**
      * 
      * @summary Skip customer
-     * @param {string} [ticketId] 
+     * @param {number} [ticketId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QueueApi
      */
-    public queuesSkipPost(ticketId?: string, options?: any) {
+    public queuesSkipPost(ticketId?: number, options?: any) {
         return QueueApiFp(this.configuration).queuesSkipPost(ticketId, options).then((request) => request(this.axios, this.basePath));
     }
 

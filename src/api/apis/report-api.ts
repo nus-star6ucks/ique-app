@@ -127,32 +127,12 @@ export const ReportApiFactory = function (configuration?: Configuration, basePat
 };
 
 /**
- * ReportApi - interface
- * @export
- * @interface ReportApi
- */
-export interface ReportApiInterface {
-    /**
-     * 
-     * @summary Get Reports
-     * @param {number} storeId 
-     * @param {number} [merchantId] 
-     * @param {number} [reportId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ReportApiInterface
-     */
-    reportsGet(storeId: number, merchantId?: number, reportId?: number, options?: any): AxiosPromise<Array<Report>>;
-
-}
-
-/**
  * ReportApi - object-oriented interface
  * @export
  * @class ReportApi
  * @extends {BaseAPI}
  */
-export class ReportApi extends BaseAPI implements ReportApiInterface {
+export class ReportApi extends BaseAPI {
     /**
      * 
      * @summary Get Reports

@@ -25,7 +25,7 @@ export interface QueueTicket {
      * @type {number}
      * @memberof QueueTicket
      */
-    id: number;
+    ticketId: number;
     /**
      * 
      * @type {number}

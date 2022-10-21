@@ -488,90 +488,12 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
 };
 
 /**
- * StoreApi - interface
- * @export
- * @interface StoreApi
- */
-export interface StoreApiInterface {
-    /**
-     * 
-     * @summary Delete Store
-     * @param {number} id 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StoreApiInterface
-     */
-    storesDelete(id: number, options?: any): AxiosPromise<object>;
-
-    /**
-     * 
-     * @summary Get Stores
-     * @param {number} [userId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StoreApiInterface
-     */
-    storesGet(userId?: number, options?: any): AxiosPromise<Array<Store>>;
-
-    /**
-     * 
-     * @summary Create Store
-     * @param {InlineObject4} [inlineObject4] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StoreApiInterface
-     */
-    storesPost(inlineObject4?: InlineObject4, options?: any): AxiosPromise<InlineResponse2011>;
-
-    /**
-     * 
-     * @summary Update Store Info
-     * @param {InlineObject3} [inlineObject3] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StoreApiInterface
-     */
-    storesPut(inlineObject3?: InlineObject3, options?: any): AxiosPromise<InlineResponse2003>;
-
-    /**
-     * 
-     * @summary Start Service
-     * @param {number} storeId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StoreApiInterface
-     */
-    storesStartPost(storeId: number, options?: any): AxiosPromise<object>;
-
-    /**
-     * 
-     * @summary Stop Service
-     * @param {number} storeId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StoreApiInterface
-     */
-    storesStopPost(storeId: number, options?: any): AxiosPromise<object>;
-
-    /**
-     * 
-     * @summary Get Store Detail
-     * @param {number} storeId storeId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StoreApiInterface
-     */
-    storesStoreIdGet(storeId: number, options?: any): AxiosPromise<InlineResponse2005>;
-
-}
-
-/**
  * StoreApi - object-oriented interface
  * @export
  * @class StoreApi
  * @extends {BaseAPI}
  */
-export class StoreApi extends BaseAPI implements StoreApiInterface {
+export class StoreApi extends BaseAPI {
     /**
      * 
      * @summary Delete Store

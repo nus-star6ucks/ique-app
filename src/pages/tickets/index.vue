@@ -9,12 +9,12 @@ import WithAuth from '~/components/WithAuth.vue'
 const { user } = useUserStore()
 
 const { data: tickets, loading: isLoading } = useRequest(async () => {
-  if (!user?.id)
+  if (!user)
     return []
-  const { data: tickets } = await queueApi.queuesTicketsGet(user?.id)
+  const { data: tickets } = await queueApi.queuesTicketsGet(user.id)
   return Promise.all(tickets.map(async (ticket) => {
     const { data: storeData } = await storeApi.storesStoreIdGet(ticket.storeId)
-    const { data: queueData } = await queueApi.queuesTicketsTicketIdGet(ticket.id)
+    const { data: queueData } = await queueApi.queuesTicketsTicketIdGet(ticket.ticketId)
 
     return {
       ...ticket,
@@ -41,9 +41,9 @@ const { data: tickets, loading: isLoading } = useRequest(async () => {
       <template v-else>
         <RouterLink
           v-for="ticket in tickets"
-          :key="ticket.id"
+          :key="ticket.ticketId"
           class="group grid grid-cols-5 overflow-hidden rounded-xl"
-          :to="`/tickets/${ticket.id}`"
+          :to="`/tickets/${ticket.ticketId}`"
         >
           <div class="col-span-2 relative rounded-xl overflow-hidden p-2">
             <img
