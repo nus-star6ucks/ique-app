@@ -5,7 +5,7 @@ import { setupLayouts } from 'virtual:generated-layouts'
 import { createHead } from '@vueuse/head'
 import { createPinia } from 'pinia'
 
-import { initializeApp } from 'firebase/app'
+// import { initializeApp } from 'firebase/app'
 import App from './App.vue'
 
 import 'virtual:windi.css'

@@ -61,7 +61,7 @@ const { data: store, loading: isStoreLoading } = useRequest(() => storeApi.store
 const ticketsProcessing = ref<Record<string, unknown>>({})
 
 // Call, Skip, Checkin
-const { run: callTicket, loading: callTicketLoading } = useRequest((ticketId: number) => queueApi.queuesCallPost(`${ticketId}`), {
+const { run: callTicket, loading: callTicketLoading } = useRequest((ticketId: number) => queueApi.queuesCallPost(ticketId), {
   manual: true,
   onBefore([ticketId]) {
     ticketsProcessing.value = { ...ticketsProcessing.value, [ticketId]: true }
@@ -78,7 +78,7 @@ const { run: callTicket, loading: callTicketLoading } = useRequest((ticketId: nu
   },
 })
 
-const { run: skipTicket, loading: skipTicketLoading } = useRequest((ticketId: number) => queueApi.queuesSkipPost(`${ticketId}`), {
+const { run: skipTicket, loading: skipTicketLoading } = useRequest((ticketId: number) => queueApi.queuesSkipPost(ticketId), {
   manual: true,
   onBefore([ticketId]) {
     ticketsProcessing.value = { ...ticketsProcessing.value, [ticketId]: true }
@@ -95,7 +95,7 @@ const { run: skipTicket, loading: skipTicketLoading } = useRequest((ticketId: nu
   },
 })
 
-const { run: checkinTicket, loading: checkinTicketLoading } = useRequest((ticketId: number) => queueApi.queuesCheckinPost(`${ticketId}`), {
+const { run: checkinTicket, loading: checkinTicketLoading } = useRequest((ticketId: number) => queueApi.queuesCheckinPost(ticketId), {
   manual: true,
   onBefore([ticketId]) {
     ticketsProcessing.value = { ...ticketsProcessing.value, [ticketId]: true }
@@ -151,19 +151,19 @@ const { data: tickets, loading: isLoading } = useRequest(() => queueApi.queuesTi
 const filteredTickets = computed(() => tickets.value?.filter(t => t.status === 'pending').filter(t => `${t.queueNumber}`.includes(keyword.value) || `${t.seatType.name}`.includes(keyword.value)))
 
 // get seatTypes by store
-const seatTypes = computed(() => store.value?.queuesInfo.filter(q => !!q.queueId).map(q => q.seatType) || [])
+const seatTypes = computed(() => store.value?.seatTypes || [])
 
 // Get queues by tickets
 const queues = computed(() => {
   if (!store.value)
     return []
 
-  return store.value.queuesInfo.map((q) => {
+  return store.value.queuesInfo.filter(qI => qI.queueId).map((q, index) => {
     const ticketsInQueue = tickets.value?.filter(tk => q.queueId === tk.queueId) || []
     return {
       ...q,
       count: ticketsInQueue.length || 0,
-      firstTicketId: ticketsInQueue.length > 0 ? ticketsInQueue[0].id : 0,
+      firstTicketId: ticketsInQueue.length > 0 ? ticketsInQueue[0].ticketId : 0,
     }
   })
 })
@@ -237,34 +237,52 @@ const queues = computed(() => {
           </div>
           <div class="bg-white overflow-hidden rounded-lg p-4">
             <ul class="divide-y divide-gray-100">
-              <li v-for="q in queues" :key="q.queueId" class="flex items-center justify-between py-4">
-                <p class="flex">
-                  <span class="text-gray-600" v-text="q.seatType.name" />
-                  <button class="text-xs flex items-center ml-2 bg-gray-100 text-gray-500 p-1 rounded-md" @click="setCoeSeatTypeModal(q.seatType)">
-                    <SettingsIcon class="w-3.5 mt-0.5 mr-1" />
-                    <span>Settings</span>
-                  </button>
-                </p>
-                <div class="space-x-2 flex items-center text-sm">
-                  <span class="flex items-center text-gray-600 mr-2 justify-start min-w-12">
-                    <ArrowSmallRightIcon class="w-4 h-4 text-gray-400" />
-                    <span class="ml-1" v-text="`#${q.firstTicketId}`" />
-                  </span>
-                  <span class="flex items-center text-gray-600 pr-4">
-                    <UserIcon class="w-4 h-4 text-gray-400" />
-                    <span class="ml-1" v-text="q.count" />
-                  </span>
-                  <button class="bg-sky-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="callTicket(q.firstTicketId)">
-                    Call
-                  </button>
-                  <button class="bg-yellow-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="skipTicket(q.firstTicketId)">
-                    Skip
-                  </button>
-                  <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="checkinTicket(q.firstTicketId)">
-                    Checkin
-                  </button>
-                </div>
-              </li>
+              <template v-if="queues.length > 0">
+                <li v-for="q in queues" :key="q.queueId" class="flex items-center justify-between py-4">
+                  <p class="flex">
+                    <span class="text-gray-600" v-text="q.seatType.name" />
+                    <button class="text-xs flex items-center ml-2 bg-gray-100 text-gray-500 p-1 rounded-md" @click="setCoeSeatTypeModal(q.seatType)">
+                      <SettingsIcon class="w-3.5 mt-0.5 mr-1" />
+                      <span>Settings</span>
+                    </button>
+                  </p>
+                  <div class="space-x-2 flex items-center text-sm">
+                    <span class="flex items-center text-gray-600 mr-2 justify-start min-w-12">
+                      <ArrowSmallRightIcon class="w-4 h-4 text-gray-400" />
+                      <span class="ml-1" v-text="`#${q.firstTicketId}`" />
+                    </span>
+                    <span class="flex items-center text-gray-600 pr-4">
+                      <UserIcon class="w-4 h-4 text-gray-400" />
+                      <span class="ml-1" v-text="q.count" />
+                    </span>
+                    <button class="bg-sky-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="callTicket(q.firstTicketId)">
+                      Call
+                    </button>
+                    <button class="bg-yellow-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="skipTicket(q.firstTicketId)">
+                      Skip
+                    </button>
+                    <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="checkinTicket(q.firstTicketId)">
+                      Checkin
+                    </button>
+                  </div>
+                </li>
+              </template>
+              <template v-else>
+                <li v-for="seatType in seatTypes" :key="seatType.id" class="flex items-center justify-between py-4">
+                  <p class="flex">
+                    <span class="text-gray-600" v-text="seatType.name" />
+                    <button class="text-xs flex items-center ml-2 bg-gray-100 text-gray-500 p-1 rounded-md" @click="setCoeSeatTypeModal(seatType)">
+                      <SettingsIcon class="w-3.5 mt-0.5 mr-1" />
+                      <span>Settings</span>
+                    </button>
+                  </p>
+                  <div class="space-x-2 flex items-center text-sm">
+                    <button class="bg-gray-500 rounded-md text-white text-sm py-1 px-2" :disabled="true">
+                      Waiting for starting service
+                    </button>
+                  </div>
+                </li>
+              </template>
             </ul>
           </div>
         </div>
@@ -289,7 +307,7 @@ const queues = computed(() => {
         <template v-else>
           <EmptyBlock v-if="filteredTickets?.length === 0" />
           <template v-else>
-            <article v-for="ticket in filteredTickets" :key="ticket.id" class="rounded-lg overflow-hidden border border-gray-100 bg-white flex items-center justify-between">
+            <article v-for="ticket in filteredTickets" :key="ticket.ticketId" class="rounded-lg overflow-hidden border border-gray-100 bg-white flex items-center justify-between">
               <div class="p-4">
                 <div>
                   <h3 class="text-xl font-medium text-gray-900 space-x-2 whitespace-nowrap">
@@ -305,15 +323,15 @@ const queues = computed(() => {
               </div>
 
               <div class="flex">
-                <button class="text-center text-sm bg-sky-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.id}`)" @click="callTicket(ticket.id)">
+                <button class="text-center text-sm bg-sky-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.ticketId}`)" @click="callTicket(ticket.ticketId)">
                   <PhoneIcon class="w-6" />
                   <span class="mt-2">Call</span>
                 </button>
-                <button class="text-center text-sm bg-yellow-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.id}`)" @click="skipTicket(ticket.id)">
+                <button class="text-center text-sm bg-yellow-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.ticketId}`)" @click="skipTicket(ticket.ticketId)">
                   <ForwardIcon class="w-6" />
                   <span class="mt-2">Skip</span>
                 </button>
-                <button class="text-center text-sm bg-emerald-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.id}`)" @click="checkinTicket(ticket.id)">
+                <button class="text-center text-sm bg-emerald-500 text-white px-4 py-6 flex flex-col items-center" :disabled="Object.keys(ticketsProcessing).includes(`${ticket.ticketId}`)" @click="checkinTicket(ticket.ticketId)">
                   <CheckIcon class="w-6" />
                   <span class="mt-2">Checkin</span>
                 </button>

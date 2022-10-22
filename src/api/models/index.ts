@@ -1,3 +1,4 @@
+export * from './direct-notification';
 export * from './inline-object';
 export * from './inline-object1';
 export * from './inline-object2';

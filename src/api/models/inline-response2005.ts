@@ -13,6 +13,7 @@
 
 
 import { QueueInfo } from './queue-info';
+import { SeatType } from './seat-type';
 import { StoresResources } from './stores-resources';
 
 /**
@@ -81,6 +82,12 @@ export interface InlineResponse2005 {
      * @memberof InlineResponse2005
      */
     resources: StoresResources;
+    /**
+     * 
+     * @type {Array<SeatType>}
+     * @memberof InlineResponse2005
+     */
+    seatTypes: Array<SeatType>;
 }
 
 /**

@@ -35,11 +35,11 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Call for customer
-         * @param {string} [ticketId] 
+         * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queuesCallPost: async (ticketId?: string, options: any = {}): Promise<RequestArgs> => {
+        queuesCallPost: async (ticketId?: number, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/queues/call`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -70,11 +70,11 @@ export const QueueApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Checkin for customer
-         * @param {string} [ticketId] 
+         * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queuesCheckinPost: async (ticketId?: string, options: any = {}): Promise<RequestArgs> => {
+        queuesCheckinPost: async (ticketId?: number, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/queues/checkin`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -282,11 +282,11 @@ export const QueueApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Call for customer
-         * @param {string} [ticketId] 
+         * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async queuesCallPost(ticketId?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse401>> {
+        async queuesCallPost(ticketId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse401>> {
             const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesCallPost(ticketId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -296,11 +296,11 @@ export const QueueApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Checkin for customer
-         * @param {string} [ticketId] 
+         * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async queuesCheckinPost(ticketId?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse401>> {
+        async queuesCheckinPost(ticketId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse401>> {
             const localVarAxiosArgs = await QueueApiAxiosParamCreator(configuration).queuesCheckinPost(ticketId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
@@ -378,21 +378,21 @@ export const QueueApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Call for customer
-         * @param {string} [ticketId] 
+         * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queuesCallPost(ticketId?: string, options?: any): AxiosPromise<InlineResponse401> {
+        queuesCallPost(ticketId?: number, options?: any): AxiosPromise<InlineResponse401> {
             return QueueApiFp(configuration).queuesCallPost(ticketId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Checkin for customer
-         * @param {string} [ticketId] 
+         * @param {number} [ticketId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        queuesCheckinPost(ticketId?: string, options?: any): AxiosPromise<InlineResponse401> {
+        queuesCheckinPost(ticketId?: number, options?: any): AxiosPromise<InlineResponse401> {
             return QueueApiFp(configuration).queuesCheckinPost(ticketId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -451,24 +451,24 @@ export class QueueApi extends BaseAPI {
     /**
      * 
      * @summary Call for customer
-     * @param {string} [ticketId] 
+     * @param {number} [ticketId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QueueApi
      */
-    public queuesCallPost(ticketId?: string, options?: any) {
+    public queuesCallPost(ticketId?: number, options?: any) {
         return QueueApiFp(this.configuration).queuesCallPost(ticketId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Checkin for customer
-     * @param {string} [ticketId] 
+     * @param {number} [ticketId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QueueApi
      */
-    public queuesCheckinPost(ticketId?: string, options?: any) {
+    public queuesCheckinPost(ticketId?: number, options?: any) {
         return QueueApiFp(this.configuration).queuesCheckinPost(ticketId, options).then((request) => request(this.axios, this.basePath));
     }
 

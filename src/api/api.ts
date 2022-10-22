@@ -13,6 +13,7 @@
 
 
 
+export * from './apis/notification-api';
 export * from './apis/queue-api';
 export * from './apis/queue-interior-api';
 export * from './apis/report-api';
