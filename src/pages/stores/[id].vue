@@ -109,7 +109,7 @@ function queue() {
                 <span class="ml-1" v-text="q.waitingSize" />
               </span>
               <template v-if="!!tickets?.find(t => t.queueId === q.queueId)">
-                <RouterLink :to="`/tickets/${tickets.find(t => t.queueId === q.queueId)?.queueId}`">
+                <RouterLink :to="`/tickets/${tickets.find(t => t.queueId === q.queueId)?.ticketId}`">
                   <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
                     Go to Ticket
                   </button>

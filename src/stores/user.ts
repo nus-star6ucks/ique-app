@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { getMessaging, getToken } from 'firebase/messaging'
+// import { onBackgroundMessage } from 'firebase/messaging/sw'
 import { notificationApi, queueApi } from '~/utils'
 
 const app = initializeApp({
@@ -13,6 +14,9 @@ const app = initializeApp({
 })
 
 const messaging = getMessaging(app)
+// onBackgroundMessage(messaging, (payload) => {
+//   console.log('[firebase-messaging-sw.js] Received background message ', payload)
+// })
 
 export interface LoginUser {
   id: number
@@ -21,18 +25,6 @@ export interface LoginUser {
   phoneNumber: string
   createTime: number
 }
-
-// messaging.onBackgroundMessage((payload) => {
-//   console.log('Received background message ', payload)
-
-//   const notificationTitle = payload.notification.title
-//   const notificationOptions = {
-//     body: payload.notification.body,
-//   }
-
-//   self.registration.showNotification(notificationTitle,
-//     notificationOptions)
-// })
 
 export const useUserStore = defineStore('user', () => {
   /**
@@ -46,7 +38,8 @@ export const useUserStore = defineStore('user', () => {
     const token = await getToken(messaging, {
       vapidKey: import.meta.env.VITE_VAPID_KEY,
     })
-    await notificationApi.queuesNotificationPost({ target: token, title: 'YAY', message: 'test' })
+    if (user.value?.id)
+      await notificationApi.queuesRegisterTokenPost(user.value.id, token)
   }
 
   const logout = () => {
