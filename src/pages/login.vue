@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { ArrowLeftIcon, LockClosedIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
-// import { getMessaging, getToken } from 'firebase/messaging'
+import { getMessaging, getToken } from 'firebase/messaging'
 import { useUserStore } from '~/stores/user'
 import { userApi } from '~/utils'
 import WithoutAuth from '~/components/WithoutAuth.vue'
 
-// const messaging = getMessaging()
+const messaging = getMessaging()
 
 const userStore = useUserStore()
 
@@ -18,7 +18,8 @@ async function onSubmit() {
     return
   loading.value = true
   try {
-    // const fcmToken = await getToken(messaging)
+    const fcmToken = await getToken(messaging)
+    console.log(fcmToken)
 
     const { data } = await userApi.usersLoginPost({
       username: username.value,

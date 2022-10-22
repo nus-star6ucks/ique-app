@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import { QueueApi, StoreApi, UserApi } from './api'
+import { NotificationApi, QueueApi, StoreApi, UserApi } from './api'
 
 dayjs.extend(relativeTime)
 
@@ -30,6 +30,7 @@ axios.interceptors.response.use((response) => {
 
 export const storeApi = new StoreApi({}, API_SMS_URL)
 export const queueApi = new QueueApi({}, API_BASEURL)
+export const notificationApi = new NotificationApi({}, API_BASEURL)
 export const userApi = new UserApi({}, API_UMS_URL)
 
 export const humanEstimateTime = (secs: number) => {

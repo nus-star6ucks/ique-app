@@ -5,7 +5,6 @@ import { useUserStore } from './stores/user'
 import { userApi } from './utils'
 
 const router = useRouter()
-const userStore = useUserStore()
 
 useHead({
   title: 'iQue',

@@ -33,8 +33,8 @@ export const NotificationApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        notificationPost: async (directNotification?: DirectNotification, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/notification`;
+        queuesNotificationPost: async (directNotification?: DirectNotification, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/queues/notification`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -61,6 +61,59 @@ export const NotificationApiAxiosParamCreator = function (configuration?: Config
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary register token
+         * @param {number} userId 
+         * @param {string} token 
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queuesRegisterTokenPost: async (userId: number, token: string, body?: object, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            if (userId === null || userId === undefined) {
+                throw new RequiredError('userId','Required parameter userId was null or undefined when calling queuesRegisterTokenPost.');
+            }
+            // verify required parameter 'token' is not null or undefined
+            if (token === null || token === undefined) {
+                throw new RequiredError('token','Required parameter token was null or undefined when calling queuesRegisterTokenPost.');
+            }
+            const localVarPath = `/queues/registerToken`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
+            if (token !== undefined) {
+                localVarQueryParameter['token'] = token;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -77,8 +130,24 @@ export const NotificationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async notificationPost(directNotification?: DirectNotification, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await NotificationApiAxiosParamCreator(configuration).notificationPost(directNotification, options);
+        async queuesNotificationPost(directNotification?: DirectNotification, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await NotificationApiAxiosParamCreator(configuration).queuesNotificationPost(directNotification, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @summary register token
+         * @param {number} userId 
+         * @param {string} token 
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async queuesRegisterTokenPost(userId: number, token: string, body?: object, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await NotificationApiAxiosParamCreator(configuration).queuesRegisterTokenPost(userId, token, body, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -100,8 +169,20 @@ export const NotificationApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        notificationPost(directNotification?: DirectNotification, options?: any): AxiosPromise<string> {
-            return NotificationApiFp(configuration).notificationPost(directNotification, options).then((request) => request(axios, basePath));
+        queuesNotificationPost(directNotification?: DirectNotification, options?: any): AxiosPromise<string> {
+            return NotificationApiFp(configuration).queuesNotificationPost(directNotification, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary register token
+         * @param {number} userId 
+         * @param {string} token 
+         * @param {object} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queuesRegisterTokenPost(userId: number, token: string, body?: object, options?: any): AxiosPromise<string> {
+            return NotificationApiFp(configuration).queuesRegisterTokenPost(userId, token, body, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -121,8 +202,22 @@ export class NotificationApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof NotificationApi
      */
-    public notificationPost(directNotification?: DirectNotification, options?: any) {
-        return NotificationApiFp(this.configuration).notificationPost(directNotification, options).then((request) => request(this.axios, this.basePath));
+    public queuesNotificationPost(directNotification?: DirectNotification, options?: any) {
+        return NotificationApiFp(this.configuration).queuesNotificationPost(directNotification, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary register token
+     * @param {number} userId 
+     * @param {string} token 
+     * @param {object} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NotificationApi
+     */
+    public queuesRegisterTokenPost(userId: number, token: string, body?: object, options?: any) {
+        return NotificationApiFp(this.configuration).queuesRegisterTokenPost(userId, token, body, options).then((request) => request(this.axios, this.basePath));
     }
 
 }

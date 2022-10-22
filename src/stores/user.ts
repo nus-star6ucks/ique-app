@@ -1,4 +1,18 @@
+import { initializeApp } from 'firebase/app'
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { getMessaging, getToken } from 'firebase/messaging'
+import { notificationApi, queueApi } from '~/utils'
+
+const app = initializeApp({
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDERID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+})
+
+const messaging = getMessaging(app)
 
 export interface LoginUser {
   id: number
@@ -8,14 +22,31 @@ export interface LoginUser {
   createTime: number
 }
 
+// messaging.onBackgroundMessage((payload) => {
+//   console.log('Received background message ', payload)
+
+//   const notificationTitle = payload.notification.title
+//   const notificationOptions = {
+//     body: payload.notification.body,
+//   }
+
+//   self.registration.showNotification(notificationTitle,
+//     notificationOptions)
+// })
+
 export const useUserStore = defineStore('user', () => {
   /**
    * Current name of the user.
    */
   const user = ref<LoginUser>()
 
-  function setToken(_token: string) {
+  async function setToken(_token: string) {
     localStorage.setItem('token', _token)
+    await Notification.requestPermission()
+    const token = await getToken(messaging, {
+      vapidKey: import.meta.env.VITE_VAPID_KEY,
+    })
+    await notificationApi.queuesNotificationPost({ target: token, title: 'YAY', message: 'test' })
   }
 
   const logout = () => {
