@@ -34,6 +34,7 @@ export const useUserStore = defineStore('user', () => {
 
   async function setToken(_token: string) {
     localStorage.setItem('token', _token)
+
     await Notification.requestPermission()
     const token = await getToken(messaging, {
       vapidKey: import.meta.env.VITE_VAPID_KEY,
