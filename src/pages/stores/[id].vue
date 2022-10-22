@@ -32,8 +32,11 @@ function deselectQueueInfo() {
   selectedQueueInfo.value = undefined!
 }
 
+const { user } = useUserStore()
+
 const storeId = useRouteParams('id')
 const { data: store, loading: isLoading } = useRequest(() => storeApi.storesStoreIdGet(+(storeId.value || 0)).then(d => d.data))
+const { data: tickets } = useRequest(() => queueApi.queuesTicketsGet(user?.id).then(d => d.data))
 
 const queueTicketRequesting = ref<boolean>(false)
 function queue() {
@@ -105,7 +108,14 @@ function queue() {
                 <UserIcon class="w-4 h-4" />
                 <span class="ml-1" v-text="q.waitingSize" />
               </span>
-              <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
+              <template v-if="!!tickets?.find(t => t.queueId === q.queueId)">
+                <RouterLink :to="`/tickets/${tickets.find(t => t.queueId === q.queueId)?.queueId}`">
+                  <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
+                    Go to Ticket
+                  </button>
+                </RouterLink>
+              </template>
+              <button v-else class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
                 Queue
               </button>
             </div>
