@@ -50,7 +50,7 @@ const ticket = computed(() => data.value?.ticket)
           <h3 class="text-center text-gray-400 mb-2 text-xl">
             Your Queue Number
           </h3>
-          <p class="text-center text-5xl font-bold text-emerald-500" v-text="(ticket.queueInfo.waitingSize - 1) > 0 ? ticket.queueNumber : `It's Your Turn!`" />
+          <p class="text-center text-5xl font-bold text-emerald-500" v-text="(ticket.queueInfo.waitingSize - 1) > 0 ? ticket.queueNumber : 'It\'s Your Turn!'" />
         </div>
         <div class="grid grid-cols-3">
           <div class="px-4 py-8">
@@ -63,7 +63,7 @@ const ticket = computed(() => data.value?.ticket)
             <h4 class="text-gray-400 mb-2 text-base">
               Ahead
             </h4>
-            <p class="text-gray-800 text-xl font-semibold" v-text="`${ticket.queueInfo.waitingSize - 1} pax`" />
+            <p class="text-gray-800 text-xl font-semibold" v-text="`${ticket.queueInfo.waitingSize - 1} people`" />
           </div>
           <div class="px-4 py-8">
             <h4 class="text-gray-400 mb-2 text-base">
