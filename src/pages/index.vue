@@ -6,7 +6,7 @@ import { storeApi } from '../utils'
 import StoreCard from '~/components/StoreCard.vue'
 import { useUserStore } from '~/stores/user'
 
-const { data: stores, loading: isLoading } = useRequest(() => storeApi.storesGet().then(d => d.data))
+const { data: stores, loading: isLoading } = useRequest(() => storeApi.storesListGet().then(d => d.data))
 
 useHead({
   meta: [

@@ -15,14 +15,6 @@ const updateDetailSwitch = ref<boolean>(false)
 const password = ref<string>('')
 const passwordConfirmation = ref<string>('')
 
-// const { run: updateDetail } = useRequest((id: number) => userApi.usersPut({ id }))
-// function onSubmit(e: any) {
-//   if (password.value || passwordConfirmation.value) {
-//     if (password.value !== passwordConfirmation.value)
-//       snackStore.show({ mode: 'error', message: 'Password and its confirmation are mismatched!' })
-//   }
-// }
-
 const { run: deleteMySelf, loading: deleteLoading } = useRequest((id: number) => userApi.usersDelete(id), {
   manual: true,
   onSuccess() {

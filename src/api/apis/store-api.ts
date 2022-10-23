@@ -116,6 +116,41 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary Get Stores List (Home)
+         * @param {number} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storesListGet: async (userId?: number, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/stores/list`;
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (userId !== undefined) {
+                localVarQueryParameter['userId'] = userId;
+            }
+
+
+    
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create Store
          * @param {InlineObject4} [inlineObject4] 
          * @param {*} [options] Override http request option.
@@ -337,6 +372,20 @@ export const StoreApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get Stores List (Home)
+         * @param {number} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async storesListGet(userId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Store>>> {
+            const localVarAxiosArgs = await StoreApiAxiosParamCreator(configuration).storesListGet(userId, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
          * @summary Create Store
          * @param {InlineObject4} [inlineObject4] 
          * @param {*} [options] Override http request option.
@@ -436,6 +485,16 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @summary Get Stores List (Home)
+         * @param {number} [userId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storesListGet(userId?: number, options?: any): AxiosPromise<Array<Store>> {
+            return StoreApiFp(configuration).storesListGet(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Create Store
          * @param {InlineObject4} [inlineObject4] 
          * @param {*} [options] Override http request option.
@@ -516,6 +575,18 @@ export class StoreApi extends BaseAPI {
      */
     public storesGet(userId?: number, options?: any) {
         return StoreApiFp(this.configuration).storesGet(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get Stores List (Home)
+     * @param {number} [userId] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public storesListGet(userId?: number, options?: any) {
+        return StoreApiFp(this.configuration).storesListGet(userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
