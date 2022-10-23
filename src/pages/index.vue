@@ -4,6 +4,7 @@ import { useRequest } from 'vue-request'
 import Loading from '../components/Loading.vue'
 import { storeApi } from '../utils'
 import StoreCard from '~/components/StoreCard.vue'
+import { useUserStore } from '~/stores/user'
 
 const { data: stores, loading: isLoading } = useRequest(() => storeApi.storesGet().then(d => d.data))
 
@@ -15,6 +16,8 @@ useHead({
     },
   ],
 })
+
+const userStore = useUserStore()
 </script>
 
 <template>
@@ -27,7 +30,7 @@ useHead({
         <MagnifyingGlassIcon class="w-4 h-4" />
       </button>
     </header>
-    <div class="p-6 rounded-lg bg-white relative">
+    <div v-if="!userStore.user" class="p-6 rounded-lg bg-white relative">
       <div>
         <h2 class="text-2xl uppercase mb-4 font-light">
           Welcome to iQue

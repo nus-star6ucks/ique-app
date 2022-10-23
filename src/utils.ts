@@ -33,13 +33,12 @@ export const queueApi = new QueueApi({}, API_BASEURL)
 export const notificationApi = new NotificationApi({}, API_BASEURL)
 export const userApi = new UserApi({}, API_UMS_URL)
 
-export const humanEstimateTime = (secs: number) => {
-  const HOUR = 60 * 60
-  const MIN = 60
-  if (secs > HOUR)
-    return `${(secs / HOUR).toFixed(1)} hrs`
-  if (secs > MIN && secs < HOUR)
-    return `${(secs / MIN).toFixed(1)} mins`
+export const humanEstimateTime = (mins: number) => {
+  const HOUR = 60
+  if (mins > HOUR)
+    return `${(mins / HOUR).toFixed(1)} hrs`
+  if (mins > 1)
+    return `${mins} mins`
   return '1 min'
 }
 

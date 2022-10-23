@@ -54,7 +54,7 @@ function confirmStopService() {
 }
 // Switch Service END
 
-const { data: store, loading: isStoreLoading } = useRequest(() => storeApi.storesStoreIdGet(+storeId.value!).then(d => d.data), {
+const { data: store, loading: isStoreLoading, run: refreshStore } = useRequest(() => storeApi.storesStoreIdGet(+storeId.value!).then(d => d.data), {
   refreshDeps: [startServiceLoading, stopServiceLoading],
 })
 
@@ -139,6 +139,7 @@ const { loading: seatTypesLoading, run: updateSeatTypes } = useRequest((seatType
   onSuccess() {
     snackStore.show({ mode: 'success', message: 'Updated successfully!' })
     setCoeSeatTypeModal()
+    refreshStore()
   },
   onError() {
     snackStore.show({ mode: 'error', message: 'Unexpected error!' })
@@ -147,6 +148,7 @@ const { loading: seatTypesLoading, run: updateSeatTypes } = useRequest((seatType
 
 const { data: tickets, loading: isLoading } = useRequest(() => queueApi.queuesTicketsGet(undefined, +storeId.value!).then(d => d.data), {
   refreshDeps: [callTicketLoading, skipTicketLoading, checkinTicketLoading, startServiceLoading, seatTypesLoading],
+  pollingInterval: 5000,
 })
 const filteredTickets = computed(() => tickets.value?.filter(t => t.status === 'pending').filter(t => `${t.queueNumber}`.includes(keyword.value) || `${t.seatType.name}`.includes(keyword.value)))
 
@@ -163,7 +165,7 @@ const queues = computed(() => {
     return {
       ...q,
       count: ticketsInQueue.length || 0,
-      firstTicketId: ticketsInQueue.length > 0 ? ticketsInQueue[0].ticketId : 0,
+      firstQueueNo: ticketsInQueue.length > 0 ? ticketsInQueue[0].queueNumber : 0,
     }
   })
 })
@@ -178,7 +180,7 @@ const queues = computed(() => {
             <ArrowLeftIcon class="w-5 h-5 text-gray-800" />
           </button>
         </RouterLink>
-        <h2>Store Detail</h2>
+        <h2 v-text="store?.name || 'Store Detail'" />
         <div class="w-9 h-9" />
       </header>
       <section class="mt-8 space-y-4 h-full overflow-auto">
@@ -249,19 +251,19 @@ const queues = computed(() => {
                   <div class="space-x-2 flex items-center text-sm">
                     <span class="flex items-center text-gray-600 mr-2 justify-start min-w-12">
                       <ArrowSmallRightIcon class="w-4 h-4 text-gray-400" />
-                      <span class="ml-1" v-text="`#${q.firstTicketId}`" />
+                      <span class="ml-1" v-text="`#${q.firstQueueNo}`" />
                     </span>
                     <span class="flex items-center text-gray-600 pr-4">
                       <UserIcon class="w-4 h-4 text-gray-400" />
                       <span class="ml-1" v-text="q.count" />
                     </span>
-                    <button class="bg-sky-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="callTicket(q.firstTicketId)">
+                    <button class="bg-sky-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstQueueNo}`)" @click="callTicket(q.firstQueueNo)">
                       Call
                     </button>
-                    <button class="bg-yellow-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="skipTicket(q.firstTicketId)">
+                    <button class="bg-yellow-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstQueueNo}`)" @click="skipTicket(q.firstQueueNo)">
                       Skip
                     </button>
-                    <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="checkinTicket(q.firstTicketId)">
+                    <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstQueueNo}`)" @click="checkinTicket(q.firstQueueNo)">
                       Checkin
                     </button>
                   </div>
@@ -388,7 +390,7 @@ const queues = computed(() => {
               </DialogTitle>
               <form class="my-4" @submit.prevent="updateSeatTypes(seatTypes.map(s => s.id === selectedSeatType.id ? selectedSeatType : s))">
                 <div class="space-y-2">
-                  <div v-if="selectedSeatType.id !== 0">
+                  <!-- <div>
                     <label for="imageUrl" class="block text-gray-700">
                       ID (Cannot be changed)
                     </label>
@@ -398,7 +400,7 @@ const queues = computed(() => {
                       :value="selectedSeatType.id"
                       class="p-2 mt-1 w-full rounded-md border-gray-200 bg-gray-100 text-gray-400 border border-gray-200"
                     >
-                  </div>
+                  </div> -->
                   <div>
                     <label for="name" class="block text-gray-700">
                       Name

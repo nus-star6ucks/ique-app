@@ -8,7 +8,9 @@ import { storeApi } from '~/utils'
 
 const updateStoreDetailStore = useUpdateStoreDetailStore()
 const userStore = useUserStore()
-const { data: stores, loading: isLoading, run: refresh } = useRequest(() => storeApi.storesGet(userStore.user?.id).then(d => d.data))
+const { data: stores, loading: isLoading, run: refresh } = useRequest(() => storeApi.storesGet(userStore.user?.id).then(d => d.data), {
+  pollingInterval: 5000,
+})
 
 // refresh when remove the selection
 const selectedStore = computed(() => updateStoreDetailStore?.updateStoreDetail?.selectedStore)
@@ -23,7 +25,7 @@ watch(selectedStore, (newState, prevState) => {
     <div class="block relative col-span-3 h-100vh overflow-y-scroll">
       <header class="p-8 flex items-center justify-between text-gray-800 mb-2 sticky top-0 z-10 bg-gray-50">
         <RouterLink v-slot="{ navigate }" to="/tickets" custom>
-          <button class="bg-white p-2 rounded-lg" @click="navigate">
+          <button class="bg-white p-2 rounded-lg" :class="{ invisible: useRouter().currentRoute.value.fullPath === '/merchant' }" @click="navigate">
             <ArrowLeftIcon class="w-5 h-5 text-gray-800" />
           </button>
         </RouterLink>
