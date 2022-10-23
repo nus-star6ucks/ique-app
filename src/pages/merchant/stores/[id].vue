@@ -388,7 +388,7 @@ const queues = computed(() => {
               >
                 Create / Update a Queue
               </DialogTitle>
-              <form class="my-4" @submit.prevent="updateSeatTypes(seatTypes.map(s => s.id === selectedSeatType.id ? selectedSeatType : s))">
+              <form class="my-4" @submit.prevent="seatTypes.map(st => st.id).includes(selectedSeatType.id) ? updateSeatTypes(seatTypes.map(s => s.id === selectedSeatType.id ? selectedSeatType : s)) : updateSeatTypes([...seatTypes, selectedSeatType])">
                 <div class="space-y-2">
                   <!-- <div>
                     <label for="imageUrl" class="block text-gray-700">
