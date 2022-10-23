@@ -297,7 +297,7 @@ const queues = computed(() => {
         </h2>
       </header>
       <section class="mt-8 space-y-4 h-full overflow-auto">
-        <Loading v-if="isLoading" :loading="true" />
+        <Loading v-if="!tickets && isLoading" :loading="true" />
         <div v-if="store?.status === 'stopService'" class="relative rounded-lg border border-gray-200 p-8 text-center opacity-70">
           <h2 class="text-2xl font-medium uppercase">
             Out of Service

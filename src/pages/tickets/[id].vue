@@ -44,7 +44,7 @@ const ticket = computed(() => data.value?.ticket)
           </p>
         </div>
       </div>
-      <Loading :loading="isLoading" />
+      <Loading :loading="!data && isLoading" />
       <div v-if="ticket" class="bg-white rounded-lg shadow-gray-100 shadow-lg px-4 py-8">
         <div class="border-b border-dashed border-gray-200 pb-8 relative">
           <h3 class="text-center text-gray-400 mb-2 text-xl">

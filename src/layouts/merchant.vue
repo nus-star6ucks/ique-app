@@ -34,7 +34,7 @@ watch(selectedStore, (newState, prevState) => {
           <PlusIcon class="w-5 h-5" />
         </RouterLink>
       </header>
-      <Loading v-if="isLoading" :loading="true" />
+      <Loading v-if="!stores && isLoading" :loading="true" />
       <div class="p-8">
         <section class="grid grid-cols-2 gap-8">
           <div v-for="store in stores" :key="store.id" class="relative block border border-gray-200 rounded-lg overflow-hidden">
