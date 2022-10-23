@@ -34,6 +34,15 @@ export const useUserStore = defineStore('user', () => {
 
   async function setToken(_token: string) {
     localStorage.setItem('token', _token)
+  }
+
+  const logout = () => {
+    localStorage.removeItem('token')
+    user.value = undefined
+  }
+
+  async function setUser(_user: LoginUser) {
+    user.value = _user
 
     try {
       await Notification.requestPermission()
@@ -43,19 +52,9 @@ export const useUserStore = defineStore('user', () => {
       const token = await getToken(messaging, {
         vapidKey: import.meta.env.VITE_VAPID_KEY,
       })
-
-      if (user.value?.id)
-        await notificationApi.queuesRegisterTokenPost(user.value.id, token)
+      if (_user?.id)
+        await notificationApi.queuesRegisterTokenPost(_user.id, token)
     }
-  }
-
-  const logout = () => {
-    localStorage.removeItem('token')
-    user.value = undefined
-  }
-
-  function setUser(_user: LoginUser) {
-    user.value = _user
   }
 
   return {
