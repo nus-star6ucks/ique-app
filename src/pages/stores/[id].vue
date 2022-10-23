@@ -101,25 +101,32 @@ function queue() {
       <p class="text-gray-600 tracking-wider leading-loose text-base" v-text="store.resources.description" />
       <div class="bg-white overflow-hidden rounded-lg p-4">
         <ul class="divide-y divide-gray-100">
-          <li v-for="q in store.queuesInfo" :key="q.queueId" class="flex items-center justify-between py-4">
-            <p v-text="q.seatType.name" />
-            <div class="space-x-4 flex items-center">
-              <span class="flex items-center text-gray-600">
-                <UserIcon class="w-4 h-4" />
-                <span class="ml-1" v-text="q.waitingSize" />
-              </span>
-              <template v-if="!!tickets?.find(t => t.queueId === q.queueId)">
-                <RouterLink :to="`/tickets/${tickets.find(t => t.queueId === q.queueId)?.ticketId}`">
-                  <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
-                    Go to Ticket
-                  </button>
-                </RouterLink>
-              </template>
-              <button v-else class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
-                Queue
-              </button>
-            </div>
-          </li>
+          <template v-if="store.queuesInfo.filter(q => !!q.queueId).length > 0">
+            <li v-for="q in store.queuesInfo" :key="q.queueId" class="flex items-center justify-between py-4">
+              <p v-text="q.seatType.name" />
+              <div class="space-x-4 flex items-center">
+                <span class="flex items-center text-gray-600">
+                  <UserIcon class="w-4 h-4" />
+                  <span class="ml-1" v-text="q.waitingSize" />
+                </span>
+                <template v-if="!!tickets?.find(t => t.queueId === q.queueId)">
+                  <RouterLink :to="`/tickets/${tickets.find(t => t.queueId === q.queueId)?.ticketId}`">
+                    <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
+                      Go to Ticket
+                    </button>
+                  </RouterLink>
+                </template>
+                <button v-else class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
+                  Queue
+                </button>
+              </div>
+            </li>
+          </template>
+          <template v-else>
+            <li v-for="st in store.seatTypes" :key="st.id" class="flex items-center justify-between py-4">
+              <p v-text="st.name" />
+            </li>
+          </template>
         </ul>
       </div>
     </section>
