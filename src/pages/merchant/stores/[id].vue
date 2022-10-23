@@ -134,7 +134,7 @@ function setCoeSeatTypeModal(mode?: SeatType | 'create') {
 }
 // Update SeatType END
 
-const { loading: seatTypesLoading, run: updateSeatTypes } = useRequest((seatTypes: SeatType[]) => storeApi.storesPut({ id: +storeId.value!, seatTypes }), {
+const { loading: seatTypesLoading, run: updateSeatTypes } = useRequest((seatTypes: SeatType[]) => storeApi.storesPut({ id: +storeId.value!, ...store, seatTypes }), {
   manual: true,
   onSuccess() {
     snackStore.show({ mode: 'success', message: 'Updated successfully!' })

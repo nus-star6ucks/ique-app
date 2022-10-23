@@ -18,6 +18,7 @@ function updateStore() {
 
   storeApi.storesPut({
     id: formData.id,
+    ...(formData as any),
     name: formData.name,
     type: formData.type as any,
     address: formData.address,
