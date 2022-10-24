@@ -28,12 +28,14 @@ useHead({
   ],
 })
 
+onBeforeMount(async () => {
+  await oneSignal.showSlidedownPrompt()
+})
+
 onMounted(async () => {
   const token = localStorage.getItem('token')
   const userStore = useUserStore()
   const notificationDot = useNotificationDotStore()
-
-  await oneSignal.showSlidedownPrompt()
 
   const routePath = window.location.hash.substring(1)
 

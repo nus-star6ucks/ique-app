@@ -100,9 +100,6 @@ export default defineConfig({
     //   },
     // }),
 
-    // https://github.com/antfu/vite-plugin-inspect
-    // Visit http://localhost:3333/__inspect/ to see the inspector
-    Inspect(),
   ],
 
   // https://github.com/vitest-dev/vitest
@@ -114,8 +111,4 @@ export default defineConfig({
     },
   },
 
-  ssr: {
-    // TODO: workaround until they support native ESM
-    noExternal: ['workbox-window'],
-  },
 })

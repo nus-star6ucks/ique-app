@@ -377,25 +377,27 @@ const queues = computed(() => {
             </Menu>
           </div>
           <div class="bg-white overflow-hidden rounded-lg p-4">
-            <Loading :loading="!reports && isReportsLoading" />
-            <ul v-if="reports?.length > 0" class="divide-y divide-gray-100">
-              <li v-for="report in reports" :key="report?.report_id" class="flex items-center justify-between py-4">
-                <p class="flex">
-                  <a v-if="report.type === 'NUM'" href="javascript:;" class="text-gray-600 hover:text-emerald-500 transition flex items-center" @click="isReportIframeOpen = report.url">
-                    <UserGroupIcon class="w-5 mr-2" />
-                    Volume Analysis
-                  </a>
-                  <a v-if="report.type === 'AWT'" href="javascript:;" class="text-gray-600 hover:text-emerald-500 transition flex items-center" @click="isReportIframeOpen = report.url">
-                    <ClockIcon class="w-5 mr-2" />
-                    Average Waiting Time Report
-                  </a>
-                </p>
-                <div class="space-x-2 flex items-center text-sm">
-                  <span class="text-gray-600 text-sm" v-text="dayjs(report.create_time).fromNow()" />
-                </div>
-              </li>
-            </ul>
-            <EmptyBlock v-else />
+            <Loading v-if="!reports && isReportsLoading" :loading="true" />
+            <template v-else>
+              <ul v-if="reports?.length > 0" class="divide-y divide-gray-100">
+                <li v-for="report in reports" :key="report?.report_id" class="flex items-center justify-between py-4">
+                  <p class="flex">
+                    <a v-if="report.type === 'NUM'" href="javascript:;" class="text-gray-600 hover:text-emerald-500 transition flex items-center" @click="isReportIframeOpen = report.url">
+                      <UserGroupIcon class="w-5 mr-2" />
+                      Volume Analysis
+                    </a>
+                    <a v-if="report.type === 'AWT'" href="javascript:;" class="text-gray-600 hover:text-emerald-500 transition flex items-center" @click="isReportIframeOpen = report.url">
+                      <ClockIcon class="w-5 mr-2" />
+                      Average Waiting Time Report
+                    </a>
+                  </p>
+                  <div class="space-x-2 flex items-center text-sm">
+                    <span class="text-gray-600 text-sm" v-text="dayjs(report.create_time).fromNow()" />
+                  </div>
+                </li>
+              </ul>
+              <EmptyBlock v-else />
+            </template>
           </div>
         </div>
       </section>
