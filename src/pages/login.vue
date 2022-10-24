@@ -22,7 +22,8 @@ async function onSubmit() {
       username: username.value,
       password: password.value,
     } as any)
-    console.log(await oneSignal.getUserId())
+    await oneSignal.getUserId()
+    await oneSignal.showSlidedownPrompt()
     userStore.login(data.token)
     window.setTimeout(() => {
       window.location.reload()
