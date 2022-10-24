@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import { ArrowLeftIcon, LockClosedIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
-import { getMessaging, getToken } from 'firebase/messaging'
+import { useOneSignal } from '@onesignal/onesignal-vue3'
 import { useUserStore } from '~/stores/user'
 import { userApi } from '~/utils'
 import WithoutAuth from '~/components/WithoutAuth.vue'
 
-const messaging = getMessaging()
-
 const userStore = useUserStore()
+
+const oneSignal = useOneSignal()
 
 const username = ref<string>('')
 const password = ref<string>('')
@@ -18,14 +18,11 @@ async function onSubmit() {
     return
   loading.value = true
   try {
-    const fcmToken = await getToken(messaging)
-    console.log(fcmToken)
-
     const { data } = await userApi.usersLoginPost({
       username: username.value,
       password: password.value,
-      // fcmToken,
     } as any)
+    console.log(oneSignal.getUserId())
     userStore.login(data.token)
     window.setTimeout(() => {
       window.location.reload()
