@@ -45,18 +45,19 @@ export const useUserStore = defineStore('user', () => {
   async function setUser(_user: LoginUser) {
     user.value = _user
 
-    try {
-      const permission = await Notification.requestPermission()
-      if (permission === 'granted') {
-        const token = await getToken(messaging, {
-          vapidKey: import.meta.env.VITE_VAPID_KEY,
-        })
+    // try {
+    //   const permission = await Notification.requestPermission()
+    //   if (permission === 'granted') {
+    //     const token = await getToken(messaging, {
+    //       vapidKey: import.meta.env.VITE_VAPID_KEY,
+    //     })
 
-        if (_user?.id)
-          await notificationApi.queuesRegisterTokenPost(_user.id, token)
-      }
-    }
-    catch {}
+    //   }
+    // }
+    // catch {}
+
+    if (_user?.id)
+      await notificationApi.queuesRegisterTokenPost(_user.id, token)
   }
 
   return {
