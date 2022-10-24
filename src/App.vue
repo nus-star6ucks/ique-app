@@ -3,7 +3,7 @@ import { useOneSignal } from '@onesignal/onesignal-vue3'
 import { UserUserTypeEnum } from './api/models'
 import Snackbar from './components/Snackbar.vue'
 import { useUserStore } from './stores/user'
-import { userApi } from './utils'
+import { notificationApi, userApi } from './utils'
 
 const router = useRouter()
 const oneSignal = useOneSignal()
@@ -34,8 +34,12 @@ onMounted(async () => {
   const userStore = useUserStore()
 
   if (typeof userStore.user === 'undefined' && token) {
-    userApi.usersGet().then(({ data }) => {
+    userApi.usersGet().then(async ({ data }) => {
       userStore.setUser(data)
+      const oneSignalUserId = await oneSignal.getUserId()
+      if (oneSignalUserId)
+        await notificationApi.queuesRegisterTokenPost(data.id, oneSignalUserId)
+
       if (data.userType === 'merchant')
         router.replace('/merchant')
     }).catch(() => {

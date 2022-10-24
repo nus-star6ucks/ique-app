@@ -1,13 +1,10 @@
 <script lang="ts" setup>
 import { ArrowLeftIcon, LockClosedIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
-import { useOneSignal } from '@onesignal/onesignal-vue3'
 import { useUserStore } from '~/stores/user'
 import { userApi } from '~/utils'
 import WithoutAuth from '~/components/WithoutAuth.vue'
 
 const userStore = useUserStore()
-
-const oneSignal = useOneSignal()
 
 const username = ref<string>('')
 const password = ref<string>('')
@@ -22,7 +19,7 @@ async function onSubmit() {
       username: username.value,
       password: password.value,
     } as any)
-    await oneSignal.getUserId()
+
     userStore.login(data.token)
     window.setTimeout(() => {
       window.location.reload()
