@@ -1,6 +1,4 @@
-import { initializeApp } from 'firebase/app'
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { getMessaging, getToken } from 'firebase/messaging'
 // import { onBackgroundMessage } from 'firebase/messaging/sw'
 import { notificationApi } from '~/utils'
 
