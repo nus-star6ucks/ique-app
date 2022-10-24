@@ -22,7 +22,7 @@ async function onSubmit() {
       username: username.value,
       password: password.value,
     } as any)
-    console.log(oneSignal.getUserId())
+    console.log(await oneSignal.getUserId())
     userStore.login(data.token)
     window.setTimeout(() => {
       window.location.reload()
