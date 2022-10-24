@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { ArrowLeftIcon, LockClosedIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
 import { useUserStore } from '~/stores/user'
+import { useSnackStore } from '~/stores/snack'
 import { userApi } from '~/utils'
 import WithoutAuth from '~/components/WithoutAuth.vue'
 
 const userStore = useUserStore()
+const snackStore = useSnackStore()
 
 const username = ref<string>('')
 const password = ref<string>('')
@@ -26,8 +28,7 @@ async function onSubmit() {
     }, 1500)
   }
   catch (e) {
-    // eslint-disable-next-line no-console
-    console.log(e)
+    snackStore.show({ message: 'User credentials are incorrect!', mode: 'error' })
   }
   finally {
     loading.value = false

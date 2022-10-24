@@ -29,8 +29,7 @@ async function onSubmit() {
     }, 1500)
   }
   catch (e) {
-    // eslint-disable-next-line no-console
-    console.log(e)
+    snackStore.show({ message: 'User credentials are incorrect!', mode: 'error' })
   }
   finally {
     loading.value = false

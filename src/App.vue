@@ -35,6 +35,8 @@ onMounted(async () => {
 
   // await oneSignal.showSlidedownPrompt()
 
+  const routePath = window.location.hash.substring(1)
+
   if (typeof userStore.user === 'undefined' && token) {
     userApi.usersGet().then(async ({ data }) => {
       userStore.setUser(data)
@@ -48,7 +50,7 @@ onMounted(async () => {
         })
       }
 
-      if (data.userType === 'merchant')
+      if (data.userType === 'merchant' && !routePath.startsWith('/merchant'))
         router.replace('/merchant')
     }).catch(() => {
       userStore.logout()
@@ -57,12 +59,12 @@ onMounted(async () => {
     return
   }
 
-  if (userStore.user?.userType === UserUserTypeEnum.Customer && router.currentRoute.value.path.startsWith('/merchant')) {
+  if (userStore.user?.userType === UserUserTypeEnum.Customer && routePath.startsWith('/merchant')) {
     router.replace('/')
     return
   }
 
-  if (userStore.user?.userType === UserUserTypeEnum.Merchant && !router.currentRoute.value.path.startsWith('/merchant'))
+  if (userStore.user?.userType === UserUserTypeEnum.Merchant && !routePath.startsWith('/merchant'))
     router.replace('/merchant')
 })
 </script>

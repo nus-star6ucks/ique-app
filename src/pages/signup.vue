@@ -31,9 +31,12 @@ async function onSubmit() {
     snackStore.show({ message: 'Signed up successfully, please login.', mode: 'success' })
     router.replace('/login')
   }
-  catch (e) {
-    // eslint-disable-next-line no-console
-    console.log(e)
+  catch (e: any) {
+    if (e?.response.data?.message) {
+      snackStore.show({ message: e?.response?.data?.message, mode: 'error' })
+      return
+    }
+    snackStore.show({ message: 'Unexpected error!', mode: 'error' })
   }
   finally {
     loading.value = false
