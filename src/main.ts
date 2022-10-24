@@ -4,6 +4,7 @@ import generatedRoutes from 'virtual:generated-pages'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { createHead } from '@vueuse/head'
 import { createPinia } from 'pinia'
+import OneSignalVuePlugin from '@onesignal/onesignal-vue3'
 
 import App from './App.vue'
 
@@ -25,4 +26,7 @@ const router = createRouter({
 app.use(pinia)
 app.use(router)
 app.use(head)
+app.use(OneSignalVuePlugin, {
+  appId: import.meta.env.VITE_ONESINGAL_APP_ID,
+})
 app.mount('#app')

@@ -5,6 +5,7 @@ specifiers:
   '@headlessui/vue': ^1.7.3
   '@heroicons/vue': ^2.0.12
   '@iconify-json/carbon': ^1.1.8
+  '@onesignal/onesignal-vue3': ^1.0.2
   '@vitejs/plugin-vue': ^3.1.2
   '@vueuse/core': ^9.3.1
   '@vueuse/head': ^0.9.7
@@ -44,6 +45,7 @@ specifiers:
 dependencies:
   '@headlessui/vue': 1.7.3_vue@3.2.41
   '@heroicons/vue': 2.0.12_vue@3.2.41
+  '@onesignal/onesignal-vue3': 1.0.2
   '@vueuse/core': 9.3.1_vue@3.2.41
   '@vueuse/head': 0.9.7_vue@3.2.41
   '@vueuse/router': 9.3.0_4g567gsol3fv3jos66rjdswwp4
@@ -2054,6 +2056,12 @@ packages:
       - bluebird
       - supports-color
     dev: true
+
+  /@onesignal/onesignal-vue3/1.0.2:
+    resolution: {integrity: sha512-vII2s7/e8veseex0hKWJHbVZDkFTh/WO76DfVvrAq0IJKv9c216TXDp3Xs6WDRQoODgPhpvI3TnHq8i1E2u+Vw==}
+    dependencies:
+      vue: 3.2.41
+    dev: false
 
   /@polka/url/1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
