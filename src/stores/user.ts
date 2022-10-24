@@ -53,8 +53,8 @@ export const useUserStore = defineStore('user', () => {
     // }
     // catch {}
 
-    if (_user?.id)
-      await notificationApi.queuesRegisterTokenPost(_user.id, token)
+    // if (_user?.id)
+    //   await notificationApi.queuesRegisterTokenPost(_user.id, token)
   }
 
   return {
