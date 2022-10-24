@@ -38,15 +38,15 @@ onMounted(async () => {
   if (typeof userStore.user === 'undefined' && token) {
     userApi.usersGet().then(async ({ data }) => {
       userStore.setUser(data)
-      // const oneSignalUserId = await oneSignal.getUserId()
-      // if (oneSignalUserId) {
-      //   await notificationApi.queuesRegisterTokenPost(data.id, oneSignalUserId)
+      const oneSignalUserId = await oneSignal.getUserId()
+      if (oneSignalUserId) {
+        await notificationApi.queuesRegisterTokenPost(data.id, oneSignalUserId)
 
-      //   oneSignal.on('notificationDisplay', (event) => {
-      //     notificationDot.setNotificationDot(true)
-      //     console.warn('OneSignal notification displayed:', event)
-      //   })
-      // }
+        oneSignal.on('notificationDisplay', (event) => {
+          notificationDot.setNotificationDot(true)
+          console.warn('OneSignal notification displayed:', event)
+        })
+      }
 
       if (data.userType === 'merchant')
         router.replace('/merchant')

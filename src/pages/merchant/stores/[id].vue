@@ -163,9 +163,6 @@ const { data: reports, loading: isReportsLoading } = useRequest(() => axios.get(
   },
 }).then(d => d.data), {
   pollingInterval: 10000,
-  onSuccess(e) {
-    console.log(e)
-  },
   onError() {
     snackStore.show({ mode: 'error', message: 'Unexpected error!' })
   },
