@@ -203,12 +203,12 @@ const queues = computed(() => {
                   Queueing
                 </p>
               </div>
-              <div>
+              <!-- <div>
                 <h3 class="text-2xl font-bold mb-1" v-text="tickets.filter(t => t.status === 'seated').length" />
                 <p class="text-sm text-gray-400">
                   Served
                 </p>
-              </div>
+              </div> -->
               <div>
                 <h3 class="text-2xl font-bold mb-1" v-text="queues.length" />
                 <p class="text-sm text-gray-400">
