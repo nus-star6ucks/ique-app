@@ -166,6 +166,7 @@ const queues = computed(() => {
       ...q,
       count: ticketsInQueue.length || 0,
       firstQueueNo: ticketsInQueue.length > 0 ? ticketsInQueue[0].queueNumber : 0,
+      firstTicketId: ticketsInQueue.length > 0 ? ticketsInQueue[0].ticketId : 0,
     }
   })
 })
@@ -257,13 +258,13 @@ const queues = computed(() => {
                       <UserIcon class="w-4 h-4 text-gray-400" />
                       <span class="ml-1" v-text="q.count" />
                     </span>
-                    <button class="bg-sky-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstQueueNo}`)" @click="callTicket(q.firstQueueNo)">
+                    <button class="bg-sky-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="callTicket(q.firstTicketId)">
                       Call
                     </button>
-                    <button class="bg-yellow-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstQueueNo}`)" @click="skipTicket(q.firstQueueNo)">
+                    <button class="bg-yellow-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="skipTicket(q.firstTicketId)">
                       Skip
                     </button>
-                    <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstQueueNo}`)" @click="checkinTicket(q.firstQueueNo)">
+                    <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="checkinTicket(q.firstTicketId)">
                       Checkin
                     </button>
                   </div>
