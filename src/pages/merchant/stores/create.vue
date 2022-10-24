@@ -32,15 +32,13 @@ const { run: create, loading } = useRequest((payload: any) => storeApi.storesPos
 function onSubmit({ target: { name, type, address, imageUrl, description } }: any) {
   if (!userStore?.user?.id)
     return
-
   create({
     merchantId: userStore.user.id,
     name: name.value,
     type: type.value,
+    address: address.value,
     phoneNumbers: [],
-    seatTypes: [{
-      name: 'Big',
-    }],
+    seatTypes: [],
     resources: {
       description: description.value,
       ratings: 4,

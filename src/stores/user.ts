@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { getMessaging, getToken } from 'firebase/messaging'
 // import { onBackgroundMessage } from 'firebase/messaging/sw'
+import axios from 'axios'
 import { notificationApi, queueApi } from '~/utils'
 
 const app = initializeApp({
@@ -45,16 +46,17 @@ export const useUserStore = defineStore('user', () => {
     user.value = _user
 
     try {
-      await Notification.requestPermission()
+      const permission = await Notification.requestPermission()
+      if (permission === 'granted') {
+        const token = await getToken(messaging, {
+          vapidKey: import.meta.env.VITE_VAPID_KEY,
+        })
+
+        if (_user?.id)
+          await notificationApi.queuesRegisterTokenPost(_user.id, token)
+      }
     }
     catch {}
-    finally {
-      const token = await getToken(messaging, {
-        vapidKey: import.meta.env.VITE_VAPID_KEY,
-      })
-      if (_user?.id)
-        await notificationApi.queuesRegisterTokenPost(_user.id, token)
-    }
   }
 
   return {
