@@ -33,7 +33,7 @@ onMounted(async () => {
   const userStore = useUserStore()
   const notificationDot = useNotificationDotStore()
 
-  // await oneSignal.showSlidedownPrompt()
+  await oneSignal.showSlidedownPrompt()
 
   const routePath = window.location.hash.substring(1)
 
