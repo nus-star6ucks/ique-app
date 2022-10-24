@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 import { HomeIcon, TicketIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
+import { useNotificationDotStore } from '~/stores/notificationDot'
+
+const { notificationDot } = useNotificationDotStore()
 </script>
 
 <template>
@@ -9,7 +12,7 @@ import { HomeIcon, TicketIcon, UserIcon } from '@heroicons/vue/24/outline/index.
       <span class="text">Home</span>
     </RouterLink>
     <RouterLink to="/tickets" class="tab relative">
-      <span class="absolute -right-1 top-0 flex h-2 w-2">
+      <span v-if="notificationDot" class="absolute -right-1 top-0 flex h-2 w-2">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
         <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-400" />
       </span>

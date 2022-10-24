@@ -5,8 +5,10 @@ import { useUserStore } from '~/stores/user'
 import { queueApi, storeApi } from '~/utils'
 import Loading from '~/components/Loading.vue'
 import WithAuth from '~/components/WithAuth.vue'
+import { useNotificationDotStore } from '~/stores/notificationDot'
 
 const { user } = useUserStore()
+const { setNotificationDot } = useNotificationDotStore()
 
 const { data: tickets, loading: isLoading } = useRequest(async () => {
   if (!user)
@@ -22,6 +24,10 @@ const { data: tickets, loading: isLoading } = useRequest(async () => {
       queue: queueData,
     }
   }))
+})
+
+onMounted(() => {
+  setNotificationDot(false)
 })
 </script>
 

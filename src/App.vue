@@ -3,6 +3,7 @@ import { useOneSignal } from '@onesignal/onesignal-vue3'
 import { UserUserTypeEnum } from './api/models'
 import Snackbar from './components/Snackbar.vue'
 import { useUserStore } from './stores/user'
+import { useNotificationDotStore } from './stores/notificationDot'
 import { notificationApi, userApi } from './utils'
 
 const router = useRouter()
@@ -28,17 +29,24 @@ useHead({
 })
 
 onMounted(async () => {
-  await oneSignal.showSlidedownPrompt()
-
   const token = localStorage.getItem('token')
   const userStore = useUserStore()
+  const notificationDot = useNotificationDotStore()
+
+  await oneSignal.showSlidedownPrompt()
 
   if (typeof userStore.user === 'undefined' && token) {
     userApi.usersGet().then(async ({ data }) => {
       userStore.setUser(data)
       const oneSignalUserId = await oneSignal.getUserId()
-      if (oneSignalUserId)
+      if (oneSignalUserId) {
         await notificationApi.queuesRegisterTokenPost(data.id, oneSignalUserId)
+
+        oneSignal.on('notificationDisplay', (event) => {
+          notificationDot.setNotificationDot(true)
+          console.warn('OneSignal notification displayed:', event)
+        })
+      }
 
       if (data.userType === 'merchant')
         router.replace('/merchant')
