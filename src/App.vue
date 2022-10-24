@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { useOneSignal } from '@onesignal/onesignal-vue3'
 import { UserUserTypeEnum } from './api/models'
 import Snackbar from './components/Snackbar.vue'
 import { useUserStore } from './stores/user'
 import { userApi } from './utils'
 
 const router = useRouter()
+const oneSignal = useOneSignal()
 
 useHead({
   title: 'iQue',
@@ -25,7 +27,9 @@ useHead({
   ],
 })
 
-onMounted(() => {
+onMounted(async () => {
+  await oneSignal.showSlidedownPrompt()
+
   const token = localStorage.getItem('token')
   const userStore = useUserStore()
 
