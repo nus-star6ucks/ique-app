@@ -19,6 +19,12 @@ export default defineConfig({
         secure: false,
         rewrite: path => path.replace(/^\/api/, ''),
       },
+      '/cf': {
+        target: 'https://ique.vercel.app/cf',
+        changeOrigin: true,
+        secure: false,
+        rewrite: path => path.replace(/^\/cf/, ''),
+      },
     },
   },
   base: '',

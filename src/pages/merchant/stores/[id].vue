@@ -1,16 +1,19 @@
 <script lang="ts" setup>
-import { ArrowLeftIcon, ArrowSmallRightIcon, CheckIcon, ForwardIcon, PhoneIcon, PlusSmallIcon, RocketLaunchIcon, Cog6ToothIcon as SettingsIcon, UserIcon, XMarkIcon } from '@heroicons/vue/24/outline/index.js'
+import { ArrowLeftIcon, ArrowSmallRightIcon, CheckIcon, ClockIcon, ForwardIcon, PhoneIcon, PlusSmallIcon, RocketLaunchIcon, Cog6ToothIcon as SettingsIcon, UserGroupIcon, UserIcon, XMarkIcon } from '@heroicons/vue/24/outline/index.js'
+import {
+  Dialog, DialogPanel, DialogTitle, Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  TransitionChild,
+  TransitionRoot,
+} from '@headlessui/vue'
 import { StopIcon } from '@heroicons/vue/24/solid/index.js'
 import { useRouteParams } from '@vueuse/router'
 import dayjs from 'dayjs'
 import { useRequest } from 'vue-request'
-import {
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  TransitionChild,
-  TransitionRoot,
-} from '@headlessui/vue'
+import axios from 'axios'
+import Loading from '../../../components/Loading.vue'
 import type { SeatType } from '~/api/models'
 import { useSnackStore } from '~/stores/snack'
 import { generateULong, queueApi, storeApi } from '~/utils'
@@ -134,6 +137,8 @@ function setCoeSeatTypeModal(mode?: SeatType | 'create') {
 }
 // Update SeatType END
 
+const isReportIframeOpen = ref<string>('')
+
 const { loading: seatTypesLoading, run: updateSeatTypes } = useRequest((seatTypes: SeatType[]) => storeApi.storesPut({ id: +storeId.value!, ...(store.value as any), seatTypes }), {
   manual: true,
   onSuccess() {
@@ -151,6 +156,34 @@ const { data: tickets, loading: isLoading } = useRequest(() => queueApi.queuesTi
   pollingInterval: 5000,
 })
 const filteredTickets = computed(() => tickets.value?.filter(t => t.status === 'pending').filter(t => `${t.queueNumber}`.includes(keyword.value) || `${t.seatType.name}`.includes(keyword.value)))
+
+const { data: reports, loading: isReportsLoading } = useRequest(() => axios.get('/cf/get-reports', {
+  params: {
+    storeId: storeId.value,
+  },
+}).then(d => d.data), {
+  pollingInterval: 10000,
+  onSuccess(e) {
+    console.log(e)
+  },
+  onError() {
+    snackStore.show({ mode: 'error', message: 'Unexpected error!' })
+  },
+})
+
+const { loading: isReportGenerating, run: generateReport } = useRequest((reportType = 'NUM') => axios.post('/cf/generate-report', {
+  storeId: storeId.value,
+  reportType,
+  unit: 'week',
+}), {
+  manual: true,
+  onSuccess() {
+    snackStore.show({ message: 'Task is inprogress, please refresh and wait for a while.', mode: 'success' })
+  },
+  onError() {
+    snackStore.show({ mode: 'error', message: 'Unexpected error!' })
+  },
+})
 
 // get seatTypes by store
 const seatTypes = computed(() => store.value?.seatTypes || [])
@@ -234,7 +267,6 @@ const queues = computed(() => {
               Queues
             </h3>
             <button class="bg-emerald-500 items-center flex rounded-md text-white text-sm py-1 px-2 mr-4" @click="setCoeSeatTypeModal('create')">
-              <PlusSmallIcon class="w-4" />
               <span>New</span>
             </button>
           </div>
@@ -287,6 +319,86 @@ const queues = computed(() => {
                 </li>
               </template>
             </ul>
+          </div>
+        </div>
+        <div class="pb-12">
+          <div class="mb-2 flex items-center justify-between">
+            <h3 class="text-xl font-bold">
+              Reports
+            </h3>
+
+            <Menu as="div" class="relative inline-block text-left">
+              <div>
+                <MenuButton
+                  :disabled="isReportGenerating"
+                  class="bg-emerald-500 items-center flex rounded-md text-white text-sm py-1 px-2 mr-4"
+                >
+                  <PlusSmallIcon class="w-4" />
+                  Generate
+                </MenuButton>
+              </div>
+
+              <transition
+                enter-active-class="transition duration-100 ease-out"
+                enter-from-class="transform scale-95 opacity-0"
+                enter-to-class="transform scale-100 opacity-100"
+                leave-active-class="transition duration-75 ease-in"
+                leave-from-class="transform scale-100 opacity-100"
+                leave-to-class="transform scale-95 opacity-0"
+              >
+                <MenuItems
+                  class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md"
+                >
+                  <div class="p-2 space-y-2">
+                    <MenuItem v-slot="{ active }">
+                      <button
+                        class="group flex w-full items-center rounded-md px-2 py-2 text-sm"
+                        :class="[
+                          active ? 'bg-emerald-500 text-white' : 'text-gray-600',
+                        ]" @click="generateReport('NUM')"
+                      >
+                        <UserGroupIcon class="w-5 mr-2" />
+
+                        Volume Analysis
+                      </button>
+                    </MenuItem>
+                    <MenuItem v-slot="{ active }">
+                      <button
+                        class="group flex w-full items-center rounded-md px-2 py-2 text-sm"
+                        :class="[
+                          active ? 'bg-emerald-500 text-white' : 'text-gray-600',
+                        ]"
+                        @click="generateReport('AWT')"
+                      >
+                        <ClockIcon class="w-5 mr-2" />
+                        Average Waiting Time
+                      </button>
+                    </MenuItem>
+                  </div>
+                </MenuItems>
+              </transition>
+            </Menu>
+          </div>
+          <div class="bg-white overflow-hidden rounded-lg p-4">
+            <Loading :loading="!reports && isReportsLoading" />
+            <ul v-if="reports?.length > 0" class="divide-y divide-gray-100">
+              <li v-for="report in reports" :key="report?.report_id" class="flex items-center justify-between py-4">
+                <p class="flex">
+                  <a v-if="report.type === 'NUM'" href="javascript:;" class="text-gray-600 hover:text-emerald-500 transition flex items-center" @click="isReportIframeOpen = report.url">
+                    <UserGroupIcon class="w-5 mr-2" />
+                    Volume Analysis
+                  </a>
+                  <a v-if="report.type === 'AWT'" href="javascript:;" class="text-gray-600 hover:text-emerald-500 transition flex items-center" @click="isReportIframeOpen = report.url">
+                    <ClockIcon class="w-5 mr-2" />
+                    Average Waiting Time Report
+                  </a>
+                </p>
+                <div class="space-x-2 flex items-center text-sm">
+                  <span class="text-gray-600 text-sm" v-text="dayjs(report.create_time).fromNow()" />
+                </div>
+              </li>
+            </ul>
+            <EmptyBlock v-else />
           </div>
         </div>
       </section>
@@ -441,6 +553,50 @@ const queues = computed(() => {
                   </div>
                 </div>
               </form>
+            </DialogPanel>
+          </TransitionChild>
+        </div>
+      </div>
+    </Dialog>
+  </TransitionRoot>
+
+  <TransitionRoot appear :show="!!isReportIframeOpen.trim()" as="template">
+    <Dialog as="div" class="relative z-10" @close="isReportIframeOpen = ''">
+      <TransitionChild
+        as="template"
+        enter="duration-300 ease-out"
+        enter-from="opacity-0"
+        enter-to="opacity-100"
+        leave="duration-200 ease-in"
+        leave-from="opacity-100"
+        leave-to="opacity-0"
+      >
+        <div class="fixed inset-0 bg-black bg-opacity-25" />
+      </TransitionChild>
+
+      <div class="fixed inset-0 overflow-y-auto">
+        <div
+          class="flex min-h-full items-center justify-center p-4 text-center"
+        >
+          <TransitionChild
+            as="template"
+            enter="duration-300 ease-out"
+            enter-from="opacity-0 scale-95"
+            enter-to="opacity-100 scale-100"
+            leave="duration-200 ease-in"
+            leave-from="opacity-100 scale-100"
+            leave-to="opacity-0 scale-95"
+          >
+            <DialogPanel
+              class="w-85vw h-85vh transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+            >
+              <DialogTitle
+                as="h3"
+                class="text-lg font-medium leading-6 text-gray-900 mb-4"
+              >
+                Report Detail
+              </DialogTitle>
+              <iframe class="w-full h-full pb-8" :src="isReportIframeOpen" />
             </DialogPanel>
           </TransitionChild>
         </div>

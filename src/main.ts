@@ -26,7 +26,8 @@ const router = createRouter({
 app.use(pinia)
 app.use(router)
 app.use(head)
-app.use(OneSignalVuePlugin, {
-  appId: import.meta.env.VITE_ONESINGAL_APP_ID,
-})
+// app.use(OneSignalVuePlugin, {
+//   appId: import.meta.env.VITE_ONESINGAL_APP_ID,
+//   allowLocalhostAsSecureOrigin: true,
+// })
 app.mount('#app')
