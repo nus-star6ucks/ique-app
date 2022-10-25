@@ -35,7 +35,9 @@ function deselectQueueInfo() {
 const { user } = useUserStore()
 
 const storeId = useRouteParams('id')
-const { data: store, loading: isLoading } = useRequest(() => storeApi.storesStoreIdGet(+(storeId.value || 0)).then(d => d.data))
+const { data: store, loading: isLoading } = useRequest(() => storeApi.storesStoreIdGet(+(storeId.value || 0)).then(d => d.data), {
+  pollingInterval: 5000,
+})
 const { data: tickets } = useRequest(() => queueApi.queuesTicketsGet(user?.id).then(d => d.data))
 
 const queueTicketRequesting = ref<boolean>(false)
@@ -66,7 +68,7 @@ function queue() {
       <h2>Store Detail</h2>
       <div class="w-9 h-9" />
     </header>
-    <Loading :loading="isLoading" />
+    <Loading :loading="isLoading && !store" />
     <section v-if="store" class="space-y-4">
       <div class="overflow-hidden rounded-lg bg-center bg-cover h-20vh my-4" :style="`background-image: url(${store.resources.imageUrl});`" />
       <div>
@@ -110,15 +112,20 @@ function queue() {
                 <UserIcon class="w-4 h-4" />
                 <span class="ml-1" v-text="q.waitingSize" />
               </span>
-              <template v-if="!!tickets?.find(t => t.queueId === q.queueId)">
-                <RouterLink :to="`/tickets/${tickets.find(t => t.queueId === q.queueId)?.ticketId}`">
-                  <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
-                    Go to Ticket
-                  </button>
-                </RouterLink>
+              <template v-if="store.status === 'onService'">
+                <template v-if="!!tickets?.find(t => t.queueId === q.queueId)">
+                  <RouterLink :to="`/tickets/${tickets.find(t => t.queueId === q.queueId)?.ticketId}`">
+                    <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
+                      Go to Ticket
+                    </button>
+                  </RouterLink>
+                </template>
+                <button v-else class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
+                  Queue
+                </button>
               </template>
-              <button v-else class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" @click="() => { setSelectedQueueInfo(q); }">
-                Queue
+              <button v-else class="bg-gray-500 rounded-md text-white text-sm py-1 px-2 cursor-default">
+                Not Available
               </button>
             </div>
           </li>

@@ -58,6 +58,7 @@ function confirmStopService() {
 // Switch Service END
 
 const { data: store, loading: isStoreLoading, run: refreshStore } = useRequest(() => storeApi.storesStoreIdGet(+storeId.value!).then(d => d.data), {
+  pollingInterval: 5000,
   refreshDeps: [startServiceLoading, stopServiceLoading],
 })
 
@@ -215,7 +216,7 @@ const queues = computed(() => {
         <div class="w-9 h-9" />
       </header>
       <section class="mt-8 space-y-4 h-full overflow-auto">
-        <Loading v-if="isStoreLoading" :loading="true" />
+        <Loading :loading="isStoreLoading && !store" />
         <div v-if="store" class="grid grid-cols-2 gap-4">
           <section class="space-y-4 bg-white border px-6 py-4 border-gray-100 rounded-lg">
             <div class="flex items-start justify-between mb-8">
