@@ -80,34 +80,9 @@ jobs:
           destination: 'ique-app-prod'
           parent: false
 
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v0'
 
-#     Alternative option - authentication via credentials json
+      - id: 'disable-index-cache'
+        run: 'gsutil setmeta -h "Cache-Control: no-cache, no-store, must-revalidate" gs://ique-app-prod/index.html'
 
-        
-#     # Get the GKE credentials so we can deploy to the cluster
-#     - name: Set up GKE credentials
-#       uses: google-github-actions/get-gke-credentials@v0
-#       with:
-#         cluster_name: ${{ env.GKE_CLUSTER }}
-#         location: ${{ env.GKE_ZONE }}
-
-#     - name: Docker configuration
-#       run: |-
-#         gcloud --quiet auth configure-docker $GAR_LOCATION-docker.pkg.dev
-        
-#     # Build the Docker image
-#     - name: Build
-#       run: |-
-#         docker build \
-#           --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest" \
-#           --build-arg GITHUB_SHA="$GITHUB_SHA" \
-#           --build-arg GITHUB_REF="$GITHUB_REF" \
-#           .
-#     # Push the Docker image to Google Artifact Registry
-#     - name: Publish
-#       run: |-
-#         docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest"
-        
-#     - name: Run Cloud Build Trigger
-#       run: |-
-#         gcloud beta builds triggers run ique --branch=main
