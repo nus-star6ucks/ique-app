@@ -86,3 +86,6 @@ jobs:
       - id: 'disable-index-cache'
         run: 'gsutil setmeta -h "Cache-Control: no-cache, no-store, must-revalidate" gs://ique-app-prod/index.html'
 
+      - id: 'redeploy-vercel'
+        run: 'curl https://api.vercel.com/v1/integrations/deploy/${{ secrets.VERCEL_DEPLOY_PATH }}'
+
