@@ -8,8 +8,10 @@ import { storeApi } from '~/utils'
 
 const updateStoreDetailStore = useUpdateStoreDetailStore()
 const userStore = useUserStore()
+const isLoggedIn = computed(() => !!userStore.user)
 const { data: stores, loading: isLoading, run: refresh } = useRequest(() => storeApi.storesGet(userStore.user?.id).then(d => d.data), {
   pollingInterval: 5000,
+  ready: isLoggedIn,
 })
 
 // refresh when remove the selection
