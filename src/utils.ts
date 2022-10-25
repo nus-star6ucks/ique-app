@@ -13,27 +13,36 @@ const API_BASEURL = '/api'
 const API_UMS_URL = '/api'
 const API_SMS_URL = '/api'
 
+const storeApi = new StoreApi({}, API_SMS_URL)
+const queueApi = new QueueApi({}, API_BASEURL)
+const notificationApi = new NotificationApi({}, API_BASEURL)
+const userApi = new UserApi({}, API_UMS_URL)
+
 const accessToken = localStorage.getItem('token') || ''
 if (accessToken.trim())
   axios.defaults.headers.Authorization = `Bearer ${accessToken}`
 
 axios.interceptors.response.use((response) => {
   return response
-}, (error) => {
+}, async (error) => {
   if (error.response.status === 401 && accessToken) {
-    localStorage.removeItem('token')
+    try {
+      const { data: refreshTokenData }: any = await userApi.usersRefreshGet()
+      if (refreshTokenData?.token) {
+        localStorage.setItem('token', refreshTokenData.token)
+        window.location.reload()
+      }
+    }
+    catch {
+      localStorage.removeItem('token')
+    }
     return error.response
   }
 
   return Promise.reject(error)
 })
 
-export const storeApi = new StoreApi({}, API_SMS_URL)
-export const queueApi = new QueueApi({}, API_BASEURL)
-export const notificationApi = new NotificationApi({}, API_BASEURL)
-export const userApi = new UserApi({}, API_UMS_URL)
-
-export const humanEstimateTime = (mins: number) => {
+const humanEstimateTime = (mins: number) => {
   const HOUR = 60
   if (mins > HOUR)
     return `${(mins / HOUR).toFixed(1)} hrs`
@@ -42,4 +51,6 @@ export const humanEstimateTime = (mins: number) => {
   return '1 min'
 }
 
-export const generateULong = () => +`${+Date.now()}${Math.floor(Math.random() * 1000)}`
+const generateULong = () => +`${+Date.now()}${Math.floor(Math.random() * 1000)}`
+
+export { storeApi, queueApi, notificationApi, userApi, humanEstimateTime, generateULong }
