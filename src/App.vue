@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useOneSignal } from '@onesignal/onesignal-vue3'
-import { UserUserTypeEnum } from './api/models'
 import Snackbar from './components/Snackbar.vue'
 import { useUserStore } from './stores/user'
 import { useNotificationDotStore } from './stores/notificationDot'
@@ -8,6 +7,8 @@ import { notificationApi, userApi } from './utils'
 
 const router = useRouter()
 const oneSignal = useOneSignal()
+const userStore = useUserStore()
+const notificationDot = useNotificationDotStore()
 
 useHead({
   title: 'iQue',
@@ -34,8 +35,6 @@ onBeforeMount(async () => {
 
 onMounted(async () => {
   const token = localStorage.getItem('token')
-  const userStore = useUserStore()
-  const notificationDot = useNotificationDotStore()
 
   if (typeof userStore.user === 'undefined' && token) {
     userApi.usersGet().then(async ({ data }) => {
