@@ -37,8 +37,6 @@ onMounted(async () => {
   const userStore = useUserStore()
   const notificationDot = useNotificationDotStore()
 
-  const routePath = window.location.hash.substring(1)
-
   if (typeof userStore.user === 'undefined' && token) {
     userApi.usersGet().then(async ({ data }) => {
       userStore.setUser(data)
@@ -51,23 +49,11 @@ onMounted(async () => {
           console.warn('OneSignal notification displayed:', event)
         })
       }
-
-      if (data.userType === 'merchant' && !routePath.startsWith('/merchant'))
-        router.replace('/merchant')
     }).catch(() => {
       userStore.logout()
       router.replace('/')
     })
-    return
   }
-
-  if (userStore.user?.userType === UserUserTypeEnum.Customer && routePath.startsWith('/merchant')) {
-    router.replace('/')
-    return
-  }
-
-  if (userStore.user?.userType === UserUserTypeEnum.Merchant && !routePath.startsWith('/merchant'))
-    router.replace('/merchant')
 })
 </script>
 

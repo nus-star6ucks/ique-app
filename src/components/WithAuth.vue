@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { UserUserTypeEnum } from '~/api/models'
+import { UserUserTypeEnum } from '~/api/models'
 import { useUserStore } from '~/stores/user'
 
 const { userType = 'customer' } = defineProps<{
@@ -9,16 +9,15 @@ const userStore = useUserStore()
 const router = useRouter()
 
 onMounted(() => {
-  const { user } = userStore
-  if (userType === 'merchant' && user?.userType !== 'merchant') {
-    router.replace('/me')
+  const routePath = window.location.hash.substring(1)
+
+  if (userStore.user?.userType === UserUserTypeEnum.Customer && routePath.startsWith('/merchant')) {
+    router.replace('/')
     return
   }
 
-  if (userType === 'customer' && user?.userType !== 'customer') {
+  if (userStore.user?.userType === UserUserTypeEnum.Merchant && !routePath.startsWith('/merchant'))
     router.replace('/merchant')
-    return
-  }
 
   const token = localStorage.getItem('token')
 
