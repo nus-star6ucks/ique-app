@@ -192,7 +192,7 @@ const queues = computed(() => {
     return []
 
   return store.value.queuesInfo.filter(qI => qI.queueId).map((q, index) => {
-    const ticketsInQueue = tickets.value?.filter(tk => q.queueId === tk.queueId) || []
+    const ticketsInQueue = tickets.value?.filter(tk => q.queueId === tk.queueId && tk.status === 'pending') || []
     return {
       ...q,
       count: ticketsInQueue.length || 0,
@@ -289,15 +289,17 @@ const queues = computed(() => {
                       <UserIcon class="w-4 h-4 text-gray-400" />
                       <span class="ml-1" v-text="q.count" />
                     </span>
-                    <button class="bg-sky-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="callTicket(q.firstTicketId)">
-                      Call
-                    </button>
-                    <button class="bg-yellow-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="skipTicket(q.firstTicketId)">
-                      Skip
-                    </button>
-                    <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="checkinTicket(q.firstTicketId)">
-                      Checkin
-                    </button>
+                    <template v-if="store?.status === 'onService'">
+                      <button class="bg-sky-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="callTicket(q.firstTicketId)">
+                        Call
+                      </button>
+                      <button class="bg-yellow-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="skipTicket(q.firstTicketId)">
+                        Skip
+                      </button>
+                      <button class="bg-emerald-500 rounded-md text-white text-sm py-1 px-2" :disabled="Object.keys(ticketsProcessing).includes(`${q.firstTicketId}`)" @click="checkinTicket(q.firstTicketId)">
+                        Checkin
+                      </button>
+                    </template>
                   </div>
                 </li>
               </template>
