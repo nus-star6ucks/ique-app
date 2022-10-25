@@ -595,7 +595,7 @@ const queues = computed(() => {
               >
                 Report Detail
               </DialogTitle>
-              <iframe class="w-full h-full pb-8" :src="`//storage.googleapis.com/ique-app-prod${isReportIframeOpen}`" />
+              <iframe class="w-full h-full pb-8" :src="`//storage.googleapis.com/ique-app-reports${isReportIframeOpen}`" />
             </DialogPanel>
           </TransitionChild>
         </div>
