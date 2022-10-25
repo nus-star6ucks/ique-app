@@ -344,7 +344,7 @@ const queues = computed(() => {
                 leave-to-class="transform scale-95 opacity-0"
               >
                 <MenuItems
-                  class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md"
+                  class="absolute z-10 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md"
                 >
                   <div class="p-2 space-y-2">
                     <MenuItem v-slot="{ active }">
