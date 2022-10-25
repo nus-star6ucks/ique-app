@@ -43,28 +43,30 @@ watch(selectedStore, (newState, prevState) => {
               :src="store.resources.imageUrl"
               class="h-48 w-full object-cover lg:h-64"
             >
-            <span :class="{ 'bg-red-500': store.status === 'stopService', 'bg-emerald-500': store.status === 'onService' }" class="inline-block absolute text-white rounded-md top-0 px-3 py-1 text-sm uppercase opacity-90" v-text="store.status" />
             <div class="p-6">
-              <h5 class="text-xl font-bold">
-                <span v-text="store.name" />
-              </h5>
-              <p class="mt-2 text-sm text-gray-600 flex flex-wrap space-x-1">
-                <MapPinIcon class="w-4" />
-                <span v-text="store.address" />
-              </p>
+              <div class="h-20">
+                <h5 class="text-xl font-bold">
+                  <span v-text="store.name" />
+                  <span :class="{ 'bg-red-500': store.status === 'stopService', 'bg-emerald-500': store.status === 'onService' }" class="inline-block text-white rounded-md px-2 py-1 text-xs font-normal mb-1 uppercase opacity-90 mx-2" v-text="store.status" />
+                </h5>
+                <p class="mt-2 text-sm text-gray-600 flex flex-wrap space-x-1">
+                  <MapPinIcon class="w-4" />
+                  <span v-text="store.address" />
+                </p>
+              </div>
               <div class="flex items-center space-x-6 mt-8">
                 <RouterLink
                   :to="`/merchant/stores/${store.id}`"
                   type="button"
                   :disabled="store.status === 'stopService'"
-                  class="text-center block w-full rounded-lg text-white p-2 uppercase bg-emerald-500"
+                  class="text-center block w-full rounded-lg text-white p-2 bg-emerald-500"
                 >
                   Serve
                 </RouterLink>
                 <a
                   href="javascript:;"
                   type="button"
-                  class="text-center w-full rounded-lg text-white bg-gray-700 p-2 uppercase"
+                  class="text-center w-full rounded-lg text-white bg-gray-500 p-2"
                   @click="updateStoreDetailStore.setSelectedStore({ selectedStore: { ...store, phoneNumbersText: store.phoneNumbers.join(`\n`) } })"
                 >
                   Settings

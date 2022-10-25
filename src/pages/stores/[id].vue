@@ -170,7 +170,7 @@ function queue() {
               </DialogTitle>
               <div>
                 <p class="text-sm text-gray-500">
-                  You're requesting to queue <span v-text="selectedQueueInfo.seatType.name" />. There are <span v-text="selectedQueueInfo.waitingSize" /> people waiting in front of you, expect to wait <span v-text="humanEstimateTime(selectedQueueInfo.estimateWaitingTime)" />.
+                  You're requesting to queue <span v-text="selectedQueueInfo.seatType.name" />. There are <span v-text="selectedQueueInfo.waitingSize" /> group(s) waiting in front of you, expect to wait <span v-text="humanEstimateTime(selectedQueueInfo.estimateWaitingTime)" />.
                 </p>
               </div>
 
