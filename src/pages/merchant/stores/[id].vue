@@ -264,7 +264,8 @@ const queues = computed(() => {
               Queues
             </h3>
             <button class="bg-emerald-500 items-center flex rounded-md text-white text-sm py-1 px-2 mr-4" @click="setCoeSeatTypeModal('create')">
-              <span>New</span>
+              <PlusSmallIcon class="w-4" />
+              New
             </button>
           </div>
           <div class="bg-white overflow-hidden rounded-lg p-4">
@@ -278,7 +279,7 @@ const queues = computed(() => {
                       <span>Settings</span>
                     </button>
                   </p>
-                  <div class="space-x-2 flex items-center text-sm">
+                  <div v-if="q.seatType.id" class="space-x-2 flex items-center text-sm">
                     <span class="flex items-center text-gray-600 mr-2 justify-start min-w-12">
                       <ArrowSmallRightIcon class="w-4 h-4 text-gray-400" />
                       <span class="ml-1" v-text="`#${q.firstQueueNo}`" />

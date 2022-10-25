@@ -63,7 +63,7 @@ const ticket = computed(() => data.value?.ticket)
             <h4 class="text-gray-400 mb-2 text-base">
               Ahead
             </h4>
-            <p class="text-gray-800 text-xl font-semibold" v-text="`${ticket.queueInfo.waitingSize - 1} people`" />
+            <p class="text-gray-800 text-xl font-semibold" v-text="`${Math.max(0, ticket.queueInfo.waitingSize - 1)} people`" />
           </div>
           <div class="px-4 py-8">
             <h4 class="text-gray-400 mb-2 text-base">
