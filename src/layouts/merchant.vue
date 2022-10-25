@@ -34,8 +34,8 @@ watch(selectedStore, (newState, prevState) => {
           <PlusIcon class="w-5 h-5" />
         </RouterLink>
       </header>
-      <Loading v-if="!stores && isLoading" :loading="true" />
-      <div class="p-8">
+      <Loading v-if="!stores && isLoading && userStore.user" :loading="true" />
+      <div v-else class="p-8">
         <section class="grid grid-cols-2 gap-12">
           <div v-for="store in stores" :key="store.id" class="relative block border border-gray-200 rounded-lg overflow-hidden">
             <img
@@ -57,7 +57,6 @@ watch(selectedStore, (newState, prevState) => {
               <div class="flex items-center space-x-6 mt-8">
                 <RouterLink
                   :to="`/merchant/stores/${store.id}`"
-                  type="button"
                   :disabled="store.status === 'stopService'"
                   class="text-center block w-full rounded-lg text-white p-2 bg-emerald-500"
                 >
@@ -65,7 +64,6 @@ watch(selectedStore, (newState, prevState) => {
                 </RouterLink>
                 <a
                   href="javascript:;"
-                  type="button"
                   class="text-center w-full rounded-lg text-white bg-gray-500 p-2"
                   @click="updateStoreDetailStore.setSelectedStore({ selectedStore: { ...store, phoneNumbersText: store.phoneNumbers.join(`\n`) } })"
                 >
