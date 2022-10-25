@@ -43,7 +43,7 @@ onMounted(() => {
     </header>
     <div class="space-y-4 mb-20">
       <Loading :loading="isLoading" />
-      <EmptyBlock v-if="tickets?.length === 0" />
+      <EmptyBlock v-if="tickets?.length === 0" :cover="true" />
       <template v-else>
         <RouterLink
           v-for="ticket in tickets"

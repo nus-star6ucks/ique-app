@@ -39,7 +39,9 @@ onMounted(async () => {
 
   if (typeof userStore.user === 'undefined' && token) {
     userApi.usersGet().then(async ({ data }) => {
+      const fullPath = window.location.hash.substring(1)
       userStore.setUser(data)
+
       const oneSignalUserId = await oneSignal.getUserId()
       if (oneSignalUserId) {
         await notificationApi.queuesRegisterTokenPost(data.id, oneSignalUserId)
@@ -49,6 +51,14 @@ onMounted(async () => {
           console.warn('OneSignal notification displayed:', event)
         })
       }
+
+      if (data.userType === 'customer' && fullPath.startsWith('/merchant')) {
+        router.replace('/')
+        return
+      }
+
+      if (data.userType === 'merchant' && !fullPath.startsWith('/merchant'))
+        router.replace('/merchant')
     }).catch(() => {
       userStore.logout()
       router.replace('/')

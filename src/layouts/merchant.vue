@@ -36,14 +36,14 @@ watch(selectedStore, (newState, prevState) => {
       </header>
       <Loading v-if="!stores && isLoading" :loading="true" />
       <div class="p-8">
-        <section class="grid grid-cols-2 gap-8">
+        <section class="grid grid-cols-2 gap-12">
           <div v-for="store in stores" :key="store.id" class="relative block border border-gray-200 rounded-lg overflow-hidden">
             <img
               :alt="store.name"
               :src="store.resources.imageUrl"
               class="h-48 w-full object-cover lg:h-64"
             >
-            <span :class="{ 'bg-gray-400': store.status === 'stopService', 'bg-emerald-500': store.status === 'onService' }" class="inline-block absolute text-white rounded-md top-0 px-3 py-1 text-sm uppercase" v-text="store.status" />
+            <span :class="{ 'bg-red-500': store.status === 'stopService', 'bg-emerald-500': store.status === 'onService' }" class="inline-block absolute text-white rounded-md top-0 px-3 py-1 text-sm uppercase opacity-90" v-text="store.status" />
             <div class="p-6">
               <h5 class="text-xl font-bold">
                 <span v-text="store.name" />
@@ -52,7 +52,7 @@ watch(selectedStore, (newState, prevState) => {
                 <MapPinIcon class="w-4" />
                 <span v-text="store.address" />
               </p>
-              <div class="flex items-center space-x-2 mt-4">
+              <div class="flex items-center space-x-6 mt-8">
                 <RouterLink
                   :to="`/merchant/stores/${store.id}`"
                   type="button"

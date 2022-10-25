@@ -43,7 +43,7 @@ function updateStore() {
       <div class="w-9 h-9" />
     </header>
     <div class="p-8">
-      <EmptyBlock v-if="!selectedStore" />
+      <EmptyBlock v-if="!selectedStore" :cover="true" />
 
       <form v-else class="grid grid-cols-6 gap-6" @submit.prevent="updateStore">
         <div class="col-span-6 sm:col-span-3">
