@@ -47,7 +47,7 @@ watch(selectedStore, (newState, prevState) => {
               <div class="h-20">
                 <h5 class="text-xl font-bold">
                   <span v-text="store.name" />
-                  <span :class="{ 'bg-red-500': store.status === 'stopService', 'bg-emerald-500': store.status === 'onService' }" class="inline-block text-white rounded-md px-2 py-1 text-xs font-normal mb-1 uppercase opacity-90 mx-2" v-text="store.status" />
+                  <span :class="{ 'bg-red-500': store.status === 'stopService', 'bg-emerald-500': store.status === 'onService' }" class="inline-block text-white rounded-md px-2 py-1 text-xs font-normal mb-1 uppercase opacity-90 mx-2" v-text="store.status === 'onService' ? 'In Service' : 'Out of Service'" />
                 </h5>
                 <p class="mt-2 text-sm text-gray-600 flex flex-wrap space-x-1">
                   <MapPinIcon class="w-4" />

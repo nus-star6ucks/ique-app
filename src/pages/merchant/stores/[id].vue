@@ -224,8 +224,8 @@ const queues = computed(() => {
                 <h2 class="text-xl font-bold mb-2 leading-none" v-text="store.name" />
                 <p class="text-gray-600" v-text="store.type" />
               </div>
-              <span v-if="store.status === 'onService'" class="text-white px-6 py-1 text-xs bg-emerald-500 rounded-md uppercase">on service</span>
-              <span v-if="store.status === 'stopService'" class="text-white px-6 py-1 text-xs bg-red-500 rounded-md uppercase">off service</span>
+              <span v-if="store.status === 'onService'" class="text-white px-6 py-1 text-xs bg-emerald-500 rounded-md uppercase">In Service</span>
+              <span v-if="store.status === 'stopService'" class="text-white px-6 py-1 text-xs bg-red-500 rounded-md uppercase">out of service</span>
             </div>
             <div v-if="tickets && store.status === 'onService'" class="flex space-x-2">
               <div>
