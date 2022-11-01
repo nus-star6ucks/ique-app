@@ -6,6 +6,8 @@ import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import obfuscator from 'rollup-plugin-obfuscator'
+import wasm from 'vite-plugin-wasm'
+import topLevelAwait from 'vite-plugin-top-level-await'
 
 import WindiCSS from 'vite-plugin-windicss'
 
@@ -51,6 +53,9 @@ export default defineConfig({
   },
 
   plugins: [
+    wasm(),
+    topLevelAwait(),
+
     WindiCSS(),
     Vue({
       reactivityTransform: true,
