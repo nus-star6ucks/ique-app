@@ -4,7 +4,7 @@ import { useRequest } from 'vue-request'
 import { UserUserTypeEnum } from '~/api/models'
 import { useSnackStore } from '~/stores/snack'
 import { useUserStore } from '~/stores/user'
-import { storeApi } from '~/utils'
+import { sanitize, storeApi } from '~/utils'
 
 useHead({
   meta: [
@@ -32,7 +32,8 @@ const { run: create, loading } = useRequest((payload: any) => storeApi.storesPos
 function onSubmit({ target: { name, type, address, imageUrl, description } }: any) {
   if (!userStore?.user?.id)
     return
-  create({
+
+  const payload = {
     merchantId: userStore.user.id,
     name: name.value,
     type: type.value,
@@ -44,7 +45,9 @@ function onSubmit({ target: { name, type, address, imageUrl, description } }: an
       ratings: 4,
       imageUrl: imageUrl.value,
     },
-  } as any)
+  }
+
+  create(sanitize(payload))
 }
 </script>
 

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import xss from 'xss'
 import { UserUserTypeEnum } from '~/api/models'
 import { useSnackStore } from '~/stores/snack'
 import { useUpdateStoreDetailStore } from '~/stores/updateStoreDetail'
@@ -19,10 +20,10 @@ function updateStore() {
   storeApi.storesPut({
     id: formData.id,
     ...(formData as any),
-    name: formData.name,
-    type: formData.type as any,
-    address: formData.address,
-    phoneNumbers: formData.phoneNumbersText.split('\n'),
+    name: xss(formData.name),
+    type: xss(formData.type) as any,
+    address: xss(formData.address),
+    phoneNumbers: formData.phoneNumbersText.split('\n').map(t => xss(t)),
     resources: formData.resources,
   }).then(() => {
     snackStore.show({ mode: 'success', message: 'Updated Successfully!' })

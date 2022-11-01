@@ -36,7 +36,8 @@
     "vue": "^3.2.41",
     "vue-demi": "^0.13.11",
     "vue-request": "^1.2.4",
-    "vue-router": "^4.1.5"
+    "vue-router": "^4.1.5",
+    "xss": "^1.0.14"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.27.0",

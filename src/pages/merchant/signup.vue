@@ -2,7 +2,7 @@
 import { UserPlusIcon } from '@heroicons/vue/24/outline/index.js'
 import { UserUserTypeEnum } from '~/api/models'
 import { useSnackStore } from '~/stores/snack'
-import { userApi } from '~/utils'
+import { sanitize, userApi } from '~/utils'
 
 const username = ref<string>('')
 const password = ref<string>('')
@@ -22,12 +22,14 @@ async function onSubmit() {
     return
   loading.value = true
   try {
-    await userApi.usersPost({
-      username: username.value,
-      password: password.value,
-      phoneNumber: phoneNumber.value,
-      userType: 'merchant',
-    } as any)
+    await userApi.usersPost(sanitize(
+      {
+        username: username.value,
+        password: password.value,
+        phoneNumber: phoneNumber.value,
+        userType: 'merchant',
+      },
+    ) as any)
     snackStore.show({ message: 'Signed up successfully, please login.', mode: 'success' })
     router.replace('/merchant/login')
   }

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ArrowLeftIcon, LockClosedIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
+import xss from 'xss'
 import { useUserStore } from '~/stores/user'
 import { useSnackStore } from '~/stores/snack'
 import { userApi } from '~/utils'
@@ -18,8 +19,8 @@ async function onSubmit() {
   loading.value = true
   try {
     const { data } = await userApi.usersLoginPost({
-      username: username.value,
-      password: password.value,
+      username: xss(username.value),
+      password: xss(password.value),
     } as any)
 
     userStore.login(data.token)

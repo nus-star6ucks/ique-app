@@ -1,6 +1,7 @@
 import axios from 'axios'
 import * as dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import xss from 'xss'
 import { NotificationApi, QueueApi, StoreApi, UserApi } from './api'
 
 dayjs.extend(relativeTime)
@@ -53,4 +54,6 @@ const humanEstimateTime = (mins: number) => {
 
 const generateULong = () => +`${+Date.now()}${Math.floor(Math.random() * 1000)}`
 
-export { storeApi, queueApi, notificationApi, userApi, humanEstimateTime, generateULong }
+const sanitize = (payload: Record<string, unknown>) => Object.fromEntries(Object.entries(payload).map(([k, v]) => [k, typeof v === 'string' ? xss(v) : v]))
+
+export { storeApi, queueApi, notificationApi, userApi, humanEstimateTime, generateULong, sanitize }

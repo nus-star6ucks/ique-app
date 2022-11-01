@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ArrowLeftIcon, LockClosedIcon, PhoneIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
-import { userApi } from '~/utils'
+import { sanitize, userApi } from '~/utils'
 import WithoutAuth from '~/components/WithoutAuth.vue'
 import { useSnackStore } from '~/stores/snack'
 
@@ -22,12 +22,12 @@ async function onSubmit() {
     return
   loading.value = true
   try {
-    await userApi.usersPost({
+    await userApi.usersPost(sanitize({
       username: username.value,
       password: password.value,
       phoneNumber: phoneNumber.value,
       userType: 'customer',
-    } as any)
+    }) as any)
     snackStore.show({ message: 'Signed up successfully, please login.', mode: 'success' })
     router.replace('/login')
   }
