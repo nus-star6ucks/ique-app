@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ArrowLeftIcon, LockClosedIcon, PhoneIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
-import { sanitize, userApi } from '~/utils'
+import { hash, sanitize, userApi } from '~/utils'
 import WithoutAuth from '~/components/WithoutAuth.vue'
 import { useSnackStore } from '~/stores/snack'
 
@@ -24,7 +24,7 @@ async function onSubmit() {
   try {
     await userApi.usersPost(sanitize({
       username: username.value,
-      password: password.value,
+      password: await hash(password.value),
       phoneNumber: phoneNumber.value,
       userType: 'customer',
     }) as any)

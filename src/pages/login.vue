@@ -3,7 +3,7 @@ import { ArrowLeftIcon, LockClosedIcon, UserIcon } from '@heroicons/vue/24/outli
 import xss from 'xss'
 import { useUserStore } from '~/stores/user'
 import { useSnackStore } from '~/stores/snack'
-import { userApi } from '~/utils'
+import { hash, userApi } from '~/utils'
 import WithoutAuth from '~/components/WithoutAuth.vue'
 
 const userStore = useUserStore()
@@ -20,7 +20,7 @@ async function onSubmit() {
   try {
     const { data } = await userApi.usersLoginPost({
       username: xss(username.value),
-      password: xss(password.value),
+      password: await hash(xss(password.value)),
     } as any)
 
     userStore.login(data.token)

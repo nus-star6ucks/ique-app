@@ -2,7 +2,7 @@
 import { UserPlusIcon } from '@heroicons/vue/24/outline/index.js'
 import { UserUserTypeEnum } from '~/api/models'
 import { useSnackStore } from '~/stores/snack'
-import { sanitize, userApi } from '~/utils'
+import { hash, sanitize, userApi } from '~/utils'
 
 const username = ref<string>('')
 const password = ref<string>('')
@@ -25,7 +25,7 @@ async function onSubmit() {
     await userApi.usersPost(sanitize(
       {
         username: username.value,
-        password: password.value,
+        password: await hash(password.value),
         phoneNumber: phoneNumber.value,
         userType: 'merchant',
       },

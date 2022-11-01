@@ -4,7 +4,7 @@ import xss from 'xss'
 import { UserUserTypeEnum } from '~/api/models'
 import { useSnackStore } from '~/stores/snack'
 import { useUserStore } from '~/stores/user'
-import { userApi } from '~/utils'
+import { hash, userApi } from '~/utils'
 
 const username = ref<string>('')
 const password = ref<string>('')
@@ -21,7 +21,7 @@ async function onSubmit() {
   try {
     const { data } = await userApi.usersLoginPost({
       username: xss(username.value),
-      password: xss(password.value),
+      password: await hash(xss(password.value)),
     })
     userStore.login(data.token)
     snackStore.show({ message: `Welcome back, ${username.value}`, mode: 'success' })
