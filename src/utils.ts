@@ -2,7 +2,7 @@ import axios from 'axios'
 import * as dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import xss from 'xss'
-import argon2 from 'argon2-browser'
+import bcrypt from 'bcryptjs'
 import { NotificationApi, QueueApi, StoreApi, UserApi } from './api'
 
 dayjs.extend(relativeTime)
@@ -57,6 +57,6 @@ const generateULong = () => +`${+Date.now()}${Math.floor(Math.random() * 1000)}`
 
 const sanitize = (payload: Record<string, unknown>) => Object.fromEntries(Object.entries(payload).map(([k, v]) => [k, typeof v === 'string' ? xss(v) : v]))
 
-const hash = async (plain: string) => (await argon2.hash({ pass: plain, salt: import.meta.env.VITE_HASH_SALT })).hash
+const hash = async (plain: string) => bcrypt.hashSync(plain, import.meta.env.VITE_HASH_SALT)
 
 export { storeApi, queueApi, notificationApi, userApi, humanEstimateTime, generateULong, sanitize, hash }
