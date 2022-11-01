@@ -5,11 +5,27 @@ import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
-import { VitePWA } from 'vite-plugin-pwa'
-import Inspect from 'vite-plugin-inspect'
+import obfuscator from 'rollup-plugin-obfuscator'
+
 import WindiCSS from 'vite-plugin-windicss'
 
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        plugins: [
+          obfuscator,
+        ],
+      },
+    },
+    minify: 'terser',
+    target: 'es2019',
+    terserOptions: {
+      compress: {
+        defaults: false,
+      },
+    },
+  },
   server: {
     proxy: {
       // with options
