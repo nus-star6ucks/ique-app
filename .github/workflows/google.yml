@@ -63,6 +63,7 @@ jobs:
           echo VITE_FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID }} >> .env
           echo VITE_VAPID_KEY=${{ secrets.VAPID_KEY }} >> .env
           echo VITE_ONESINGAL_APP_ID=${{ secrets.ONESINGAL_APP_ID }} >> .env
+          echo VITE_HASH_SALT=${{ secrets.VITE_HASH_SALT }} >> .env
           cat .env
         
       - name: Building the project
