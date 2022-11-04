@@ -22,6 +22,8 @@
     "@headlessui/vue": "^1.7.3",
     "@heroicons/vue": "^2.0.12",
     "@onesignal/onesignal-vue3": "^1.0.2",
+    "@sentry/tracing": "^7.17.4",
+    "@sentry/vue": "^7.17.4",
     "@vueuse/core": "^9.3.1",
     "@vueuse/head": "^0.9.7",
     "@vueuse/router": "^9.3.0",

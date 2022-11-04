@@ -5,6 +5,8 @@ import { setupLayouts } from 'virtual:generated-layouts'
 import { createHead } from '@vueuse/head'
 import { createPinia } from 'pinia'
 import OneSignalVuePlugin from '@onesignal/onesignal-vue3'
+import * as Sentry from '@sentry/vue'
+import { BrowserTracing } from '@sentry/tracing'
 
 import App from './App.vue'
 
@@ -21,6 +23,18 @@ const routes = setupLayouts(generatedRoutes)
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
+})
+
+Sentry.init({
+  app,
+  dsn: import.meta.env.VITE_SENTRY_DSN,
+  integrations: [
+    new BrowserTracing({
+      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+      tracingOrigins: ['localhost', 'ique.vercel.app', /^\//],
+    }),
+  ],
+  tracesSampleRate: 1.0,
 })
 
 app.use(pinia)
