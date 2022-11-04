@@ -47,7 +47,7 @@ onMounted(async () => {
 
         oneSignal.on('notificationDisplay', (event) => {
           notificationDot.setNotificationDot(true)
-          console.warn('OneSignal notification displayed:', event)
+          
         })
       }
 
