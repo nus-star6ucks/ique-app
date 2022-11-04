@@ -37,7 +37,7 @@ function confirmDelete() {
   // eslint-disable-next-line no-alert
   const userInput = window.prompt('This action cannot be undone, please type your username to continue: ')
   if (userInput === userStore.user.username)
-    deleteMySelf(+userStore.user.id)
+    deleteMySelf(Number(userStore.user.id))
 }
 </script>
 
