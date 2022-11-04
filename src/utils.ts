@@ -52,7 +52,7 @@ const humanEstimateTime = (mins: number) => {
   return '1 min'
 }
 
-const generateULong = () => +`${+Date.now()}${Math.floor(Math.random() * 1000)}`
+const generateULong = () => Number(`${Number(Date.now())}${Math.floor(Math.random() * 1000)}`)
 
 const sanitize = (payload: Record<string, unknown>) => Object.fromEntries(Object.entries(payload).map(([k, v]) => [k, typeof v === 'string' ? xss(v) : v]))
 
