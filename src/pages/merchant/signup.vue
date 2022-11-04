@@ -1,47 +1,50 @@
 <script lang="ts" setup>
-import { UserPlusIcon } from '@heroicons/vue/24/outline/index.js'
-import { UserUserTypeEnum } from '~/api/models'
-import { useSnackStore } from '~/stores/snack'
-import { hash, sanitize, userApi } from '~/utils'
+import { UserPlusIcon } from "@heroicons/vue/24/outline/index.js";
+import { UserUserTypeEnum } from "~/api/models";
+import { useSnackStore } from "~/stores/snack";
+import { hash, sanitize, userApi } from "~/utils";
 
-const username = ref<string>('')
-const password = ref<string>('')
-const passwordConfirmation = ref<string>('')
-const phoneNumber = ref<string>('')
-const loading = ref<boolean>(false)
+const username = ref<string>("");
+const password = ref<string>("");
+const passwordConfirmation = ref<string>("");
+const phoneNumber = ref<string>("");
+const loading = ref<boolean>(false);
 
-const router = useRouter()
-const snackStore = useSnackStore()
+const router = useRouter();
+const snackStore = useSnackStore();
 
 async function onSubmit() {
   if (password.value !== passwordConfirmation.value) {
-    snackStore.show({ message: 'Password and its confirmation are mismatched!', mode: 'error' })
-    return
+    snackStore.show({
+      message: "Password and its confirmation are mismatched!",
+      mode: "error",
+    });
+    return;
   }
-  if (loading.value)
-    return
-  loading.value = true
+  if (loading.value) return;
+  loading.value = true;
   try {
-    await userApi.usersPost(sanitize(
-      {
+    await userApi.usersPost(
+      sanitize({
         username: username.value,
         password: await hash(password.value),
         phoneNumber: phoneNumber.value,
-        userType: 'merchant',
-      },
-    ) as any)
-    snackStore.show({ message: 'Signed up successfully, please login.', mode: 'success' })
-    router.replace('/merchant/login')
-  }
-  catch (e: any) {
+        userType: "merchant",
+      }) as any
+    );
+    snackStore.show({
+      message: "Signed up successfully, please login.",
+      mode: "success",
+    });
+    router.replace("/merchant/login");
+  } catch (e: any) {
     if (e?.response.data?.message) {
-      snackStore.show({ message: e?.response?.data?.message, mode: 'error' })
-      return
+      snackStore.show({ message: e?.response?.data?.message, mode: "error" });
+      return;
     }
-    snackStore.show({ message: 'Unexpected error!', mode: 'error' })
-  }
-  finally {
-    loading.value = false
+    snackStore.show({ message: "Unexpected error!", mode: "error" });
+  } finally {
+    loading.value = false;
   }
 }
 </script>
@@ -61,15 +64,22 @@ async function onSubmit() {
               Join Us
             </h1>
 
-            <form class="mt-8 grid grid-cols-6 gap-6" @submit.prevent="onSubmit">
+            <form
+              class="mt-8 grid grid-cols-6 gap-6"
+              @submit.prevent="onSubmit"
+            >
               <div class="col-span-6">
                 <label for="username" class="block text-gray-700">
                   Username
                 </label>
                 <input
-                  v-model.trim="username" placeholder="Username" name="username" required type="text"
+                  v-model.trim="username"
+                  placeholder="Username"
+                  name="username"
+                  required
+                  type="text"
                   class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
-                >
+                />
               </div>
 
               <div class="col-span-6">
@@ -82,7 +92,7 @@ async function onSubmit() {
                   name="phoneNumber"
                   type="tel"
                   class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
-                >
+                />
               </div>
 
               <div class="col-span-6">
@@ -95,7 +105,7 @@ async function onSubmit() {
                   name="password"
                   type="password"
                   class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
-                >
+                />
               </div>
 
               <div class="col-span-6">
@@ -108,7 +118,7 @@ async function onSubmit() {
                   name="passwordConfirmation"
                   type="password"
                   class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
-                >
+                />
               </div>
 
               <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
@@ -121,7 +131,10 @@ async function onSubmit() {
 
                 <p class="mt-4 text-gray-500 sm:mt-0 w-72">
                   Have an account already?
-                  <RouterLink to="/merchant/login" class="text-gray-700 underline">
+                  <RouterLink
+                    to="/merchant/login"
+                    class="text-gray-700 underline"
+                  >
                     Login Now
                   </RouterLink>
                 </p>
@@ -135,7 +148,7 @@ async function onSubmit() {
           <img
             src="/assets/demo.jpeg"
             class="absolute inset-0 h-full w-full object-cover"
-          >
+          />
         </aside>
       </div>
     </section>
@@ -147,4 +160,3 @@ meta:
   layout: default
   classNames: m-0 h-100vh p-0
 </route>
-

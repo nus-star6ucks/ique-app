@@ -1,37 +1,41 @@
 <script lang="ts" setup>
-import { BuildingStorefrontIcon } from '@heroicons/vue/24/outline/index.js'
-import { useRequest } from 'vue-request'
-import { UserUserTypeEnum } from '~/api/models'
-import { useSnackStore } from '~/stores/snack'
-import { useUserStore } from '~/stores/user'
-import { sanitize, storeApi } from '~/utils'
+import { BuildingStorefrontIcon } from "@heroicons/vue/24/outline/index.js";
+import { useRequest } from "vue-request";
+import { UserUserTypeEnum } from "~/api/models";
+import { useSnackStore } from "~/stores/snack";
+import { useUserStore } from "~/stores/user";
+import { sanitize, storeApi } from "~/utils";
 
 useHead({
   meta: [
     {
-      name: 'theme-color',
-      content: () => '#fff',
+      name: "theme-color",
+      content: () => "#fff",
     },
   ],
-})
+});
 
-const router = useRouter()
-const snackStore = useSnackStore()
-const userStore = useUserStore()
-const { run: create, loading } = useRequest((payload: any) => storeApi.storesPost(payload).then(d => d.data), {
-  manual: true,
-  onSuccess() {
-    snackStore.show({ mode: 'success', message: 'Created successfully!' })
-    router.replace('/merchant')
-  },
-  onError() {
-    snackStore.show({ mode: 'error', message: 'Unexpected error!' })
-  },
-})
+const router = useRouter();
+const snackStore = useSnackStore();
+const userStore = useUserStore();
+const { run: create, loading } = useRequest(
+  (payload: any) => storeApi.storesPost(payload).then((d) => d.data),
+  {
+    manual: true,
+    onSuccess() {
+      snackStore.show({ mode: "success", message: "Created successfully!" });
+      router.replace("/merchant");
+    },
+    onError() {
+      snackStore.show({ mode: "error", message: "Unexpected error!" });
+    },
+  }
+);
 
-function onSubmit({ target: { name, type, address, imageUrl, description } }: any) {
-  if (!userStore?.user?.id)
-    return
+function onSubmit({
+  target: { name, type, address, imageUrl, description },
+}: any) {
+  if (!userStore?.user?.id) return;
 
   const payload = {
     merchantId: userStore.user.id,
@@ -45,9 +49,9 @@ function onSubmit({ target: { name, type, address, imageUrl, description } }: an
       ratings: 4,
       imageUrl: imageUrl.value,
     },
-  }
+  };
 
-  create(sanitize(payload))
+  create(sanitize(payload));
 }
 </script>
 
@@ -66,12 +70,12 @@ function onSubmit({ target: { name, type, address, imageUrl, description } }: an
               Create a Store
             </h1>
 
-            <form class="mt-8 grid grid-cols-6 gap-6" @submit.prevent="onSubmit">
+            <form
+              class="mt-8 grid grid-cols-6 gap-6"
+              @submit.prevent="onSubmit"
+            >
               <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="name"
-                  class="block text-gray-700"
-                >
+                <label for="name" class="block text-gray-700">
                   Store Name
                 </label>
 
@@ -82,16 +86,11 @@ function onSubmit({ target: { name, type, address, imageUrl, description } }: an
                   minlength="6"
                   required
                   class="mt-1 p-2 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
-                >
+                />
               </div>
 
               <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="type"
-                  class="block text-gray-700"
-                >
-                  Type
-                </label>
+                <label for="type" class="block text-gray-700"> Type </label>
 
                 <select
                   id="type"
@@ -100,12 +99,8 @@ function onSubmit({ target: { name, type, address, imageUrl, description } }: an
                   required
                   class="mt-1 p-2 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
                 >
-                  <option value="Restaurant">
-                    Restaurant
-                  </option>
-                  <option value="Cafe">
-                    Cafe
-                  </option>
+                  <option value="Restaurant">Restaurant</option>
+                  <option value="Cafe">Cafe</option>
                 </select>
               </div>
 
@@ -133,7 +128,7 @@ function onSubmit({ target: { name, type, address, imageUrl, description } }: an
                   name="imageUrl"
                   required
                   class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
-                >
+                />
               </div>
 
               <div class="col-span-6">
@@ -174,7 +169,7 @@ function onSubmit({ target: { name, type, address, imageUrl, description } }: an
           <img
             src="/assets/demo.jpeg"
             class="absolute inset-0 h-full w-full object-cover"
-          >
+          />
         </aside>
       </div>
     </section>
@@ -186,4 +181,3 @@ meta:
   layout: default
   classNames: m-0 h-100vh p-0
 </route>
-

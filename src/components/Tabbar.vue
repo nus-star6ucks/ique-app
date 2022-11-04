@@ -1,8 +1,12 @@
 <script lang="ts" setup>
-import { HomeIcon, TicketIcon, UserIcon } from '@heroicons/vue/24/outline/index.js'
-import { useNotificationDotStore } from '~/stores/notificationDot'
+import {
+  HomeIcon,
+  TicketIcon,
+  UserIcon,
+} from "@heroicons/vue/24/outline/index.js";
+import { useNotificationDotStore } from "~/stores/notificationDot";
 
-const { notificationDot, setNotificationDot } = useNotificationDotStore()
+const { notificationDot, setNotificationDot } = useNotificationDotStore();
 </script>
 
 <template>
@@ -11,9 +15,15 @@ const { notificationDot, setNotificationDot } = useNotificationDotStore()
       <span class="icon"><HomeIcon class="w-6 h-6" /></span>
       <span class="text">Home</span>
     </RouterLink>
-    <RouterLink to="/tickets" class="tab relative" @click="setNotificationDot(false)">
+    <RouterLink
+      to="/tickets"
+      class="tab relative"
+      @click="setNotificationDot(false)"
+    >
       <span v-if="notificationDot" class="absolute -right-1 top-0 flex h-2 w-2">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
+        <span
+          class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"
+        />
         <span class="relative inline-flex rounded-full h-2 w-2 bg-rose-400" />
       </span>
       <span class="icon">
@@ -27,4 +37,3 @@ const { notificationDot, setNotificationDot } = useNotificationDotStore()
     </RouterLink>
   </footer>
 </template>
-

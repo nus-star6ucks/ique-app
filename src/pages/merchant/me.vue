@@ -1,44 +1,54 @@
 <script lang="ts" setup>
-import { AdjustmentsHorizontalIcon, ArrowLeftOnRectangleIcon, HeartIcon, XMarkIcon } from '@heroicons/vue/24/outline/index.js'
-import { useRequest } from 'vue-request'
-import { UserUserTypeEnum } from '~/api/models'
-import { useSnackStore } from '~/stores/snack'
-import { useUserStore } from '~/stores/user'
-import { storeApi, userApi } from '~/utils'
+import {
+  AdjustmentsHorizontalIcon,
+  ArrowLeftOnRectangleIcon,
+  HeartIcon,
+  XMarkIcon,
+} from "@heroicons/vue/24/outline/index.js";
+import { useRequest } from "vue-request";
+import { UserUserTypeEnum } from "~/api/models";
+import { useSnackStore } from "~/stores/snack";
+import { useUserStore } from "~/stores/user";
+import { storeApi, userApi } from "~/utils";
 
-const userStore = useUserStore()
-const snackStore = useSnackStore()
+const userStore = useUserStore();
+const snackStore = useSnackStore();
 
-const { data: stores } = useRequest(() => storeApi.storesGet(userStore.user?.id).then(d => d.data))
-const updateDetailSwitch = ref<boolean>(false)
+const { data: stores } = useRequest(() =>
+  storeApi.storesGet(userStore.user?.id).then((d) => d.data)
+);
+const updateDetailSwitch = ref<boolean>(false);
 
-const password = ref<string>('')
-const passwordConfirmation = ref<string>('')
+const password = ref<string>("");
+const passwordConfirmation = ref<string>("");
 
-const { run: deleteMySelf, loading: deleteLoading } = useRequest((id: number) => userApi.usersDelete(id), {
-  manual: true,
-  onSuccess() {
-    snackStore.show({ mode: 'success', message: 'Farewell!' })
-    userStore.logout()
-  },
-})
+const { run: deleteMySelf, loading: deleteLoading } = useRequest(
+  (id: number) => userApi.usersDelete(id),
+  {
+    manual: true,
+    onSuccess() {
+      snackStore.show({ mode: "success", message: "Farewell!" });
+      userStore.logout();
+    },
+  }
+);
 function confirmDelete() {
-  const { user } = userStore
-  if (!user?.id || deleteLoading.value)
-    return
+  const { user } = userStore;
+  if (!user?.id || deleteLoading.value) return;
   // eslint-disable-next-line no-alert
-  const userInput = window.prompt('This action cannot be undone, please type your username to continue: ')
-  if (userInput === user.username)
-    deleteMySelf(+user.id)
+  const userInput = window.prompt(
+    "This action cannot be undone, please type your username to continue: "
+  );
+  if (userInput === user.username) deleteMySelf(+user.id);
 }
 
 function confirmLogout() {
   // eslint-disable-next-line no-alert
-  if (window.confirm('Are you sure?')) {
-    userStore.logout()
+  if (window.confirm("Are you sure?")) {
+    userStore.logout();
     window.setTimeout(() => {
-      window.location.reload()
-    }, 1500)
+      window.location.reload();
+    }, 1500);
   }
 }
 </script>
@@ -49,19 +59,21 @@ function confirmLogout() {
       <div class="text-white bg-emerald-500 p-8">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-2xl font-semibold mb-2">
-              :-)
-            </p>
-            <h1 class="text-3xl font-semibold uppercase" v-text="userStore.user?.username" />
+            <p class="text-2xl font-semibold mb-2">:-)</p>
+            <h1
+              class="text-3xl font-semibold uppercase"
+              v-text="userStore.user?.username"
+            />
           </div>
-          <div class="rounded-md bg-contain w-14 h-14" :style="`background-image: url('https://i.pravatar.cc/150?u=${userStore.user?.username}')`" />
+          <div
+            class="rounded-md bg-contain w-14 h-14"
+            :style="`background-image: url('https://i.pravatar.cc/150?u=${userStore.user?.username}')`"
+          />
         </div>
         <div v-if="stores" class="flex space-x-8 mt-8">
           <div>
             <h3 class="font-semibold text-xl mb-1" v-text="stores.length" />
-            <p class="text-gray-200">
-              Stores
-            </p>
+            <p class="text-gray-200">Stores</p>
           </div>
         </div>
       </div>
@@ -72,7 +84,9 @@ function confirmLogout() {
             <span class="text">Rate Us</span>
           </li>
           <li @click="updateDetailSwitch = true">
-            <span class="icon"><AdjustmentsHorizontalIcon class="w-6 h-6" /></span>
+            <span class="icon"
+              ><AdjustmentsHorizontalIcon class="w-6 h-6"
+            /></span>
             <span class="text">Settings</span>
           </li>
           <li @click="confirmDelete">
@@ -80,11 +94,17 @@ function confirmLogout() {
             <span class="text">Delete Account</span>
           </li>
           <li @click="confirmLogout">
-            <span class="icon"><ArrowLeftOnRectangleIcon class="w-6 h-6" /></span>
+            <span class="icon"
+              ><ArrowLeftOnRectangleIcon class="w-6 h-6"
+            /></span>
             <span class="text">Logout</span>
           </li>
         </ul>
-        <form v-if="updateDetailSwitch" action="#" class="grid grid-cols-6 gap-6">
+        <form
+          v-if="updateDetailSwitch"
+          action="#"
+          class="grid grid-cols-6 gap-6"
+        >
           <div class="col-span-6">
             <label for="imageUrl" class="block text-gray-700">
               Username (Cannot be changed)
@@ -95,7 +115,7 @@ function confirmLogout() {
               readonly
               :value="userStore.user.username"
               class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
-            >
+            />
           </div>
 
           <div class="col-span-6">
@@ -108,12 +128,10 @@ function confirmLogout() {
               name="phoneNumber"
               class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
               :value="userStore.user.phoneNumber"
-            >
+            />
           </div>
           <div class="col-span-6">
-            <label for="password" class="block text-gray-700">
-              Password
-            </label>
+            <label for="password" class="block text-gray-700"> Password </label>
             <input
               id="password"
               v-model.trim="password"
@@ -121,7 +139,7 @@ function confirmLogout() {
               name="password"
               placeholder="Leave it empty if it is no need to modify"
               class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
-            >
+            />
           </div>
           <div class="col-span-6">
             <label for="passwordConfirmation" class="block text-gray-700">
@@ -133,7 +151,7 @@ function confirmLogout() {
               name="passwordConfirmation"
               type="password"
               class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
-            >
+            />
           </div>
 
           <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
@@ -144,7 +162,12 @@ function confirmLogout() {
             </button>
 
             <p class="mt-4 text-gray-500 sm:mt-0">
-              <a href="javascript:;" class="text-gray-700 underline" @click="updateDetailSwitch = false">Back without changes</a>
+              <a
+                href="javascript:;"
+                class="text-gray-700 underline"
+                @click="updateDetailSwitch = false"
+                >Back without changes</a
+              >
             </p>
           </div>
         </form>
@@ -157,4 +180,3 @@ function confirmLogout() {
 meta:
   layout: merchant
 </route>
-

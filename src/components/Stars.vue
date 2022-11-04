@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { StarIcon as StarSolidIcon } from '@heroicons/vue/24/solid/index.js'
-import { StarIcon } from '@heroicons/vue/24/outline/index.js'
+import { StarIcon as StarSolidIcon } from "@heroicons/vue/24/solid/index.js";
+import { StarIcon } from "@heroicons/vue/24/outline/index.js";
 
 const props = defineProps<{
-  count: number
-}>()
+  count: number;
+}>();
 
-const { count } = useCounter(props.count)
+const { count } = useCounter(props.count);
 </script>
 
 <template>
@@ -17,4 +17,3 @@ const { count } = useCounter(props.count)
     </span>
   </div>
 </template>
-

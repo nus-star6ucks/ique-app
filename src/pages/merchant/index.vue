@@ -1,36 +1,40 @@
 <script lang="ts" setup>
-import xss from 'xss'
-import { UserUserTypeEnum } from '~/api/models'
-import { useSnackStore } from '~/stores/snack'
-import { useUpdateStoreDetailStore } from '~/stores/updateStoreDetail'
-import { storeApi } from '~/utils'
+import xss from "xss";
+import { UserUserTypeEnum } from "~/api/models";
+import { useSnackStore } from "~/stores/snack";
+import { useUpdateStoreDetailStore } from "~/stores/updateStoreDetail";
+import { storeApi } from "~/utils";
 
-const updateStoreLoading = ref<boolean>(false)
-const updateStoreDetailStore = useUpdateStoreDetailStore()
+const updateStoreLoading = ref<boolean>(false);
+const updateStoreDetailStore = useUpdateStoreDetailStore();
 
-const selectedStore = computed(() => updateStoreDetailStore?.updateStoreDetail?.selectedStore)
-const snackStore = useSnackStore()
+const selectedStore = computed(
+  () => updateStoreDetailStore?.updateStoreDetail?.selectedStore
+);
+const snackStore = useSnackStore();
 
 function updateStore() {
-  updateStoreLoading.value = true
-  const formData = selectedStore.value
-  if (!formData)
-    return
+  updateStoreLoading.value = true;
+  const formData = selectedStore.value;
+  if (!formData) return;
 
-  storeApi.storesPut({
-    id: formData.id,
-    ...(formData as any),
-    name: xss(formData.name),
-    type: xss(formData.type) as any,
-    address: xss(formData.address),
-    phoneNumbers: formData.phoneNumbersText.split('\n').map(t => xss(t)),
-    resources: formData.resources,
-  }).then(() => {
-    snackStore.show({ mode: 'success', message: 'Updated Successfully!' })
-    updateStoreDetailStore.setSelectedStore(undefined!)
-  }).finally(() => {
-    updateStoreLoading.value = false
-  })
+  storeApi
+    .storesPut({
+      id: formData.id,
+      ...(formData as any),
+      name: xss(formData.name),
+      type: xss(formData.type) as any,
+      address: xss(formData.address),
+      phoneNumbers: formData.phoneNumbersText.split("\n").map((t) => xss(t)),
+      resources: formData.resources,
+    })
+    .then(() => {
+      snackStore.show({ mode: "success", message: "Updated Successfully!" });
+      updateStoreDetailStore.setSelectedStore(undefined!);
+    })
+    .finally(() => {
+      updateStoreLoading.value = false;
+    });
 }
 </script>
 
@@ -38,9 +42,7 @@ function updateStore() {
   <WithAuth :user-type="UserUserTypeEnum.Merchant">
     <header class="flex items-center justify-center text-gray-800 mb-2 p-8">
       <div class="w-9 h-9" />
-      <h2>
-        Update Details
-      </h2>
+      <h2>Update Details</h2>
       <div class="w-9 h-9" />
     </header>
     <div class="p-8">
@@ -48,12 +50,7 @@ function updateStore() {
 
       <form v-else class="grid grid-cols-6 gap-6" @submit.prevent="updateStore">
         <div class="col-span-6 sm:col-span-3">
-          <label
-            for="name"
-            class="block text-gray-700"
-          >
-            Store Name
-          </label>
+          <label for="name" class="block text-gray-700"> Store Name </label>
 
           <input
             id="name"
@@ -62,15 +59,10 @@ function updateStore() {
             name="name"
             required
             class="mt-1 p-2 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
-          >
+          />
         </div>
         <div class="col-span-6 sm:col-span-3">
-          <label
-            for="type"
-            class="block text-gray-700"
-          >
-            Type
-          </label>
+          <label for="type" class="block text-gray-700"> Type </label>
 
           <select
             id="type"
@@ -80,19 +72,13 @@ function updateStore() {
             required
             class="mt-1 p-2 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
           >
-            <option value="Restaurant">
-              Restaurant
-            </option>
-            <option value="Cafe">
-              Cafe
-            </option>
+            <option value="Restaurant">Restaurant</option>
+            <option value="Cafe">Cafe</option>
           </select>
         </div>
 
         <div class="col-span-6">
-          <label for="address" class="block text-gray-700">
-            Address
-          </label>
+          <label for="address" class="block text-gray-700"> Address </label>
           <textarea
             id="address"
             v-model="selectedStore.address"
@@ -112,15 +98,11 @@ function updateStore() {
             v-model="selectedStore.resources.imageUrl"
             name="imageUrl"
             class="p-2 mt-1 w-full rounded-md border-gray-200 bg-white text-gray-700 border border-gray-200"
-          >
+          />
         </div>
 
         <div class="col-span-6">
-          <label
-            for="phoneNumbers"
-
-            class="block text-gray-700"
-          >
+          <label for="phoneNumbers" class="block text-gray-700">
             Phone Numbers (split with line break)
           </label>
           <textarea
@@ -169,4 +151,3 @@ function updateStore() {
 meta:
   layout: merchant
 </route>
-

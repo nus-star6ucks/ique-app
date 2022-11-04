@@ -1,5 +1,5 @@
-import { defineConfig } from 'windicss/helpers'
-import colors from 'windicss/colors'
+import { defineConfig } from "windicss/helpers";
+import colors from "windicss/colors";
 
 export default defineConfig({
   attributify: true,
@@ -11,4 +11,4 @@ export default defineConfig({
       },
     },
   },
-})
+});

@@ -1,32 +1,32 @@
-import { createApp } from 'vue'
-import { createRouter, createWebHashHistory } from 'vue-router'
-import generatedRoutes from 'virtual:generated-pages'
-import { setupLayouts } from 'virtual:generated-layouts'
-import { createHead } from '@vueuse/head'
-import { createPinia } from 'pinia'
-import OneSignalVuePlugin from '@onesignal/onesignal-vue3'
+import { createApp } from "vue";
+import { createRouter, createWebHashHistory } from "vue-router";
+import generatedRoutes from "virtual:generated-pages";
+import { setupLayouts } from "virtual:generated-layouts";
+import { createHead } from "@vueuse/head";
+import { createPinia } from "pinia";
+import OneSignalVuePlugin from "@onesignal/onesignal-vue3";
 
-import App from './App.vue'
+import App from "./App.vue";
 
-import 'virtual:windi.css'
-import './styles/main.css'
+import "virtual:windi.css";
+import "./styles/main.css";
 
-const pinia = createPinia()
+const pinia = createPinia();
 
-const app = createApp(App)
-const head = createHead()
+const app = createApp(App);
+const head = createHead();
 
-const routes = setupLayouts(generatedRoutes)
+const routes = setupLayouts(generatedRoutes);
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
-})
+});
 
-app.use(pinia)
-app.use(router)
-app.use(head)
+app.use(pinia);
+app.use(router);
+app.use(head);
 app.use(OneSignalVuePlugin, {
   appId: import.meta.env.VITE_ONESINGAL_APP_ID,
-})
-app.mount('#app')
+});
+app.mount("#app");

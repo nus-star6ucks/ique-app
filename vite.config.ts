@@ -1,25 +1,23 @@
-import path from 'path'
-import { defineConfig } from 'vite'
-import Vue from '@vitejs/plugin-vue'
-import Pages from 'vite-plugin-pages'
-import Layouts from 'vite-plugin-vue-layouts'
-import Components from 'unplugin-vue-components/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import obfuscator from 'rollup-plugin-obfuscator'
+import path from "path";
+import { defineConfig } from "vite";
+import Vue from "@vitejs/plugin-vue";
+import Pages from "vite-plugin-pages";
+import Layouts from "vite-plugin-vue-layouts";
+import Components from "unplugin-vue-components/vite";
+import AutoImport from "unplugin-auto-import/vite";
+import obfuscator from "rollup-plugin-obfuscator";
 
-import WindiCSS from 'vite-plugin-windicss'
+import WindiCSS from "vite-plugin-windicss";
 
 export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        plugins: [
-          obfuscator,
-        ],
+        plugins: [obfuscator],
       },
     },
-    minify: 'terser',
-    target: 'es2019',
+    minify: "terser",
+    target: "es2019",
     terserOptions: {
       compress: {
         defaults: false,
@@ -29,29 +27,28 @@ export default defineConfig({
   server: {
     proxy: {
       // with options
-      '/api': {
-        target: 'http://34.142.186.216.nip.io',
+      "/api": {
+        target: "http://34.142.186.216.nip.io",
         changeOrigin: true,
         secure: false,
-        rewrite: path => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
-      '/cf': {
-        target: 'https://ique.vercel.app/cf',
+      "/cf": {
+        target: "https://ique.vercel.app/cf",
         changeOrigin: true,
         secure: false,
-        rewrite: path => path.replace(/^\/cf/, ''),
+        rewrite: (path) => path.replace(/^\/cf/, ""),
       },
     },
   },
-  base: '',
+  base: "",
   resolve: {
     alias: {
-      '~/': `${path.resolve(__dirname, 'src')}/`,
+      "~/": `${path.resolve(__dirname, "src")}/`,
     },
   },
 
   plugins: [
-
     WindiCSS(),
     Vue({
       reactivityTransform: true,
@@ -66,27 +63,24 @@ export default defineConfig({
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
       imports: [
-        'vue',
-        'vue-router',
-        'vue/macros',
-        '@vueuse/head',
-        '@vueuse/core',
+        "vue",
+        "vue-router",
+        "vue/macros",
+        "@vueuse/head",
+        "@vueuse/core",
       ],
-      dts: 'src/auto-imports.d.ts',
-      dirs: [
-        'src/composables',
-        'src/store',
-      ],
+      dts: "src/auto-imports.d.ts",
+      dirs: ["src/composables", "src/store"],
       vueTemplate: true,
     }),
 
     // https://github.com/antfu/unplugin-vue-components
     Components({
       // allow auto load markdown components under `./src/components/`
-      extensions: ['vue'],
+      extensions: ["vue"],
       // allow auto import and register components used in markdown
       include: [/\.vue$/, /\.vue\?vue/],
-      dts: 'src/components.d.ts',
+      dts: "src/components.d.ts",
     }),
 
     // https://github.com/antfu/vite-plugin-pwa
@@ -116,16 +110,14 @@ export default defineConfig({
     //     ],
     //   },
     // }),
-
   ],
 
   // https://github.com/vitest-dev/vitest
   test: {
-    include: ['test/**/*.test.ts'],
-    environment: 'jsdom',
+    include: ["test/**/*.test.ts"],
+    environment: "jsdom",
     deps: {
-      inline: ['@vue', '@vueuse', 'vue-demi'],
+      inline: ["@vue", "@vueuse", "vue-demi"],
     },
   },
-
-})
+});

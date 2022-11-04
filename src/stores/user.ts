@@ -1,30 +1,30 @@
-import { acceptHMRUpdate, defineStore } from 'pinia'
+import { acceptHMRUpdate, defineStore } from "pinia";
 
 export interface LoginUser {
-  id: number
-  username: string
-  userType: string
-  phoneNumber: string
-  createTime: number
+  id: number;
+  username: string;
+  userType: string;
+  phoneNumber: string;
+  createTime: number;
 }
 
-export const useUserStore = defineStore('user', () => {
+export const useUserStore = defineStore("user", () => {
   /**
    * Current name of the user.
    */
-  const user = ref<LoginUser>()
+  const user = ref<LoginUser>();
 
   async function setToken(_token: string) {
-    localStorage.setItem('token', _token)
+    localStorage.setItem("token", _token);
   }
 
   const logout = () => {
-    localStorage.removeItem('token')
-    user.value = undefined
-  }
+    localStorage.removeItem("token");
+    user.value = undefined;
+  };
 
   async function setUser(_user: LoginUser) {
-    user.value = _user
+    user.value = _user;
   }
 
   return {
@@ -32,8 +32,8 @@ export const useUserStore = defineStore('user', () => {
     logout,
     setUser,
     user,
-  }
-})
+  };
+});
 
 if (import.meta.hot)
-  import.meta.hot.accept(acceptHMRUpdate(useUserStore, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useUserStore, import.meta.hot));

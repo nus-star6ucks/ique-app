@@ -1,37 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#10b981" />
+    <meta name="apple-mobile-web-app-title" content="iQue" />
+    <meta name="application-name" content="iQue" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#ffffff" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#10b981">
-  <meta name="apple-mobile-web-app-title" content="iQue">
-  <meta name="application-name" content="iQue">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
-  <meta name="theme-color" content="#ffffff">
-  
-  <script>
-    (function (d) {
-      const config = {
-        kitId: 'evw3nrf',
-        scriptTimeout: 3000,
-        async: true,
-  }
-  const h = d.documentElement; const t = setTimeout(() => { h.className = `${h.className.replace(/\bwf-loading\b/g, '')} wf-inactive` }, config.scriptTimeout); const tk = d.createElement('script'); let f = false; const s = d.getElementsByTagName('script')[0]; let a; h.className += ' wf-loading'; tk.src = `https://use.typekit.net/${config.kitId}.js`; tk.async = true; tk.onload = tk.onreadystatechange = function () {
-    a = this.readyState; if (f || a && a != 'complete' && a != 'loaded')
-          return; f = true; clearTimeout(t); try { Typekit.load(config) }
-    catch (e) {}
-  }; s.parentNode.insertBefore(tk, s)
-    })(document)
-  </script>
-</head>
+    <script>
+      (function (d) {
+        const config = {
+          kitId: "evw3nrf",
+          scriptTimeout: 3000,
+          async: true,
+        };
+        const h = d.documentElement;
+        const t = setTimeout(() => {
+          h.className = `${h.className.replace(
+            /\bwf-loading\b/g,
+            ""
+          )} wf-inactive`;
+        }, config.scriptTimeout);
+        const tk = d.createElement("script");
+        let f = false;
+        const s = d.getElementsByTagName("script")[0];
+        let a;
+        h.className += " wf-loading";
+        tk.src = `https://use.typekit.net/${config.kitId}.js`;
+        tk.async = true;
+        tk.onload = tk.onreadystatechange = function () {
+          a = this.readyState;
+          if (f || (a && a != "complete" && a != "loaded")) return;
+          f = true;
+          clearTimeout(t);
+          try {
+            Typekit.load(config);
+          } catch (e) {}
+        };
+        s.parentNode.insertBefore(tk, s);
+      })(document);
+    </script>
+  </head>
 
-<body class="font-body">
-  <div id="app"></div>
-  <script type="module" src="/src/main.ts"></script>
-</body>
-
+  <body class="font-body">
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>
