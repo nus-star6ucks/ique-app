@@ -1,0 +1,3456 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "iQueue",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "Store"
+    },
+    {
+      "name": "Queue"
+    },
+    {
+      "name": "Queue/Interior"
+    },
+    {
+      "name": "Report"
+    },
+    {
+      "name": "Notification"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "Signup",
+        "x-apifox-folder": "User",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "user signup",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "userType": {
+                    "type": "string",
+                    "enum": [
+                      "customer",
+                      "merchant"
+                    ],
+                    "x-apifox": {
+                      "enumDescriptions": {
+                        "customer": "",
+                        "merchant": ""
+                      }
+                    }
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "active",
+                      "cancelled"
+                    ],
+                    "x-apifox": {
+                      "enumDescriptions": {
+                        "active": "",
+                        "cancelled": ""
+                      }
+                    }
+                  }
+                },
+                "x-apifox-orders": [
+                  "username",
+                  "password",
+                  "userType",
+                  "phoneNumber",
+                  "status"
+                ],
+                "x-apifox-refs": {},
+                "required": [
+                  "username",
+                  "password",
+                  "phoneNumber",
+                  "status",
+                  "userType"
+                ],
+                "x-apifox-ignore-properties": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "createTime": {
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "id",
+                    "createTime"
+                  ],
+                  "required": [
+                    "id",
+                    "createTime"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42488532-run"
+      },
+      "put": {
+        "summary": "Update User Info",
+        "x-apifox-folder": "User",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "userType": {
+                    "type": "string",
+                    "enum": [
+                      "customer",
+                      "merchant"
+                    ],
+                    "x-apifox": {
+                      "enumDescriptions": {
+                        "customer": "",
+                        "merchant": ""
+                      }
+                    }
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "active",
+                      "cancelled"
+                    ],
+                    "x-apifox": {
+                      "enumDescriptions": {
+                        "active": "",
+                        "cancelled": ""
+                      }
+                    }
+                  },
+                  "createTime": {
+                    "description": "timestamp",
+                    "type": "integer"
+                  }
+                },
+                "x-apifox-orders": [
+                  "01GE72MMHTNAEVE5DBDSSE03SX"
+                ],
+                "required": [
+                  "id",
+                  "userType"
+                ],
+                "x-apifox-refs": {
+                  "01GE72MMHTNAEVE5DBDSSE03SX": {
+                    "$ref": "#/components/schemas/User",
+                    "x-apifox-overrides": {
+                      "createTime": {
+                        "description": "timestamp",
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "active",
+                          "cancelled"
+                        ],
+                        "x-apifox": {
+                          "enumDescriptions": {
+                            "active": "",
+                            "cancelled": ""
+                          }
+                        }
+                      },
+                      "id": {
+                        "type": "integer"
+                      },
+                      "username": {
+                        "type": "string"
+                      },
+                      "password": {
+                        "type": "string"
+                      },
+                      "phoneNumber": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id"
+                    ]
+                  }
+                },
+                "x-apifox-ignore-properties": [
+                  "id",
+                  "username",
+                  "password",
+                  "userType",
+                  "phoneNumber",
+                  "status",
+                  "createTime"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    },
+                    "userType": {
+                      "type": "string",
+                      "enum": [
+                        "customer",
+                        "merchant"
+                      ],
+                      "x-apifox": {
+                        "enumDescriptions": {
+                          "customer": "",
+                          "merchant": ""
+                        }
+                      }
+                    },
+                    "phoneNumber": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "active",
+                        "cancelled"
+                      ],
+                      "x-apifox": {
+                        "enumDescriptions": {
+                          "active": "",
+                          "cancelled": ""
+                        }
+                      }
+                    },
+                    "createTime": {
+                      "description": "timestamp",
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "id",
+                    "username",
+                    "password",
+                    "userType",
+                    "phoneNumber",
+                    "status",
+                    "createTime"
+                  ],
+                  "x-apifox-refs": {},
+                  "required": [
+                    "id"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42489717-run"
+      },
+      "delete": {
+        "summary": "Delete User",
+        "x-apifox-folder": "User",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Should delete shops before delete user account"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42489786-run"
+      },
+      "get": {
+        "summary": "Get User",
+        "x-apifox-folder": "User",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "x-apifox-overrides": {},
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "userType": {
+                      "type": "string",
+                      "enum": [
+                        "customer",
+                        "merchant"
+                      ],
+                      "x-apifox": {
+                        "enumDescriptions": {
+                          "customer": "",
+                          "merchant": ""
+                        }
+                      }
+                    },
+                    "phoneNumber": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "active",
+                        "cancelled"
+                      ],
+                      "x-apifox": {
+                        "enumDescriptions": {
+                          "active": "",
+                          "cancelled": ""
+                        }
+                      }
+                    },
+                    "createTime": {
+                      "description": "timestamp",
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-refs": {},
+                  "x-apifox-orders": [
+                    "id",
+                    "username",
+                    "userType",
+                    "phoneNumber",
+                    "status",
+                    "createTime"
+                  ],
+                  "required": [
+                    "id",
+                    "username",
+                    "status",
+                    "createTime",
+                    "userType",
+                    "phoneNumber"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42949058-run"
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "Login",
+        "x-apifox-folder": "User",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "x-apifox-orders": [
+                  "username",
+                  "password"
+                ],
+                "required": [
+                  "username",
+                  "password"
+                ],
+                "x-apifox-ignore-properties": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "userType": {
+                      "type": "string",
+                      "description": "customer, merchant"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "token",
+                    "userType"
+                  ],
+                  "required": [
+                    "token",
+                    "userType"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42488566-run"
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "summary": "Logout",
+        "x-apifox-folder": "User",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42489626-run"
+      }
+    },
+    "/stores": {
+      "post": {
+        "summary": "Create Store",
+        "x-apifox-folder": "Store",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Store"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "merchantId": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "title": "StoreType",
+                    "enum": [
+                      "Restaurant",
+                      "Cafe"
+                    ],
+                    "x-apifox": {
+                      "enumDescriptions": {
+                        "Restaurant": "",
+                        "Cafe": ""
+                      }
+                    },
+                    "description": "StoreType"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "phoneNumbers": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "seatTypes": {
+                    "description": "queue ids",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/SeatType"
+                    }
+                  },
+                  "status": {
+                    "type": "string",
+                    "title": "Store Status",
+                    "enum": [
+                      "onService",
+                      "stopService"
+                    ],
+                    "x-apifox": {
+                      "enumDescriptions": {
+                        "onService": "",
+                        "stopService": ""
+                      }
+                    },
+                    "description": "Store Status"
+                  },
+                  "resources": {
+                    "type": "object",
+                    "properties": {
+                      "description": {
+                        "type": "string"
+                      },
+                      "imageUrl": {
+                        "type": "string"
+                      },
+                      "ratings": {
+                        "type": "number",
+                        "minimum": 3,
+                        "maximum": 5
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "description",
+                      "imageUrl",
+                      "ratings"
+                    ],
+                    "required": [
+                      "description",
+                      "imageUrl",
+                      "ratings"
+                    ],
+                    "x-apifox-ignore-properties": []
+                  },
+                  "registerTime": {
+                    "type": "integer"
+                  }
+                },
+                "x-apifox-orders": [
+                  "01GE74RZ7N0QN782K77QZD1GHN"
+                ],
+                "x-apifox-refs": {
+                  "01GE74RZ7N0QN782K77QZD1GHN": {
+                    "$ref": "#/components/schemas/Store",
+                    "x-apifox-overrides": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "string",
+                        "title": "Store Status",
+                        "enum": [
+                          "onService",
+                          "stopService"
+                        ],
+                        "x-apifox": {
+                          "enumDescriptions": {
+                            "onService": "",
+                            "stopService": ""
+                          }
+                        },
+                        "description": "Store Status"
+                      },
+                      "registerTime": {
+                        "type": "integer"
+                      },
+                      "queues": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        },
+                        "description": "queue ids"
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "merchantId",
+                  "name",
+                  "type",
+                  "address",
+                  "phoneNumbers",
+                  "seatTypes",
+                  "resources"
+                ],
+                "x-apifox-ignore-properties": [
+                  "id",
+                  "merchantId",
+                  "name",
+                  "type",
+                  "address",
+                  "phoneNumbers",
+                  "seatTypes",
+                  "status",
+                  "resources",
+                  "registerTime"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "registerTime": {
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "id",
+                    "registerTime"
+                  ],
+                  "required": [
+                    "id",
+                    "registerTime"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42491242-run"
+      },
+      "put": {
+        "summary": "Update Store Info",
+        "x-apifox-folder": "Store",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Store"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-apifox-overrides": {},
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "merchantId": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "title": "StoreType",
+                    "enum": [
+                      "Restaurant",
+                      "Cafe"
+                    ],
+                    "x-apifox": {
+                      "enumDescriptions": {
+                        "Restaurant": "",
+                        "Cafe": ""
+                      }
+                    },
+                    "description": "StoreType"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "phoneNumbers": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "seatTypes": {
+                    "description": "queue ids",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/SeatType"
+                    }
+                  },
+                  "status": {
+                    "type": "string",
+                    "title": "Store Status",
+                    "enum": [
+                      "onService",
+                      "stopService"
+                    ],
+                    "x-apifox": {
+                      "enumDescriptions": {
+                        "onService": "",
+                        "stopService": ""
+                      }
+                    },
+                    "description": "Store Status"
+                  },
+                  "resources": {
+                    "type": "object",
+                    "properties": {
+                      "description": {
+                        "type": "string"
+                      },
+                      "imageUrl": {
+                        "type": "string"
+                      },
+                      "ratings": {
+                        "type": "number",
+                        "minimum": 3,
+                        "maximum": 5
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "description",
+                      "imageUrl",
+                      "ratings"
+                    ],
+                    "required": [
+                      "description",
+                      "imageUrl",
+                      "ratings"
+                    ],
+                    "x-apifox-ignore-properties": []
+                  },
+                  "registerTime": {
+                    "type": "integer"
+                  }
+                },
+                "x-apifox-refs": {},
+                "x-apifox-orders": [
+                  "id",
+                  "merchantId",
+                  "name",
+                  "type",
+                  "address",
+                  "phoneNumbers",
+                  "seatTypes",
+                  "status",
+                  "resources",
+                  "registerTime"
+                ],
+                "required": [
+                  "id"
+                ],
+                "x-apifox-ignore-properties": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "merchantId": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "title": "StoreType",
+                      "enum": [
+                        "Restaurant",
+                        "Cafe"
+                      ],
+                      "x-apifox": {
+                        "enumDescriptions": {
+                          "Restaurant": "",
+                          "Cafe": ""
+                        }
+                      },
+                      "description": "StoreType"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "phoneNumbers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "seatTypes": {
+                      "description": "queue ids",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SeatType"
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "title": "Store Status",
+                      "enum": [
+                        "onService",
+                        "stopService"
+                      ],
+                      "x-apifox": {
+                        "enumDescriptions": {
+                          "onService": "",
+                          "stopService": ""
+                        }
+                      },
+                      "description": "Store Status"
+                    },
+                    "resources": {
+                      "type": "object",
+                      "properties": {
+                        "description": {
+                          "type": "string"
+                        },
+                        "imageUrl": {
+                          "type": "string"
+                        },
+                        "ratings": {
+                          "type": "number",
+                          "minimum": 3,
+                          "maximum": 5
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "description",
+                        "imageUrl",
+                        "ratings"
+                      ],
+                      "required": [
+                        "description",
+                        "imageUrl",
+                        "ratings"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    },
+                    "registerTime": {
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "01GE75KAZYSQRX7DPVC1X0ZQW3"
+                  ],
+                  "x-apifox-refs": {
+                    "01GE75KAZYSQRX7DPVC1X0ZQW3": {
+                      "$ref": "#/components/schemas/Store",
+                      "x-apifox-overrides": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "status": {
+                          "type": "string",
+                          "title": "Store Status",
+                          "enum": [
+                            "onService",
+                            "stopService"
+                          ],
+                          "x-apifox": {
+                            "enumDescriptions": {
+                              "onService": "",
+                              "stopService": ""
+                            }
+                          },
+                          "description": "Store Status"
+                        },
+                        "registerTime": {
+                          "type": "integer"
+                        },
+                        "queues": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "description": "queue ids"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "merchantId",
+                    "name",
+                    "type",
+                    "address",
+                    "phoneNumbers",
+                    "seatTypes",
+                    "resources"
+                  ],
+                  "x-apifox-ignore-properties": [
+                    "id",
+                    "merchantId",
+                    "name",
+                    "type",
+                    "address",
+                    "phoneNumbers",
+                    "seatTypes",
+                    "status",
+                    "resources",
+                    "registerTime"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42491245-run"
+      },
+      "delete": {
+        "summary": "Delete Store",
+        "x-apifox-folder": "Store",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Store"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Should delete shops before delete user account"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42491246-run"
+      },
+      "get": {
+        "summary": "Get Stores",
+        "x-apifox-folder": "Store",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Store"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Store",
+                    "x-apifox-overrides": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "string",
+                        "title": "Store Status",
+                        "enum": [
+                          "onService",
+                          "stopService"
+                        ],
+                        "x-apifox": {
+                          "enumDescriptions": {
+                            "onService": "",
+                            "stopService": ""
+                          }
+                        },
+                        "description": "Store Status"
+                      },
+                      "registerTime": {
+                        "type": "integer"
+                      },
+                      "queues": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        },
+                        "description": "queue ids"
+                      }
+                    }
+                  },
+                  "minItems": 20
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42491348-run"
+      }
+    },
+    "/stores/start": {
+      "post": {
+        "summary": "Start Service",
+        "x-apifox-folder": "Store",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Store"
+        ],
+        "parameters": [
+          {
+            "name": "storeId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42491451-run"
+      }
+    },
+    "/stores/stop": {
+      "post": {
+        "summary": "Stop Service",
+        "x-apifox-folder": "Store",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Store"
+        ],
+        "parameters": [
+          {
+            "name": "storeId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42491452-run"
+      }
+    },
+    "/queues/tickets": {
+      "post": {
+        "summary": "Create Queue Ticket",
+        "x-apifox-folder": "Queue",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "用户取号",
+        "tags": [
+          "Queue"
+        ],
+        "parameters": [
+          {
+            "name": "queueId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "639",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "customerId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "2",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "storeId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ticketId": {
+                      "type": "integer"
+                    },
+                    "queueNumber": {
+                      "type": "integer"
+                    },
+                    "seatTypeName": {
+                      "type": "string"
+                    },
+                    "waitingSize": {
+                      "type": "integer"
+                    },
+                    "estimateWaitingTime": {
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "ticketId",
+                    "queueNumber",
+                    "seatTypeName",
+                    "waitingSize",
+                    "estimateWaitingTime"
+                  ],
+                  "required": [
+                    "ticketId",
+                    "queueNumber",
+                    "seatTypeName",
+                    "waitingSize",
+                    "estimateWaitingTime"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42491464-run"
+      },
+      "get": {
+        "summary": "Get Queue Tickets",
+        "x-apifox-folder": "Queue",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "1. get tickets by storeId: 用户获取某家商店的排队信息\n2. get tickets by userId：用户获取自己的所有取号的 ticket 信息\n3. get tickets by userId & storeId：用户获取自己取号的某家商店的 ticket 信息\n",
+        "tags": [
+          "Queue"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "storeId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QueueTicket",
+                    "x-apifox-overrides": {}
+                  },
+                  "minItems": 10
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42501138-run"
+      }
+    },
+    "/queues/tickets/{ticketId}": {
+      "get": {
+        "summary": "Get Queue Ticket Detail",
+        "x-apifox-folder": "Queue",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "get a ticket by ticketId：用户获取取号详细信息，获取在当前队列中自己前面还有多少人排队",
+        "tags": [
+          "Queue"
+        ],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "ticketId",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "storeId": {
+                      "type": "integer"
+                    },
+                    "customerId": {
+                      "type": "integer"
+                    },
+                    "queueNumber": {
+                      "type": "integer"
+                    },
+                    "startTime": {
+                      "type": "integer"
+                    },
+                    "endTime": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "queueInfo": {
+                      "$ref": "#/components/schemas/QueueInfo",
+                      "x-apifox-overrides": {}
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "storeId",
+                    "customerId",
+                    "queueNumber",
+                    "startTime",
+                    "endTime",
+                    "status",
+                    "queueInfo"
+                  ],
+                  "x-apifox-orders": [
+                    "id",
+                    "storeId",
+                    "customerId",
+                    "queueNumber",
+                    "startTime",
+                    "endTime",
+                    "status",
+                    "queueInfo"
+                  ],
+                  "x-apifox-refs": {},
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42501487-run"
+      }
+    },
+    "/queues/checkin": {
+      "post": {
+        "summary": "Checkin for customer",
+        "x-apifox-folder": "Queue",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Queue"
+        ],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42501721-run"
+      }
+    },
+    "/reports": {
+      "get": {
+        "summary": "Get Reports",
+        "x-apifox-folder": "Report",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Report"
+        ],
+        "parameters": [
+          {
+            "name": "merchantId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "storeId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "reportId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Report",
+                    "x-apifox-overrides": {}
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42501903-run"
+      }
+    },
+    "/stores/{storeId}": {
+      "get": {
+        "summary": "Get Store Detail",
+        "x-apifox-folder": "Store",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Store"
+        ],
+        "parameters": [
+          {
+            "name": "storeId",
+            "in": "path",
+            "description": "storeId",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "x-apifox-overrides": {},
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "merchantId": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "title": "StoreType",
+                      "enum": [
+                        "Restaurant",
+                        "Cafe"
+                      ],
+                      "x-apifox": {
+                        "enumDescriptions": {
+                          "Restaurant": "",
+                          "Cafe": ""
+                        }
+                      },
+                      "description": "StoreType"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "phoneNumbers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "title": "Store Status",
+                      "enum": [
+                        "onService",
+                        "stopService"
+                      ],
+                      "x-apifox": {
+                        "enumDescriptions": {
+                          "onService": "",
+                          "stopService": ""
+                        }
+                      },
+                      "description": "Store Status"
+                    },
+                    "registerTime": {
+                      "type": "integer"
+                    },
+                    "queuesInfo": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QueueInfo",
+                        "x-apifox-overrides": {}
+                      }
+                    },
+                    "resources": {
+                      "type": "object",
+                      "properties": {
+                        "description": {
+                          "type": "string"
+                        },
+                        "imageUrl": {
+                          "type": "string"
+                        },
+                        "ratings": {
+                          "type": "number",
+                          "minimum": 3,
+                          "maximum": 5
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "description",
+                        "imageUrl",
+                        "ratings"
+                      ],
+                      "required": [
+                        "description",
+                        "imageUrl",
+                        "ratings"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    },
+                    "seatTypes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SeatType"
+                      }
+                    }
+                  },
+                  "x-apifox-refs": {},
+                  "x-apifox-orders": [
+                    "id",
+                    "merchantId",
+                    "name",
+                    "type",
+                    "address",
+                    "phoneNumbers",
+                    "status",
+                    "registerTime",
+                    "queuesInfo",
+                    "resources",
+                    "seatTypes"
+                  ],
+                  "required": [
+                    "id",
+                    "merchantId",
+                    "name",
+                    "type",
+                    "phoneNumbers",
+                    "status",
+                    "registerTime",
+                    "resources",
+                    "address",
+                    "queuesInfo",
+                    "seatTypes"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42622540-run"
+      }
+    },
+    "/users/verify": {
+      "get": {
+        "summary": "Verify User Token",
+        "x-apifox-folder": "User",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "Headers 里带上 token，返回 User 详细信息，如 token 失效返回 401。",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "x-apifox-overrides": {},
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "userType": {
+                      "type": "string",
+                      "enum": [
+                        "customer",
+                        "merchant"
+                      ],
+                      "x-apifox": {
+                        "enumDescriptions": {
+                          "customer": "",
+                          "merchant": ""
+                        }
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "active",
+                        "cancelled"
+                      ],
+                      "x-apifox": {
+                        "enumDescriptions": {
+                          "active": "",
+                          "cancelled": ""
+                        }
+                      }
+                    },
+                    "createTime": {
+                      "description": "timestamp",
+                      "type": "integer"
+                    }
+                  },
+                  "x-apifox-refs": {},
+                  "x-apifox-orders": [
+                    "id",
+                    "username",
+                    "userType",
+                    "status",
+                    "createTime"
+                  ],
+                  "required": [
+                    "id",
+                    "username",
+                    "status",
+                    "createTime",
+                    "userType"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42686108-run"
+      }
+    },
+    "/users/refresh": {
+      "get": {
+        "summary": "Refresh Token",
+        "x-apifox-folder": "User",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42956941-run"
+      }
+    },
+    "/queues/{queueId}": {
+      "get": {
+        "summary": "Get Queue Info Detail",
+        "x-apifox-folder": "Queue/Interior",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "（SMS调用QMS）用户未取号，获取当前 store 所有 queue 的 waiting size",
+        "tags": [
+          "Queue/Interior"
+        ],
+        "parameters": [
+          {
+            "name": "queueId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueInfo",
+                  "x-apifox-overrides": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-43237496-run"
+      }
+    },
+    "/queues/start": {
+      "post": {
+        "summary": "Create Queues",
+        "x-apifox-folder": "Queue/Interior",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "sms.startService() ---> qms.createQueues()",
+        "tags": [
+          "Queue/Interior"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SeatType"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "seatTypeId": {
+                        "type": "integer"
+                      },
+                      "queueId": {
+                        "type": "integer"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "seatTypeId",
+                      "queueId"
+                    ],
+                    "required": [
+                      "seatTypeId",
+                      "queueId"
+                    ],
+                    "x-apifox-ignore-properties": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-43439389-run"
+      }
+    },
+    "/queues/stop": {
+      "post": {
+        "summary": "Delete Queues",
+        "x-apifox-folder": "Queue/Interior",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "sms.stopService() ---> qms.deleteQueues()",
+        "tags": [
+          "Queue/Interior"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Delete successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-43439403-run"
+      }
+    },
+    "/queues/skip": {
+      "post": {
+        "summary": "Skip customer",
+        "x-apifox-folder": "Queue",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Queue"
+        ],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-44401297-run"
+      }
+    },
+    "/queues/call": {
+      "post": {
+        "summary": "Call for customer",
+        "x-apifox-folder": "Queue",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Queue"
+        ],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-44401369-run"
+      }
+    },
+    "/queues/notification": {
+      "post": {
+        "summary": "Notification",
+        "x-apifox-folder": "Notification",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Notification"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DirectNotification",
+                "x-apifox-overrides": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-45327999-run"
+      }
+    },
+    "/queues/registerToken": {
+      "post": {
+        "summary": "register token",
+        "x-apifox-folder": "Notification",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Notification"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "rqerqe",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {},
+                "x-apifox-orders": [],
+                "x-apifox-ignore-properties": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-45336781-run"
+      }
+    },
+    "/stores/list": {
+      "get": {
+        "summary": "Get Stores List (Home)",
+        "x-apifox-folder": "Store",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Store"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Store",
+                    "x-apifox-overrides": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "string",
+                        "title": "Store Status",
+                        "enum": [
+                          "onService",
+                          "stopService"
+                        ],
+                        "x-apifox": {
+                          "enumDescriptions": {
+                            "onService": "",
+                            "stopService": ""
+                          }
+                        },
+                        "description": "Store Status"
+                      },
+                      "registerTime": {
+                        "type": "integer"
+                      },
+                      "queues": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        },
+                        "description": "queue ids"
+                      }
+                    }
+                  },
+                  "minItems": 20
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Record Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "message"
+                  ],
+                  "required": [
+                    "message"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-45377278-run"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DirectNotification": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "x-apifox-orders": [
+          "target",
+          "title",
+          "message"
+        ],
+        "required": [
+          "target",
+          "message",
+          "title"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "QueueInfo": {
+        "type": "object",
+        "properties": {
+          "queueId": {
+            "type": "integer"
+          },
+          "seatType": {
+            "$ref": "#/components/schemas/SeatType"
+          },
+          "waitingSize": {
+            "type": "integer"
+          },
+          "estimateWaitingTime": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "queueId",
+          "seatType",
+          "waitingSize",
+          "estimateWaitingTime"
+        ],
+        "x-apifox-orders": [
+          "queueId",
+          "seatType",
+          "waitingSize",
+          "estimateWaitingTime"
+        ],
+        "x-apifox-refs": {},
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "Report": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "storeId": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "AWT",
+              "WCN_ADN"
+            ],
+            "x-apifox": {
+              "enumDescriptions": {
+                "AWT": "average waiting time",
+                "WCN_ADN": "waiting customer number & acutal diner number"
+              }
+            }
+          },
+          "url": {
+            "type": "string"
+          },
+          "createdTime": {
+            "type": "integer"
+          },
+          "unit": {
+            "type": "string",
+            "description": "time unit of report",
+            "enum": [
+              "day",
+              "week",
+              "month",
+              "year"
+            ],
+            "x-apifox": {
+              "enumDescriptions": {
+                "day": "interval = hour",
+                "week": "interval = day",
+                "month": "interval = month",
+                "year": "interval = month"
+              }
+            }
+          }
+        },
+        "x-apifox-orders": [
+          "id",
+          "storeId",
+          "type",
+          "url",
+          "createdTime",
+          "unit"
+        ],
+        "required": [
+          "id",
+          "type",
+          "storeId",
+          "createdTime",
+          "url",
+          "unit"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "SeatType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "x-apifox-orders": [
+          "id",
+          "name"
+        ],
+        "required": [
+          "name"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "QueueTicket": {
+        "type": "object",
+        "properties": {
+          "ticketId": {
+            "type": "integer"
+          },
+          "storeId": {
+            "type": "integer"
+          },
+          "customerId": {
+            "type": "integer"
+          },
+          "seatType": {
+            "$ref": "#/components/schemas/SeatType"
+          },
+          "queueNumber": {
+            "type": "integer"
+          },
+          "queueId": {
+            "type": "integer"
+          },
+          "startTime": {
+            "type": "integer"
+          },
+          "endTime": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string",
+            "default": "",
+            "enum": [
+              "pending",
+              "seated",
+              "skipped"
+            ],
+            "x-apifox": {
+              "enumDescriptions": {
+                "pending": "",
+                "seated": "",
+                "skipped": ""
+              }
+            }
+          }
+        },
+        "x-apifox-orders": [
+          "ticketId",
+          "storeId",
+          "customerId",
+          "seatType",
+          "queueNumber",
+          "queueId",
+          "startTime",
+          "endTime",
+          "status"
+        ],
+        "required": [
+          "ticketId",
+          "storeId",
+          "customerId",
+          "queueNumber",
+          "queueId",
+          "startTime",
+          "endTime",
+          "status",
+          "seatType"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "Store": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "merchantId": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "title": "StoreType",
+            "enum": [
+              "Restaurant",
+              "Cafe"
+            ],
+            "x-apifox": {
+              "enumDescriptions": {
+                "Restaurant": "",
+                "Cafe": ""
+              }
+            },
+            "description": "StoreType"
+          },
+          "address": {
+            "type": "string"
+          },
+          "phoneNumbers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "seatTypes": {
+            "description": "queue ids",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SeatType"
+            }
+          },
+          "status": {
+            "type": "string",
+            "title": "Store Status",
+            "enum": [
+              "onService",
+              "stopService"
+            ],
+            "x-apifox": {
+              "enumDescriptions": {
+                "onService": "",
+                "stopService": ""
+              }
+            },
+            "description": "Store Status"
+          },
+          "resources": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string"
+              },
+              "imageUrl": {
+                "type": "string"
+              },
+              "ratings": {
+                "type": "number",
+                "minimum": 3,
+                "maximum": 5
+              }
+            },
+            "x-apifox-orders": [
+              "description",
+              "imageUrl",
+              "ratings"
+            ],
+            "required": [
+              "description",
+              "imageUrl",
+              "ratings"
+            ],
+            "x-apifox-ignore-properties": []
+          },
+          "registerTime": {
+            "type": "integer"
+          }
+        },
+        "x-apifox-orders": [
+          "id",
+          "merchantId",
+          "name",
+          "type",
+          "address",
+          "phoneNumbers",
+          "seatTypes",
+          "status",
+          "resources",
+          "registerTime"
+        ],
+        "required": [
+          "id",
+          "merchantId",
+          "name",
+          "type",
+          "phoneNumbers",
+          "status",
+          "registerTime",
+          "seatTypes",
+          "resources",
+          "address"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "userType": {
+            "type": "string",
+            "enum": [
+              "customer",
+              "merchant"
+            ],
+            "x-apifox": {
+              "enumDescriptions": {
+                "customer": "",
+                "merchant": ""
+              }
+            }
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "cancelled"
+            ],
+            "x-apifox": {
+              "enumDescriptions": {
+                "active": "",
+                "cancelled": ""
+              }
+            }
+          },
+          "createTime": {
+            "description": "timestamp",
+            "type": "integer"
+          }
+        },
+        "x-apifox-orders": [
+          "id",
+          "username",
+          "password",
+          "userType",
+          "phoneNumber",
+          "status",
+          "createTime"
+        ],
+        "required": [
+          "id",
+          "username",
+          "password",
+          "phoneNumber",
+          "status",
+          "createTime",
+          "userType"
+        ],
+        "x-apifox-ignore-properties": [],
+        "x-apifox-folder": ""
+      }
+    }
+  }
+}
