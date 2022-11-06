@@ -30,7 +30,7 @@ export default defineConfig({
     proxy: {
       // with options
       '/api': {
-        target: 'http://34.142.186.216.nip.io',
+        target: 'https://ique.vercel.app/api',
         changeOrigin: true,
         secure: false,
         rewrite: path => path.replace(/^\/api/, ''),
