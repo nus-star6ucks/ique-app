@@ -26,19 +26,19 @@ if (accessToken.trim())
 axios.interceptors.response.use((response) => {
   return response
 }, async (error) => {
-  if (error.response.status === 401 && accessToken) {
-    try {
-      const { data: refreshTokenData }: any = await userApi.usersRefreshGet()
-      if (refreshTokenData?.token) {
-        localStorage.setItem('token', refreshTokenData.token)
-        window.location.reload()
-      }
-    }
-    catch {
-      localStorage.removeItem('token')
-    }
-    return error.response
-  }
+  // if (error.response.status === 401 && accessToken) {
+  //   try {
+  //     const { data: refreshTokenData }: any = await userApi.usersRefreshGet()
+  //     if (refreshTokenData?.token) {
+  //       localStorage.setItem('token', refreshTokenData.token)
+  //       window.location.reload()
+  //     }
+  //   }
+  //   catch {
+  //     localStorage.removeItem('token')
+  //   }
+  //   return error.response
+  // }
 
   return Promise.reject(error)
 })
