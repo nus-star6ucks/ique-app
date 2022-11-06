@@ -15,7 +15,7 @@ const password = ref<string>('')
 const loading = ref<boolean>(false)
 
 async function loginWithOAuth(strategy: 'google' | 'github') {
-  const oauthWindowHandle = window.open(`/api/oauth2/authorization/${strategy}`)
+  const oauthWindowHandle = window.open(`/api/oauth2/authorization/${strategy}`, '', 'resizable=yes,width=600,height=800')
 
   const polling = setInterval(() => {
     if (!oauthWindowHandle) {
@@ -41,7 +41,7 @@ async function loginWithOAuth(strategy: 'google' | 'github') {
         oauthWindowHandle.close()
       }
     }
-  }, 500)
+  }, 200)
 }
 
 async function onSubmit() {
@@ -109,13 +109,13 @@ async function onSubmit() {
           Login
         </button>
         <div class="flex items-center justify-center space-x-4">
-          <button type="button" :disabled="loading" :class="{ 'shadow-none': loading, 'bg-gray-400': loading }" class="transition-all w-full flex space-x-2 items-center justify-center bg-gray-200 text-gray-500 hover:bg-gray-800 hover:text-white rounded-lg uppercase py-4" @click="loginWithOAuth('google')">
+          <button type="button" :disabled="loading" :class="{ 'shadow-none': loading, 'bg-gray-400': loading }" class="transition-all w-full flex space-x-2 items-center justify-center bg-gray-200 text-gray-500 hover:bg-gray-800 hover:text-white rounded-lg uppercase py-4" @click="loginWithOAuth('github')">
             <Icon icon="akar-icons:github-fill" />
             <span>
               Login With GitHub
             </span>
           </button>
-          <button type="button" :disabled="loading" :class="{ 'shadow-none': loading, 'bg-gray-400': loading }" class="transition-all w-full flex space-x-2 items-center justify-center bg-gray-200 text-gray-500 hover:bg-sky-500 hover:text-white rounded-lg uppercase py-4" @click="loginWithOAuth('github')">
+          <button type="button" :disabled="loading" :class="{ 'shadow-none': loading, 'bg-gray-400': loading }" class="transition-all w-full flex space-x-2 items-center justify-center bg-gray-200 text-gray-500 hover:bg-sky-500 hover:text-white rounded-lg uppercase py-4" @click="loginWithOAuth('google')">
             <Icon icon="akar-icons:google-fill" />
             <span>
               Login With Google
