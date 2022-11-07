@@ -26,7 +26,7 @@
     }
   ],
   "paths": {
-    "/users": {
+    "/api/users": {
       "post": {
         "summary": "Signup",
         "x-apifox-folder": "User",
@@ -618,7 +618,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42949058-run"
       }
     },
-    "/users/login": {
+    "/api/users/login": {
       "post": {
         "summary": "Login",
         "x-apifox-folder": "User",
@@ -701,7 +701,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42488566-run"
       }
     },
-    "/users/logout": {
+    "/api/users/logout": {
       "post": {
         "summary": "Logout",
         "x-apifox-folder": "User",
@@ -730,7 +730,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42489626-run"
       }
     },
-    "/stores": {
+    "/api/stores": {
       "post": {
         "summary": "Create Store",
         "x-apifox-folder": "Store",
@@ -1495,7 +1495,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42491348-run"
       }
     },
-    "/stores/start": {
+    "/api/stores/start": {
       "post": {
         "summary": "Start Service",
         "x-apifox-folder": "Store",
@@ -1578,7 +1578,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42491451-run"
       }
     },
-    "/stores/stop": {
+    "/api/stores/stop": {
       "post": {
         "summary": "Stop Service",
         "x-apifox-folder": "Store",
@@ -1661,7 +1661,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42491452-run"
       }
     },
-    "/queues/tickets": {
+    "/api/queues/tickets": {
       "post": {
         "summary": "Create Queue Ticket",
         "x-apifox-folder": "Queue",
@@ -1886,7 +1886,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42501138-run"
       }
     },
-    "/queues/tickets/{ticketId}": {
+    "/api/queues/tickets/{ticketId}": {
       "get": {
         "summary": "Get Queue Ticket Detail",
         "x-apifox-folder": "Queue",
@@ -2015,7 +2015,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42501487-run"
       }
     },
-    "/queues/checkin": {
+    "/api/queues/checkin": {
       "post": {
         "summary": "Checkin for customer",
         "x-apifox-folder": "Queue",
@@ -2085,7 +2085,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42501721-run"
       }
     },
-    "/reports": {
+    "/api/reports": {
       "get": {
         "summary": "Get Reports",
         "x-apifox-folder": "Report",
@@ -2187,7 +2187,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42501903-run"
       }
     },
-    "/stores/{storeId}": {
+    "/api/stores/{storeId}": {
       "get": {
         "summary": "Get Store Detail",
         "x-apifox-folder": "Store",
@@ -2389,7 +2389,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42622540-run"
       }
     },
-    "/users/verify": {
+    "/api/users/verify": {
       "get": {
         "summary": "Verify User Token",
         "x-apifox-folder": "User",
@@ -2494,7 +2494,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42686108-run"
       }
     },
-    "/users/refresh": {
+    "/api/users/refresh": {
       "get": {
         "summary": "Refresh Token",
         "x-apifox-folder": "User",
@@ -2523,7 +2523,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-42956941-run"
       }
     },
-    "/queues/{queueId}": {
+    "/api/queues/{queueId}": {
       "get": {
         "summary": "Get Queue Info Detail",
         "x-apifox-folder": "Queue/Interior",
@@ -2604,7 +2604,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-43237496-run"
       }
     },
-    "/queues/start": {
+    "/api/queues/start": {
       "post": {
         "summary": "Create Queues",
         "x-apifox-folder": "Queue/Interior",
@@ -2662,7 +2662,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-43439389-run"
       }
     },
-    "/queues/stop": {
+    "/api/queues/stop": {
       "post": {
         "summary": "Delete Queues",
         "x-apifox-folder": "Queue/Interior",
@@ -2703,7 +2703,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-43439403-run"
       }
     },
-    "/queues/skip": {
+    "/api/queues/skip": {
       "post": {
         "summary": "Skip customer",
         "x-apifox-folder": "Queue",
@@ -2773,7 +2773,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-44401297-run"
       }
     },
-    "/queues/call": {
+    "/api/queues/call": {
       "post": {
         "summary": "Call for customer",
         "x-apifox-folder": "Queue",
@@ -2843,7 +2843,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-44401369-run"
       }
     },
-    "/queues/notification": {
+    "/api/queues/notification": {
       "post": {
         "summary": "Notification",
         "x-apifox-folder": "Notification",
@@ -2879,7 +2879,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-45327999-run"
       }
     },
-    "/queues/registerToken": {
+    "/api/queues/registerToken": {
       "post": {
         "summary": "register token",
         "x-apifox-folder": "Notification",
@@ -2938,7 +2938,7 @@
         "x-run-in-apifox": "https://www.apifox.cn/web/project/1701091/apis/api-45336781-run"
       }
     },
-    "/stores/list": {
+    "/api/stores/list": {
       "get": {
         "summary": "Get Stores List (Home)",
         "x-apifox-folder": "Store",
