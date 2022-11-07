@@ -38,7 +38,7 @@ async function loginWithOAuth(strategy: 'google' | 'github') {
       finally {
         loading.value = false
         clearInterval(polling)
-        // oauthWindowHandle.close()
+        oauthWindowHandle.close()
       }
     }
   }, 200)
