@@ -1,6 +1,6 @@
 {
   "routes": [
     { "src": "/admin/dataset-import/(.*)", "dest": "https://ique-rcmd-increment-uploader.vercel.app/$1" },
-    { "src": "/admin/(.*)", "dest": "https://ique-rcmd-producer.vercel.app/$1" }
+    { "src": "/admin/producer/(.*)", "dest": "https://ique-rcmd-producer.vercel.app/$1" }
   ]
 }
