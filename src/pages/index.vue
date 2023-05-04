@@ -64,7 +64,7 @@ const userStore = useUserStore()
       </button>
     </section> -->
     <div class="flex justify-center w-full">
-      <iframe width="640" src="http://localhost:8080" />
+      <iframe width="640" height="4000" src="http://localhost:8080" />
     </div>
     <!-- <section v-if="stores" class="grid grid-cols-2 gap-4">
       <StoreCard v-for="store in stores" :key="store.id" :store="store" />
