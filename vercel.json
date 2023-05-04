@@ -1,19 +1,6 @@
 {
-  "headers": [
-    {
-      "source": "/admin/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Credentials", "value": "true" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT" },
-        { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version" }
-      ]
-    }
-  ],
   "routes": [
     { "src": "/admin/dataset-import/(.*)", "dest": "https://ique-rcmd-increment-uploader.vercel.app/$1" },
-    { "src": "/admin/producer/api(/.*)?", "dest": "https://ique-rcmd-producer.vercel.app/api$1" },
-    { "src": "/admin/rt-processing/api/(.*)", "dest": "https://ique-rt-processor-dw7zkrwkja-as.a.run.app/$1" },
-    { "src": "/admin", "dest": "https://ique-rcmd-app.vercel.app/" }
+    { "src": "/admin/producer/api(/.*)?", "dest": "https://ique-rcmd-producer.vercel.app/api$1" }
   ]
 }
