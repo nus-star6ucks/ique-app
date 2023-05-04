@@ -35,11 +35,11 @@ const userStore = useUserStore()
         <h2 class="text-2xl uppercase mb-4 font-light">
           Welcome to iQue
         </h2>
-        <RouterLink v-slot="{ navigate }" to="/me" custom>
+        <!-- <RouterLink v-slot="{ navigate }" to="/me" custom>
           <button class="border rounded-lg p-2 border-gray-800 flex items-center text-sm" @click="navigate">
             <span>Sign up or login to start</span> <ChevronRightIcon class="w-4" />
           </button>
-        </RouterLink>
+        </RouterLink> -->
       </div>
       <img src="/assets/banner.svg" class="w-32 absolute right-2 bottom-6">
     </div>
